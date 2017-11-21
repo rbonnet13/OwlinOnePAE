@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/tools">
+    <string-array name="choix">
+    <item android:id="@+id/disponibleItem"
+          android:title="@string/disponible"/>
+         <item android:id="@+id/nonDisponibleItem"
+             android:title="@string/nonDisponible"/>
+         <item android:id="@+id/venduItem"
+             android:title="@string/vendu"/>
+         <item android:id="@+id/signalerItem"
+             android:title="@string/signaler"/>
+    </string-array>
+    <item name="disponibleItem" type="id">disponibleItem</item>
+    <item name="nonDisponibleItem" type="id">nonDisponibleItem</item>
+    <item name="venduItem" type="id">venduItem</item>
+    <item name="signalerItem" type="id">signalerItem</item>
+</resources>

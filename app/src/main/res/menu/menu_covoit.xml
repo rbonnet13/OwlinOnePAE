@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/recherchecovoiturage"
+        android:title="@string/rechercheCovoit" />
+    <item android:id="@+id/notificationcovoiturage"
+        android:title="@string/notificationCovoit" />
+</menu>

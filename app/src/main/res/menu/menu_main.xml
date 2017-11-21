@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="PAE.MainActivity">
+    <item
+        android:id="@+id/Trierpar"
+        android:orderInCategory="100"
+        android:title="@string/Trierpar" />
+    <item
+        android:id="@+id/TrierDispo"
+        android:orderInCategory="100"
+        android:title="@string/TrierDispo" />
+    <item
+        android:id="@+id/TrierPrix"
+        android:orderInCategory="100"
+        android:title="@string/TrierPrix"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/TrierDeux"
+        android:orderInCategory="100"
+        android:title="@string/TrierDeux"
+        app:showAsAction="never" />
+</menu>
