@@ -49,12 +49,13 @@ public class CalendarExtra extends AppCompatActivity implements Serializable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_extra);
         final ArrayList<EventCalendar> myList = (ArrayList<EventCalendar>) getIntent().getSerializableExtra("mylist");
-    imgLogo = (ImageView) findViewById(R.id.imgOwlEvent);
-
+        imgLogo = (ImageView) findViewById(R.id.imgOwlEvent);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        // affichage flèche
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(null);
+
 
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
