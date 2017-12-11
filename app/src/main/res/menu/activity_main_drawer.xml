@@ -23,6 +23,10 @@
             android:id="@+id/nav_parametre"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/parametre" />
+        <item
+            android:id="@+id/nav_connexion"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/connexion" />
     </group>
 
 </menu>

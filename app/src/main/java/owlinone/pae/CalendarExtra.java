@@ -7,6 +7,7 @@ package owlinone.pae;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class CalendarExtra extends AppCompatActivity implements Serializable{
 
         final ActionBar actionBar = getSupportActionBar();
         // affichage flèche
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(null);
 
 

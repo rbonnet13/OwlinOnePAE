@@ -245,7 +245,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(jsonResult == 0){
 
-                Toast.makeText(RegisterActivity.this, "Invalid username or password or email", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Invalid username or shity or email", Toast.LENGTH_LONG).show();
 
                 return;
 
