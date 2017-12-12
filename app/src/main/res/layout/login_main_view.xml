@@ -75,16 +75,28 @@
         android:drawableLeft="@drawable/ic_action_pass"
         android:hint="Mot de passe"
         android:inputType="textPassword"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="0dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/password_field"
+        android:layout_below="@+id/password_field"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/colorWhite"
+        android:buttonTint="@color/colorWhite"
+        android:ems="10"
+        android:text="Se souvenir de moi" />
 
 
     <Button
+        android:id="@+id/login"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="@drawable/background_login"
-        android:layout_below="@+id/password_field"
+        android:layout_below="@+id/checkBox1"
         android:layout_centerHorizontal="true"
-        android:id="@+id/login"
         android:text="@string/login"
         android:textColor="@color/caldroid_holo_blue_light"
         android:textAllCaps="false"
@@ -94,12 +106,12 @@
         android:layout_marginBottom="10dp"/>
 
     <Button
+        android:id="@+id/register_button"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="@drawable/background_signup"
         android:layout_below="@+id/login"
         android:layout_centerHorizontal="true"
-        android:id="@+id/register_button"
         android:text="@string/sign_up"
         android:textColor="@color/colorWhite"
         android:textAllCaps="false"
@@ -107,7 +119,5 @@
         android:textSize="18sp"
         android:clickable="true"
          />
-
-
 </RelativeLayout>
 </LinearLayout>

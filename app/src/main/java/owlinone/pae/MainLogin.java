@@ -5,6 +5,7 @@ package owlinone.pae;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.HttpResponse;
@@ -94,12 +96,15 @@ public class MainLogin extends AppCompatActivity {
 
 // request authentication with remote server4
 
+
                 AsyncDataClass asyncRequestObject = new AsyncDataClass();
                 asyncRequestObject.execute(serverUrl, enteredUsername, enteredPassword);
-
             }
 
         });
+
+
+
         registerButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -195,7 +200,7 @@ public class MainLogin extends AppCompatActivity {
 
             System.out.println("Resulted Value: " + result);
 
-            if(result.equals("") || result == null){
+            if (result.equals("") || result == null) {
 
                 Toast.makeText(MainLogin.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
 
@@ -205,7 +210,7 @@ public class MainLogin extends AppCompatActivity {
 
             int jsonResult = returnParsedJsonObject(result);
 
-            if(jsonResult == 0){
+            if (jsonResult == 0) {
 
                 Toast.makeText(MainLogin.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
 
@@ -213,7 +218,7 @@ public class MainLogin extends AppCompatActivity {
 
             }
 
-            if(jsonResult == 1){
+            if (jsonResult == 1) {
 
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
 
@@ -224,6 +229,7 @@ public class MainLogin extends AppCompatActivity {
                 startActivity(intent);
 
             }
+
 
         }
 

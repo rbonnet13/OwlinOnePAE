@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.TextView;
+
+import static android.net.sip.SipErrorCode.TIME_OUT;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-
+        int TIME_OUT = 1500;
 
         Intent intent = getIntent();
 
@@ -47,6 +50,26 @@ public class LoginActivity extends AppCompatActivity {
 
         successMessage.setText(message);
 
+        if(message.equals("Connexion réussie")){
+            System.out.println("success message : " + successMessage.getText());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent u = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(u);
+                    finish();
+                }
+            }, TIME_OUT);
+        }else  if (message.equals("Inscription réussie")) {
+            System.out.println("success message : " + successMessage.getText());
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    Intent i = new Intent(LoginActivity.this, MainLogin.class);
+                    startActivity(i);
+                    finish();
+                }
+            }, TIME_OUT);
+        }
     }
 
     @Override
