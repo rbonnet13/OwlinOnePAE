@@ -13,6 +13,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
@@ -62,6 +64,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -82,6 +86,22 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
+        setSupportActionBar(toolbar);
+
+        //Affichage de la flèche de retour-----------------------------------
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         username = (EditText)findViewById(R.id.username_field);
 
@@ -105,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(enteredUsername.equals("") || enteredPassword.equals("") || enteredEmail.equals("")){
 
-                    Toast.makeText(RegisterActivity.this, "Username or password or email must be filled", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
 
                     return;
 
@@ -113,8 +133,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(enteredUsername.length() <= 1 || enteredPassword.length() <= 1){
 
-                    Toast.makeText(RegisterActivity.this, "Username or password length must be greater than one", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Le pseudo et le login doivent dépasser 1 caractère", Toast.LENGTH_LONG).show();
 
+                    return;
+
+                }
+
+                String expression = "^[\\w\\.-]+@esaip.org"; //Regex pour savoir si le mail est de bonne forme
+                CharSequence inputStr = enteredEmail;
+
+                Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(inputStr);
+                if (!matcher.matches()) {
+                    Toast.makeText(RegisterActivity.this, "Email doit sous la forme @esaip.org", Toast.LENGTH_LONG).show();
                     return;
 
                 }
@@ -235,7 +266,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(result.equals("") || result == null){
 
-                Toast.makeText(RegisterActivity.this, "Server connection failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
 
                 return;
 
@@ -245,7 +276,10 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(jsonResult == 0){
 
-                Toast.makeText(RegisterActivity.this, "Invalid username or shity or email", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
+                Log.e("Username saisi:", enteredUsername);
+
+
 
                 return;
 
@@ -257,7 +291,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 intent.putExtra("USERNAME", enteredUsername);
 
-                intent.putExtra("MESSAGE", "You have been successfully Registered");
+                intent.putExtra("MESSAGE", "Inscription réussie");
 
                 startActivity(intent);
 

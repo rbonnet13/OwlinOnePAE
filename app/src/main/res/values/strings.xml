@@ -50,18 +50,20 @@
     ]]></string>
     <string name="hello_world">Hello world!</string>
     <string name="actionsettings">Settings</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="login">Login</string>
+    <string name="username">Pseudo</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">Adresse Email (@esaip.org)</string>
+    <string name="login">Se connecter</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="registration_instruction">I do not have a username and password details. Click the button below to register</string>
-    <string name="register_button">Register Now</string>
+    <string name="registration_instruction">Vous n\'êtes pas encore inscrits? Inscrivez-vous dès maintenant</string>
+    <string name="register_button">Se connecter</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="welcome">WELCOME</string>
-    <string name="is_login">You have been successfully login </string>
-    <string name="sign_up">Sign Up Now</string>
+    <string name="welcome">BIENVENUE</string>
+    <string name="is_login">Connexion réussie </string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="sign_up2">Valider l\'inscription</string>
     <item name="actionsettings" type="id">Settings</item>
     <string name="connexion">Connexion</string>
+    <string name="inscription">Inscription</string>
 
 </resources>

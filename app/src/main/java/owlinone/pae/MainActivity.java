@@ -281,11 +281,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_stage) {
             Intent intentStage = new Intent(getApplicationContext(), Stage.class);
             startActivity(intentStage);
-        } else if (id == R.id.nav_parametre) {
-            Intent intentParametre = new Intent(getApplicationContext(), Parametre.class);
-            startActivity(intentParametre);
-        }
-        else if (id == R.id.nav_connexion) {
+        } else if (id == R.id.nav_connexion) {
             Intent intentConnexion = new Intent(getApplicationContext(), MainLogin.class);
             startActivity(intentConnexion);
         }

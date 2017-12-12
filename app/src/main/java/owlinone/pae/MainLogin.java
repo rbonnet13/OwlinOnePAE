@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,9 +45,25 @@ public class MainLogin extends AppCompatActivity {
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main_view);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar5);
+        setSupportActionBar(toolbar);
+
+        //Affichage de la flèche de retour-----------------------------------
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         username = (EditText)findViewById(R.id.username_field);
         password = (EditText)findViewById(R.id.password_field);
 
@@ -64,13 +81,13 @@ public class MainLogin extends AppCompatActivity {
 
                 if(enteredUsername.equals("") || enteredPassword.equals("")){
 
-                    Toast.makeText(MainLogin.this, "Username or password must be filled", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
 
                     return;
 
                 }
                 if(enteredUsername.length() <= 1 || enteredPassword.length() <= 1){
-                    Toast.makeText(MainLogin.this, "Username or password length must be greater than one", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainLogin.this, "Le pseudo et le login doivent dépasser 1 caractère", Toast.LENGTH_LONG).show();
                     return;
 
                 }
@@ -180,7 +197,7 @@ public class MainLogin extends AppCompatActivity {
 
             if(result.equals("") || result == null){
 
-                Toast.makeText(MainLogin.this, "Server connection failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainLogin.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
 
                 return;
 
@@ -190,7 +207,7 @@ public class MainLogin extends AppCompatActivity {
 
             if(jsonResult == 0){
 
-                Toast.makeText(MainLogin.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainLogin.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
 
                 return;
 
@@ -202,7 +219,7 @@ public class MainLogin extends AppCompatActivity {
 
                 intent.putExtra("USERNAME", enteredUsername);
 
-                intent.putExtra("MESSAGE", "You have been successfully login");
+                intent.putExtra("MESSAGE", "Connexion réussie");
 
                 startActivity(intent);
 
