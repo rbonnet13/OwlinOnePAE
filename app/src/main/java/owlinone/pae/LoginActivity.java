@@ -12,13 +12,12 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
 
 import android.widget.TextView;
-
-import static android.net.sip.SipErrorCode.TIME_OUT;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        int TIME_OUT = 1500;
+        int TIME_OUT = 3000;
 
         Intent intent = getIntent();
 
@@ -60,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 }
             }, TIME_OUT);
-        }else  if (message.equals("Inscription réussie")) {
+        }else  if (message.equals("Inscription réussie")){
             System.out.println("success message : " + successMessage.getText());
             new Handler().postDelayed(new Runnable() {
                 public void run() {
