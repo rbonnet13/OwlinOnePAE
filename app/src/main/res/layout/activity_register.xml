@@ -33,14 +33,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/logo_esaip_2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/photo_user"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/profile"
+            android:scaleType="centerCrop"
+            app:civ_border_color="@color/colorWhite"
+            app:civ_border_width="4dp"/>
 
     <EditText
         android:layout_width="250dp"
@@ -58,7 +61,7 @@
         android:textSize="16dp"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imageViewLogo"
+        android:layout_below="@+id/photo_user"
         android:layout_marginBottom="10dp"/>
 
     <EditText

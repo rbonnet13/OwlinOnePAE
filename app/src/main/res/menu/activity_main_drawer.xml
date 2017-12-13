@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_connexion"
-            android:icon="@drawable/ic_account"
-            android:title="@string/connexion" />
-        <item
-            android:id="@+id/nav_planning"
-            android:icon="@drawable/ic_planning"
-            android:title="Calendrier" />
-        <item
-            android:id="@+id/nav_appartements"
-            android:icon="@drawable/ic_appartements"
-            android:title="@string/appartements" />
-        <item
-            android:id="@+id/nav_covoit"
-            android:icon="@drawable/ic_covoit"
-            android:title="@string/covoiturage" />
-        <item
-            android:id="@+id/nav_stage"
-            android:icon="@drawable/ic_stage"
-            android:title="@string/stage" />
-        <item
-            android:id="@+id/nav_deconnexion"
-            android:icon="@drawable/ic_stage"
-            android:title="@string/Deconnexion" />
 
+        <item android:title="Compte">
+            <menu>
+                <item
+                    android:id="@+id/nav_connexion"
+                    android:icon="@drawable/ic_account"
+                    android:title="@string/connexion" />
+                <item
+                    android:id="@+id/nav_deconnexion"
+                    android:icon="@drawable/ic_logout"
+                    android:title="@string/déconnexion" />
+            </menu>
+        </item>
+
+        <item android:title="Fonctionnalités">
+            <menu>
+                <item
+                    android:id="@+id/nav_planning"
+                    android:icon="@drawable/ic_planning"
+                    android:title="Calendrier" />
+                <item
+                    android:id="@+id/nav_appartements"
+                    android:icon="@drawable/ic_appartements"
+                    android:title="@string/appartements" />
+            </menu>
+        </item>
+
+
+        <item android:title="A venir">
+            <menu>
+                <item
+                    android:id="@+id/nav_covoit"
+                    android:icon="@drawable/ic_covoit"
+                    android:title="@string/covoiturage" />
+                <item
+                    android:id="@+id/nav_stage"
+                    android:icon="@drawable/ic_stage"
+                    android:title="@string/stage" />
+            </menu>
+        </item>
 
     </group>
-
 </menu>
