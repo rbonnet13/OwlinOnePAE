@@ -98,7 +98,10 @@ public class MainActivity extends AppCompatActivity
             View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
             ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
             ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
-            
+
+
+
+
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -304,13 +307,24 @@ public class MainActivity extends AppCompatActivity
             Intent intentStage = new Intent(getApplicationContext(), Stage.class);
             startActivity(intentStage);
         } else if (id == R.id.nav_connexion) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu menu = navigationView.getMenu();
+            MenuItem itemCo = menu.findItem(R.id.nav_deconnexion);
+            itemCo.setVisible(false);
             Intent intentConnexion = new Intent(getApplicationContext(), MainLogin.class);
             startActivity(intentConnexion);
         } else if(id == R.id.nav_deconnexion){
             View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
             ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("");
-            ((TextView) header.findViewById(R.id.id_email_user)).setText("");
+            ((TextView) header.findViewById(R.id.id_email_user)).setText("Vous n'êtes pas connecté");
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu menu = navigationView.getMenu();
+            MenuItem itemCo = menu.findItem(R.id.nav_connexion);
+            itemCo.setVisible(true);
+            MenuItem itemDeco = menu.findItem(R.id.nav_deconnexion);
+            itemDeco.setVisible(false);
             session.logoutUser();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

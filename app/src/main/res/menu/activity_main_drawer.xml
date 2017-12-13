@@ -8,11 +8,13 @@
                 <item
                     android:id="@+id/nav_connexion"
                     android:icon="@drawable/ic_account"
-                    android:title="@string/connexion" />
+                    android:title="@string/connexion"
+                    android:visible="false"/>
                 <item
                     android:id="@+id/nav_deconnexion"
                     android:icon="@drawable/ic_logout"
-                    android:title="@string/déconnexion" />
+                    android:title="@string/déconnexion"
+                    android:visible="true"/>
             </menu>
         </item>
 
