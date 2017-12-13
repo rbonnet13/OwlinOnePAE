@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity
             View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
             ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
             ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
+            
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
