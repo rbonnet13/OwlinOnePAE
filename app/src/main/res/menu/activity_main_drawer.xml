@@ -23,6 +23,10 @@
             android:id="@+id/nav_stage"
             android:icon="@drawable/ic_stage"
             android:title="@string/stage" />
+        <item
+            android:id="@+id/nav_deconnexion"
+            android:icon="@drawable/ic_stage"
+            android:title="@string/Deconnexion" />
 
 
     </group>

@@ -65,5 +65,5 @@
     <item name="actionsettings" type="id">Settings</item>
     <string name="connexion">Connexion</string>
     <string name="inscription">Inscription</string>
-
+    <string name="Deconnexion">Deconnexion</string>
 </resources>

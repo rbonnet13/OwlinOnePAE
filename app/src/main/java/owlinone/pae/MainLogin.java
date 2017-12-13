@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,14 +43,17 @@ public class MainLogin extends AppCompatActivity {
     protected EditText username;
     private EditText password;
     protected String enteredUsername;
+
     private final String serverUrl = AddressUrl.strTriIndex;
+    private Session session;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main_view);
-
+        // User Session Manager
+        session = new Session(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar5);
         setSupportActionBar(toolbar);
 
@@ -68,6 +72,9 @@ public class MainLogin extends AppCompatActivity {
 
         username = (EditText)findViewById(R.id.username_field);
         password = (EditText)findViewById(R.id.password_field);
+        Toast.makeText(getApplicationContext(),
+                "User Login Status: " + session.isUserLoggedIn(),
+                Toast.LENGTH_LONG).show();
 
         Button loginButton = (Button)findViewById(R.id.login);
         Button registerButton = (Button)findViewById(R.id.register_button);
@@ -223,14 +230,13 @@ public class MainLogin extends AppCompatActivity {
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
 
                 intent.putExtra("USERNAME", enteredUsername);
-
                 intent.putExtra("MESSAGE", "Connexion réussie");
 
+                session.createUserLoginSession(enteredUsername,"Bienvenue vous êtes connecté");
+                Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
                 startActivity(intent);
-
+                finish();
             }
-
-
         }
 
         private StringBuilder inputStreamToString(InputStream is) {

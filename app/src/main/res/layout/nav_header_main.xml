@@ -13,19 +13,40 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:weightSum="1">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        app:srcCompat="@drawable/logo_esaip_2"
-        android:id="@+id/imageView" />
-
-    <TextView
+    <LinearLayout
+        android:paddingLeft="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="OWL IN ONE"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textStyle="normal|bold"
-        android:textAlignment="center" />
-
+        android:gravity="left|center_vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_menu"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="@android:color/white"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            app:civ_border_width="2dp"
+            android:src="@drawable/profile"
+            app:srcCompat="@android:drawable/sym_def_app_icon"/>
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/id_pseudo_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Invité"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <TextView
+            android:id="@+id/id_email_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="non.connecté@esaip.org" />
+    </LinearLayout>
 </LinearLayout>

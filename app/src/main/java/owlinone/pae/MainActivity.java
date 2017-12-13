@@ -13,13 +13,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import owlinone.pae.R;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     int top;
     ArrayList<EventCalendar> arrayListEvent;
     ArticleAdapter adapter;
+    Session session;
 
     @Override
     public void onRestart() {
@@ -77,6 +81,23 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // User Session Manager
+        session = new Session(getApplicationContext());
+        Toast.makeText(getApplicationContext(),
+                "User Login Status: " + session.isUserLoggedIn(),
+                Toast.LENGTH_LONG).show();
+        if(session.checkLogin())
+            finish();
+            // get user data from session
+            HashMap<String, String> user = session.getUserDetails();
+            // get name
+            String name = user.get(Session.KEY_NAME);
+            // get email
+            String pass = user.get(Session.KEY_EMAIL);
+            // Show user data on activity
+            View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+            ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
+            ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -284,6 +305,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_connexion) {
             Intent intentConnexion = new Intent(getApplicationContext(), MainLogin.class);
             startActivity(intentConnexion);
+        } else if(id == R.id.nav_deconnexion){
+            View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+            ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("");
+            ((TextView) header.findViewById(R.id.id_email_user)).setText("");
+            session.logoutUser();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -453,7 +479,4 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(Void result) {
         }
     }
-
-
-
 }
