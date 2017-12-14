@@ -90,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                 enteredUsername = username.getText().toString();
                 String enteredPassword = password.getText().toString();
                 String enteredEmail = email.getText().toString();
+                String enteredPhoto = convertirImgString(bitmap);
 
                 if (enteredUsername.equals("") || enteredPassword.equals("") || enteredEmail.equals("")) {
                     Toast.makeText(RegisterActivity.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
@@ -112,28 +113,26 @@ public class RegisterActivity extends AppCompatActivity {
 
 // request authentication with remote server4
                 AsyncDataClass asyncRequestObject = new AsyncDataClass();
-                asyncRequestObject.execute(serverUrl, enteredUsername, enteredPassword, enteredEmail);
-
-                imagePhoto.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = null;
-                        //verificacion de la version de plataforma
-                        if (Build.VERSION.SDK_INT < 19) {
-                            //android 4.3  y anteriores
-                            i = new Intent();
-                            i.setAction(Intent.ACTION_GET_CONTENT);
-                        } else {
-                            //android 4.4 y superior
-                            i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                            i.addCategory(Intent.CATEGORY_OPENABLE);
-                        }
-                        i.setType("image/*");
-                        startActivityForResult(i, request_code);
-                    }
-                });
+                asyncRequestObject.execute(serverUrl, enteredUsername, enteredPassword, enteredEmail, enteredPhoto);
             }
-
+        });
+        imagePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = null;
+                //verificacion de la version de plataforma
+                if (Build.VERSION.SDK_INT < 19) {
+                    //android 4.3  y anteriores
+                    i = new Intent();
+                    i.setAction(Intent.ACTION_GET_CONTENT);
+                } else {
+                    //android 4.4 y superior
+                    i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                }
+                i.setType("image/*");
+                startActivityForResult(i, request_code);
+            }
         });
     }
 
@@ -149,8 +148,10 @@ public class RegisterActivity extends AppCompatActivity {
         }else{
             imagenString = "no imagen"; //se enviara este string en caso de no haber imagen
         }
+
         return imagenString;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -202,6 +203,7 @@ public class RegisterActivity extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("username", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("password", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("email", params[3]));
+                nameValuePairs.add(new BasicNameValuePair("photo", params[4]));
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpClient.execute(httpPost);
                 jsonResult = inputStreamToString(response.getEntity().getContent()).toString();

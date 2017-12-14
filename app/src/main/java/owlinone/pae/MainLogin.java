@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -38,13 +41,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainLogin extends AppCompatActivity {
 
     protected EditText username;
     private EditText password;
     protected String enteredUsername;
+    protected String enteredPhoto;
 
     private final String serverUrl = AddressUrl.strTriIndex;
+
     private Session session;
 
     @Override
@@ -70,14 +76,14 @@ public class MainLogin extends AppCompatActivity {
             }
         });
 
-        username = (EditText)findViewById(R.id.username_field);
-        password = (EditText)findViewById(R.id.password_field);
+        username = (EditText) findViewById(R.id.username_field);
+        password = (EditText) findViewById(R.id.password_field);
         Toast.makeText(getApplicationContext(),
                 "User Login Status: " + session.isUserLoggedIn(),
                 Toast.LENGTH_LONG).show();
 
-        Button loginButton = (Button)findViewById(R.id.login);
-        Button registerButton = (Button)findViewById(R.id.register_button);
+        Button loginButton = (Button) findViewById(R.id.login);
+        Button registerButton = (Button) findViewById(R.id.register_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -88,29 +94,20 @@ public class MainLogin extends AppCompatActivity {
                 enteredUsername = username.getText().toString();
                 String enteredPassword = password.getText().toString();
 
-                if(enteredUsername.equals("") || enteredPassword.equals("")){
-
+                if (enteredUsername.equals("") || enteredPassword.equals("")) {
                     Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
-
                     return;
-
                 }
-                if(enteredUsername.length() <= 1 || enteredPassword.length() <= 1){
+                if (enteredUsername.length() <= 1 || enteredPassword.length() <= 1) {
                     Toast.makeText(MainLogin.this, "Le pseudo et le login doivent dépasser 1 caractère", Toast.LENGTH_LONG).show();
                     return;
-
                 }
-
 // request authentication with remote server4
-
-
                 AsyncDataClass asyncRequestObject = new AsyncDataClass();
                 asyncRequestObject.execute(serverUrl, enteredUsername, enteredPassword);
             }
 
         });
-
-
 
         registerButton.setOnClickListener(new View.OnClickListener() {
 
@@ -124,6 +121,7 @@ public class MainLogin extends AppCompatActivity {
         });
 
     }
+
 
     @Override
 
@@ -202,93 +200,56 @@ public class MainLogin extends AppCompatActivity {
         @Override
 
         protected void onPostExecute(String result) {
-
             super.onPostExecute(result);
-
             System.out.println("Resulted Value: " + result);
-
             if (result.equals("") || result == null) {
-
                 Toast.makeText(MainLogin.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
-
                 return;
-
             }
 
             int jsonResult = returnParsedJsonObject(result);
-
             if (jsonResult == 0) {
-
                 Toast.makeText(MainLogin.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
-
                 return;
-
             }
 
             if (jsonResult == 1) {
-
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
-
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-
                 session.createUserLoginSession(enteredUsername,"Bienvenue vous êtes connecté");
                 Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
+
                 startActivity(intent);
                 finish();
             }
         }
 
         private StringBuilder inputStreamToString(InputStream is) {
-
             String rLine = "";
-
             StringBuilder answer = new StringBuilder();
-
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
             try {
-
                 while ((rLine = br.readLine()) != null) {
-
                     answer.append(rLine);
-
                 }
-
             } catch (IOException e) {
-
 // TODO Auto-generated catch block
-
                 e.printStackTrace();
-
             }
-
             return answer;
-
         }
-
     }
 
     private int returnParsedJsonObject(String result){
-
         JSONObject resultObject = null;
-
         int returnedResult = 0;
-
         try {
-
             resultObject = new JSONObject(result);
-
             returnedResult = resultObject.getInt("success");
-
         } catch (JSONException e) {
-
             e.printStackTrace();
-
         }
-
         return returnedResult;
-
     }
-
 }

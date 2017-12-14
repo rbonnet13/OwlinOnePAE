@@ -33,7 +33,8 @@ public class Session {
     public static final String KEY_NAME = "name";
 
     // Email address (make variable public to access from outside)
-    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
+
 
     // Constructor
     public Session(Context context){
@@ -51,7 +52,7 @@ public class Session {
         editor.putString(KEY_NAME, name);
 
         // Storing email in pref
-        editor.putString(KEY_EMAIL, password);
+        editor.putString(KEY_PASSWORD, password);
 
         // commit changes
         editor.commit();
@@ -97,7 +98,7 @@ public class Session {
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
 
         // user email id
-        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
 
         // return user
         return user;
@@ -113,7 +114,7 @@ public class Session {
         editor.commit();
 
         // After logout redirect user to Login Activity
-        Intent i = new Intent(_context, MainLogin.class);
+        Intent i = new Intent(_context, MainActivity.class);
 
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

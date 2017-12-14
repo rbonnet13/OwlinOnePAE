@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         String loggedUser = intentBundle.getString("USERNAME");
         loggedUser = capitalizeFirstCharacter(loggedUser);
         String message = intentBundle.getString("MESSAGE");
+
         TextView loginUsername = (TextView)findViewById(R.id.login_user);
         TextView successMessage = (TextView)findViewById(R.id.message);
         loginUsername.setText(loggedUser);

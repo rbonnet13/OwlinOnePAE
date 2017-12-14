@@ -21,9 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import owlinone.pae.R;
 
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity
     ArrayList<EventCalendar> arrayListEvent;
     ArticleAdapter adapter;
     Session session;
+    private final String strPhoto = AddressUrl.strPhoto;
+    String strImage;
 
     @Override
     public void onRestart() {
@@ -93,13 +98,27 @@ public class MainActivity extends AppCompatActivity
             // get name
             String name = user.get(Session.KEY_NAME);
             // get email
-            String pass = user.get(Session.KEY_EMAIL);
+            String pass = user.get(Session.KEY_PASSWORD);
+
+
             // Show user data on activity
             View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
             ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
             ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
+            ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
-
+            //image
+        //Toast.makeText(MainActivity.this, "Photo = "+ user.get(Session.KEY_PHOTO), Toast.LENGTH_LONG).show();
+       /* if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
+            url_image = url_image.replace(" ","%20");
+            try {
+                Log.i("RESPUESTA IMAGE: ",""+url_image);
+                Glide.with(this).load(url_image).into(photo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }*/
 
 
         arrayList = new ArrayList<Article>();
