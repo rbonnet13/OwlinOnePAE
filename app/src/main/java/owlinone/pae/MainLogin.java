@@ -194,7 +194,6 @@ public class MainLogin extends AppCompatActivity {
         protected void onPreExecute() {
 
             super.onPreExecute();
-
         }
 
         @Override
