@@ -213,10 +213,11 @@ public class MainLogin extends AppCompatActivity {
             }
 
             if (jsonResult == 1) {
+                String jsonresultImg = returnParsedJsonObjectImg(result);
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-                session.createUserLoginSession(enteredUsername,"Bienvenue vous êtes connecté");
+                session.createUserLoginSession(enteredUsername,"Bienvenue vous êtes connecté",jsonresultImg);
                 Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
 
                 startActivity(intent);
@@ -250,5 +251,16 @@ public class MainLogin extends AppCompatActivity {
             e.printStackTrace();
         }
         return returnedResult;
+    }
+    private String returnParsedJsonObjectImg (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("photo");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
     }
 }

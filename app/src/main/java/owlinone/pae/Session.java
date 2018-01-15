@@ -35,6 +35,9 @@ public class Session {
     // Email address (make variable public to access from outside)
     public static final String KEY_PASSWORD = "password";
 
+    // Email address (make variable public to access from outside)
+    public static final String KEY_PHOTO = "photo";
+
 
     // Constructor
     public Session(Context context){
@@ -44,7 +47,7 @@ public class Session {
     }
 
     //Create login session
-    public void createUserLoginSession(String name, String password){
+    public void createUserLoginSession(String name, String password, String photo){
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
@@ -53,7 +56,8 @@ public class Session {
 
         // Storing email in pref
         editor.putString(KEY_PASSWORD, password);
-
+        // Storing email in pref
+        editor.putString(KEY_PHOTO, photo);
         // commit changes
         editor.commit();
     }
@@ -87,7 +91,7 @@ public class Session {
 
 
     /**
-     * Get stored session data
+     * Get stored session dataF
      * */
     public HashMap<String, String> getUserDetails(){
 
@@ -99,6 +103,9 @@ public class Session {
 
         // user email id
         user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
+
+        // user photo id
+        user.put(KEY_PHOTO, pref.getString(KEY_PHOTO, "sans image"));
 
         // return user
         return user;

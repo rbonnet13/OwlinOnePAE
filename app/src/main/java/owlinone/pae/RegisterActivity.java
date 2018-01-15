@@ -138,7 +138,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Convertir image en string
     private String convertirImgString(Bitmap bitmap) {
-
         String imagenString;
         ByteArrayOutputStream array=new ByteArrayOutputStream();
         if(bitmap!=null){
@@ -146,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
             byte[] imagenByte=array.toByteArray();
             imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
         }else{
-            imagenString = "no imagen"; //se enviara este string en caso de no haber imagen
+            imagenString = "sans image"; //se enviara este string en caso de no haber imagen
         }
 
         return imagenString;

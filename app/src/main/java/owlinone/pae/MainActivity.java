@@ -65,10 +65,8 @@ public class MainActivity extends AppCompatActivity
     int index;
     int top;
     ArrayList<EventCalendar> arrayListEvent;
-    ArticleAdapter adapter;
     Session session;
     private final String strPhoto = AddressUrl.strPhoto;
-    String strImage;
 
     @Override
     public void onRestart() {
@@ -99,6 +97,10 @@ public class MainActivity extends AppCompatActivity
             String name = user.get(Session.KEY_NAME);
             // get email
             String pass = user.get(Session.KEY_PASSWORD);
+             // get email
+            String photoT = user.get(Session.KEY_PHOTO);
+
+
 
 
             // Show user data on activity
@@ -108,8 +110,8 @@ public class MainActivity extends AppCompatActivity
             ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
             //image
-        //Toast.makeText(MainActivity.this, "Photo = "+ user.get(Session.KEY_PHOTO), Toast.LENGTH_LONG).show();
-       /* if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+        Toast.makeText(MainActivity.this, "Photo = "+ photoT, Toast.LENGTH_LONG).show();
+       if(!user.get(Session.KEY_PHOTO).equals("sans image")){
             String url_image = strPhoto + user.get(Session.KEY_PHOTO);
             url_image = url_image.replace(" ","%20");
             try {
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }*/
+        }
 
 
         arrayList = new ArrayList<Article>();
