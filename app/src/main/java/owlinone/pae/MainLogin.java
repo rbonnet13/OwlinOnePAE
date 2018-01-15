@@ -65,7 +65,7 @@ public class MainLogin extends AppCompatActivity {
 
         //Affichage de la flèche de retour-----------------------------------
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
@@ -122,7 +122,10 @@ public class MainLogin extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed(){
+        Toast.makeText(MainLogin.this, "Connexion obligatoire", Toast.LENGTH_LONG).show();
+    }
     @Override
 
     public boolean onCreateOptionsMenu(Menu menu) {

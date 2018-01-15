@@ -15,6 +15,11 @@
                     android:icon="@drawable/ic_logout"
                     android:title="@string/déconnexion"
                     android:visible="true"/>
+                <item
+                    android:id="@+id/nav_compte"
+                    android:icon="@drawable/ic_compte"
+                    android:title="@string/compte"
+                    android:visible="true"/>
             </menu>
         </item>
 

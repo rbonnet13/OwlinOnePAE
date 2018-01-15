@@ -91,27 +91,27 @@ public class MainActivity extends AppCompatActivity
                 Toast.LENGTH_LONG).show();
         if(session.checkLogin())
             finish();
-            // get user data from session
-            HashMap<String, String> user = session.getUserDetails();
-            // get name
-            String name = user.get(Session.KEY_NAME);
-            // get email
-            String pass = user.get(Session.KEY_PASSWORD);
-             // get email
-            String photoT = user.get(Session.KEY_PHOTO);
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        // get name
+        String name = user.get(Session.KEY_NAME);
+        // get email
+        String pass = user.get(Session.KEY_PASSWORD);
+        // get email
+        String photoT = user.get(Session.KEY_PHOTO);
 
 
 
 
-            // Show user data on activity
-            View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
-            ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
-            ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
-            ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
+        // Show user data on activity
+        View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
+        ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
+        ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
-            //image
+        //image
         Toast.makeText(MainActivity.this, "Photo = "+ photoT, Toast.LENGTH_LONG).show();
-       if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
             String url_image = strPhoto + user.get(Session.KEY_PHOTO);
             url_image = url_image.replace(" ","%20");
             try {
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity
         });
         new ReadJson().execute();
 
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(Void result) {
             ArticleAdapter adapter = new ArticleAdapter(getApplicationContext(), R.layout.row_list, arrayList);
             if(lv.getAdapter()==null)
-            lv.setAdapter(adapter);
+                lv.setAdapter(adapter);
             else{
                 lv.setAdapter(adapter);
                 lv.setSelectionFromTop(index, top);

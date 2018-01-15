@@ -6,7 +6,7 @@ package owlinone.pae;
 
 public class AddressUrl {
 
-    private static String strUrl = "172.20.10.7";
+    private static String strUrl = "172.20.10.5";
     private static String strPort = "80";
     private static String strDossierPhp = "test4";
 
@@ -22,7 +22,7 @@ public class AddressUrl {
     public static final String strTriAppartPrix        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrix.php";
     public static final String strTriAppartPrixDispo   = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrixDispo.php";
     public static final String strTriIndex             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/index.php";
-    public static final String strPhoto                = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/";
+    public static final String strPhoto                = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp + "/";
 
 
 
