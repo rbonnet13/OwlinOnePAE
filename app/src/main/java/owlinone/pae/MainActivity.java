@@ -338,6 +338,8 @@ public class MainActivity extends AppCompatActivity
             View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
             ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("");
             ((TextView) header.findViewById(R.id.id_email_user)).setText("Vous n'êtes pas connecté");
+            ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
+            photo.setImageResource(R.drawable.profile);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             Menu menu = navigationView.getMenu();
             MenuItem itemCo = menu.findItem(R.id.nav_connexion);
