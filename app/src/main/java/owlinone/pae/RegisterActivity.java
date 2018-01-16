@@ -6,9 +6,11 @@ package owlinone.pae;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -65,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,11 +139,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // Convertir image en string
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String convertirImgString(Bitmap bitmap) {
         String imagenString;
         ByteArrayOutputStream array=new ByteArrayOutputStream();
         if(bitmap!=null){
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,array);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,30,array);
             byte[] imagenByte=array.toByteArray();
             imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
         }else{

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -46,6 +47,7 @@ public class MainLogin extends AppCompatActivity {
 
     protected EditText username;
     private EditText password;
+    private EditText mdp;
     protected String enteredUsername;
     protected String enteredPhoto;
 
@@ -78,6 +80,9 @@ public class MainLogin extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.username_field);
         password = (EditText) findViewById(R.id.password_field);
+        TextView mdpValiation = (TextView) findViewById(R.id.mpd_oublie);
+
+
         Toast.makeText(getApplicationContext(),
                 "User Login Status: " + session.isUserLoggedIn(),
                 Toast.LENGTH_LONG).show();
@@ -110,9 +115,7 @@ public class MainLogin extends AppCompatActivity {
         });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
-
             public void onClick(View v) {
                 Intent intent = new Intent(MainLogin.this, RegisterActivity.class);
                 startActivity(intent);
@@ -120,6 +123,14 @@ public class MainLogin extends AppCompatActivity {
 
         });
 
+        mdpValiation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainLogin.this, PasswordConfiguration.class);
+                startActivity(intent);
+            }
+
+        });
     }
 
     @Override
