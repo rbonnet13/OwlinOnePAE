@@ -2,18 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgDetailArticle"
         android:layout_alignParentTop="true"
-        android:src="@drawable/omar" />
+        android:src="@drawable/omar"
+        android:scaleType="center"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"

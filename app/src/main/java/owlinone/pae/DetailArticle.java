@@ -6,7 +6,10 @@ package owlinone.pae;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -103,10 +106,17 @@ public class DetailArticle extends Activity {
         }
 
         //Chargement de l'image de l'article--------------------------------------------------------
-        Picasso.with(this)
+        //Récupère et décode les images en Base64 depuis la BDD
+        String base64 = strImage.substring(strImage.indexOf(","));
+        byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+        Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
+        imgDetail.setImageBitmap(image);
+
+
+        /*Picasso.with(this)
                 .load(strImage)
                 .resize(width,600)
-                .into(imgDetail);
+                .into(imgDetail);*/
 
         //Affichage dans les TextView avec les string précèdent-------------------------------------
         textCategorie.setText(strCategorie);

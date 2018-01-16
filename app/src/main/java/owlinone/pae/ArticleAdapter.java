@@ -8,9 +8,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +44,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +76,7 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
         this.resource= resource;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         ViewHolder viewHolder = null;
@@ -108,7 +115,14 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
 
         final Article article = getItem(position);
 
-        Picasso.with(context).load(article.getStrImg()).resize(width,600).into(viewHolder.imageView, new Callback() {
+        //Récupère et décode les images en Base64 depuis la BDD
+        String base64 = article.getStrImg().substring(article.getStrImg().indexOf(","));
+        byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+        Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
+        viewHolder.imageView.setImageBitmap(image);
+
+        // Picasso n'est pas nécessaire pour afficher les images stockées en Base64
+        /*Picasso.with(context).load(text).resize(width,600).into(viewHolder.imageView, new Callback() {
             @Override
             public void onSuccess() {
                 Log.d("Success...", "picasso loaded successfully");
@@ -119,7 +133,7 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
                 Log.d("Error...", "picasso load error");
 
             }
-        });
+        });*/
 
             if (prefs.getBoolean(String.valueOf(article.getStrID()), false) == true) {
                 article.setLike(true);
