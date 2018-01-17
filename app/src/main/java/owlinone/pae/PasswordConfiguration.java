@@ -1,61 +1,74 @@
 package owlinone.pae;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static owlinone.pae.AddressUrl.strChemin;
 
 /**
  * Created by Julian on 15/01/2018.
  */
 
-public class PasswordConfiguration extends AppCompatActivity {
+public class PasswordConfiguration extends AppCompatActivity{
 
-    private EditText newPassword;
-    private EditText newPasswordConfirmation;
 
-   @Override
+
+
+
     protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
-       setContentView(R.layout.password_conf);
-       // Toolbar
-       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar7);
-       setSupportActionBar(toolbar);
-       if (getSupportActionBar() != null) {
-           getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-           getSupportActionBar().setDisplayShowHomeEnabled(true);
-       }
-       toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               finish();
-           }
-       });
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.password_conf);
 
-      /* newPassword = (EditText) findViewById(R.id.new_password);
-       newPasswordConfirmation = (EditText) findViewById(R.id.new_password_confirmation);
-       Button validation = (Button) findViewById(R.id.validation_password);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar15);
+        setSupportActionBar(toolbar);
 
-       validation.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               String newPasswordEntered = newPassword.getText().toString();
-               String newPasswordConfirmationEntered = newPasswordConfirmation.getText().toString();
-               if (newPasswordConfirmationEntered == newPasswordEntered){
-                   Intent intent = new Intent(PasswordConfiguration.this, LoginActivity.class);
-                   intent.putExtra("PASSWORD", newPasswordConfirmationEntered);
-                   startActivity(intent);
-               }
-               else{
-                   Toast.makeText(PasswordConfiguration.this, "Mot de passe incorrect", Toast.LENGTH_LONG).show();
-                   return;
-               }
-           }
+        //Affichage de la flèche de retour-----------------------------------
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
-   });*/
-   }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Button validation = (Button) findViewById(R.id.validation_password);
+        validation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PasswordConfiguration.this, PasswordModification.class);
+                startActivity(intent);
+            }
+
+        });
+    }
+
+
+
 }
