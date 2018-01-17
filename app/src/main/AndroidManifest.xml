@@ -103,6 +103,9 @@
             <activity
                 android:name=".PasswordConfiguration">
             </activity>
+            <activity
+                android:name=".PasswordModification">
+            </activity>
     </application>
 
 </manifest>
