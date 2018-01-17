@@ -10,6 +10,7 @@ public class AddressUrl {
     private static String strPort = "80";
     private static String strDossierPhp = "test4";
 
+    public static final String strChemin               = "http://" + strUrl;
     public static final String strAddAppart            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/addAppart.php";
     public static final String strModifierDispo        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/modifierDispo.php";
     public static final String strArticle              = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/article.php";
@@ -77,9 +78,13 @@ public class AddressUrl {
         return strTriIndex;
     }
 
-  public String getStrPhoto() {
+    public String getStrPhoto() {
        return strPhoto;
    }
+
+    public String getStrChemin() {
+        return strChemin;
+    }
 
 
 
