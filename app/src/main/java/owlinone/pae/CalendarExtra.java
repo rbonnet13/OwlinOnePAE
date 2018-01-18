@@ -6,6 +6,10 @@ package owlinone.pae;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -22,8 +26,10 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +48,8 @@ public class CalendarExtra extends AppCompatActivity implements Serializable{
     TextView textEvent = null;
     ImageView imgLogo = null;
     ArrayList<String> mylistEvent = null;
+    Date date = new Date();
+
 
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
 
@@ -54,8 +62,8 @@ public class CalendarExtra extends AppCompatActivity implements Serializable{
 
         final ActionBar actionBar = getSupportActionBar();
         // affichage flèche
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(null);
+        actionBar.setTitle(dateFormatMonth.format(date));
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
 
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
@@ -66,6 +74,7 @@ public class CalendarExtra extends AppCompatActivity implements Serializable{
             Event evl2 = new Event(Color.BLUE,finalTest1,"");
             compactCalendar.addEvent(evl2);
         }
+
 
         // insertion
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {

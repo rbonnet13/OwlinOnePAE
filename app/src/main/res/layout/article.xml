@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"
+            app:titleTextColor="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize"
+            android:id="@+id/toolbar20" />
+
+        <owlinone.pae.AutoResizeTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/categorie_detail"
+            android:maxLines="1"
+            android:ellipsize="none"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:textColor="@color/colorWhite"
+            android:gravity="center_vertical"
+            tools:textSize="19sp"
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,25 +50,15 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgDetailArticle"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/omar"
-        android:scaleType="center"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/categorie_detail"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorPrimary"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"/>
+        <ImageView
+            android:id="@+id/imgDetailArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/omar" />
     </RelativeLayout>
 
         <TextView

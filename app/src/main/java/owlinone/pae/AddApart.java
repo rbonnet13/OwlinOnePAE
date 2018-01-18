@@ -183,7 +183,7 @@ public class AddApart extends AppCompatActivity {
         });
 
         final Context context = getApplicationContext();
-        final CharSequence text = "Veuillez remplir les champs obligatoire";
+        final CharSequence text = "Veuillez remplir les champs obligatoires";
         final int duration = Toast.LENGTH_LONG;
 
         //Identification de lEditText----------------------------------------
@@ -317,7 +317,7 @@ public class AddApart extends AppCompatActivity {
                 //Si email est nul and mail valid-----------------------------------------------------------
                 else if (isEmailValid(strMail_prop) == false)
                 {
-                    mail_prop.setError("Veuillez saisir une addresse mail valide ");
+                    mail_prop.setError("Veuillez saisir une addresse mail valide");
                     Toast.makeText(context, text, duration).show();
                 }
                 else if(strMail_prop.length() == 0) {

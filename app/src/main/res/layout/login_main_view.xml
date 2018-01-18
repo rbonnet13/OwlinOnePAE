@@ -51,7 +51,7 @@
         android:ems="10"
         android:hint="Pseudo"
         android:textColorHint="@color/colorWhite"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
         android:textSize="16dp"
         android:textColor="@color/colorWhite"
         android:layout_centerHorizontal="true"

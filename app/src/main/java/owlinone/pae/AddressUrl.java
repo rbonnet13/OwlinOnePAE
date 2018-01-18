@@ -6,7 +6,7 @@ package owlinone.pae;
 
 public class AddressUrl {
 
-    private static String strUrl = "172.20.10.5";
+    private static String strUrl = "192.168.0.12";
     private static String strPort = "80";
     private static String strDossierPhp = "test4";
 

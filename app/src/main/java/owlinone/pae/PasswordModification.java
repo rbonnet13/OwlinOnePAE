@@ -25,6 +25,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import owlinone.pae.ServerRequest;
+import owlinone.pae.ServerResponse;
+import owlinone.pae.User;
 
 import static owlinone.pae.AddressUrl.strChemin;
 
@@ -34,7 +37,7 @@ import static owlinone.pae.AddressUrl.strChemin;
 
 public class PasswordModification extends AppCompatActivity{
 
-    private AppCompatButton btn_reset;
+
     private EditText et_email,et_code,et_password;
     private TextView tv_timer;
     private ProgressBar progress;
@@ -43,10 +46,20 @@ public class PasswordModification extends AppCompatActivity{
     private CountDownTimer countDownTimer;
 
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_password_reset);
+
+        Button btn_reset = (Button) findViewById(R.id.btn_reset);
+        tv_timer = (TextView)findViewById(R.id.cocotte).findViewById(R.id.tv_timer);
+        et_code = (EditText)findViewById(R.id.cocotte).findViewById(R.id.et_code);
+        et_email = (EditText)findViewById(R.id.cocotte).findViewById(R.id.et_email);
+        et_password = (EditText)findViewById(R.id.cocotte).findViewById(R.id.et_password);
+        et_password.setVisibility(View.GONE);
+        et_code.setVisibility(View.GONE);
+        tv_timer.setVisibility(View.GONE);
+       // btn_reset.setOnClickListener(this);
+        progress = (ProgressBar)findViewById(R.id.cocotte).findViewById(R.id.progress);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar16);
         setSupportActionBar(toolbar);
@@ -63,6 +76,8 @@ public class PasswordModification extends AppCompatActivity{
                 finish();
             }
         });
+
+
     }
 
 
@@ -74,7 +89,6 @@ public class PasswordModification extends AppCompatActivity{
                 if(!isResetInitiated) {
                     email = et_email.getText().toString();
                     if (!email.isEmpty()) {
-                        progress.setVisibility(View.VISIBLE);
                         initiateResetPasswordProcess(email);
                     } else {
 
@@ -123,16 +137,14 @@ public class PasswordModification extends AppCompatActivity{
                 Snackbar.make(findViewById(R.id.cocotte), resp.getMessage(), Snackbar.LENGTH_LONG).show();
 
                 if(resp.getResult().equals(Constants.SUCCESS)){
-
+                    //Button btn_reset = (Button) findViewById(R.id.btn_reset);
                     Snackbar.make(findViewById(R.id.cocotte), resp.getMessage(), Snackbar.LENGTH_LONG).show();
                     et_email.setVisibility(View.GONE);
                     et_code.setVisibility(View.VISIBLE);
                     et_password.setVisibility(View.VISIBLE);
                     tv_timer.setVisibility(View.VISIBLE);
-                    btn_reset.setText("Change Password");
+                    //btn_reset.setText("Change Password");
                     isResetInitiated = true;
-                    startCountdownTimer();
-
                 } else {
 
                     Snackbar.make(findViewById(R.id.cocotte), resp.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -198,30 +210,7 @@ public class PasswordModification extends AppCompatActivity{
                 progress.setVisibility(View.INVISIBLE);
                 Log.d(Constants.TAG,"failed");
                 Snackbar.make(findViewById(R.id.cocotte), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-
             }
         });
     }
-
-    private void startCountdownTimer(){
-        countDownTimer = new CountDownTimer(120000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                tv_timer.setText("Time remaining : " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                Snackbar.make(findViewById(R.id.cocotte), "Time Out ! Request again to reset password.", Snackbar.LENGTH_LONG).show();
-                //goToLogin();
-            }
-        }.start();
-    }
-
-   /* private void goToLogin(){
-
-        Fragment login = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_frame,login);
-        ft.commit();
-    }*/
 }

@@ -63,8 +63,7 @@
         </activity>
             <activity
                 android:name="owlinone.pae.DetailArticle"
-                android:screenOrientation="portrait"
-                android:label="@string/app_name">
+                android:screenOrientation="portrait">
             </activity>
 
         <activity
@@ -101,7 +100,7 @@
                 android:label="@string/title_activity_register" >
             </activity>
             <activity
-                android:name=".PasswordConfiguration">
+                android:name=".PasswordReset">
             </activity>
             <activity
                 android:name=".PasswordModification">

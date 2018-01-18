@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fond2"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -18,122 +20,159 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:elevation="0dp"
             app:title="@string/dialog_appart"
             android:layout_gravity="center"
-            app:titleMarginStart="20dp"
-            android:animateLayoutChanges="false"
             />
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="1">
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerMonsieur"
-                />;
 
-            <EditText
-                android:id="@+id/nom_prop_add"
-                android:inputType="textPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
-                android:hint="@string/nom_prop_add" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_alignLeft="@+id/mail_prop_add"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerMonsieur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignStart="@+id/nom_prop_add"
+                    android:layout_marginTop="9dp"
+                    android:background="#11000000"
+                    android:textColor="#FF0000" />;
+
+                <EditText
+                    android:id="@+id/nom_prop_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="#11000000"
+                    android:ems="20"
+                    android:hint="@string/nom_prop_add"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/mail_prop_add"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:inputType="textEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
-                android:hint="@string/adresse_mail"/>
+                android:ems="10"
+                android:background="#11000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:hint="@string/adresse_mail"
+                android:layout_centerHorizontal="true"
+                />
 
             <EditText
                 android:id="@+id/tel_prop_add"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
+                android:ems="10"
+                android:background="#11000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:layout_centerHorizontal="true"
                 android:hint="@string/tel_prop_add"/>
 
             <EditText
                 android:id="@+id/adresse_appart_add"
-                android:inputType="textPostalAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="#11000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:layout_centerHorizontal="true"
                 android:hint="@string/adresse_apart_add"/>
 
             <EditText
                 android:id="@+id/CP_appart_add"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
+                android:ems="5"
+                android:background="#11000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:layout_centerHorizontal="true"
                 android:hint="@string/CP_appart_add"/>
 
             <EditText
                 android:id="@+id/ville_appart_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:background="#11000000"
+                android:layout_gravity="center"
+                android:inputType="textCapSentences"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:layout_centerHorizontal="true"
                 android:hint="@string/ville_appart_add"/>
 
             <EditText
-                android:id="@+id/detail_appart_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
-                android:hint="@string/detail_appart_add"/>
-
-            <EditText
                 android:id="@+id/prix_appart_add"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
+                android:ems="10"
+                android:background="#11000000"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:layout_centerHorizontal="true"
                 android:hint="@string/prix_appart_add"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/detail_appart_add"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:minLines="2"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="#11000000"
+                android:hint="@string/detail_appart_add"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/colorWhite"
+            />
+
+
+
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="#11000000"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                >
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -145,54 +184,58 @@
                 android:id="@+id/descrip_appart_add"
                 android:layout_width="50dp"
                 android:inputType="number"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp" />
-            />;
+                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/metreCarre"
-                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
                 android:scaleType="center" />
 
+            </LinearLayout>
+
             <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="#11000000"
                 android:id="@+id/spinnerDispo"
                 />;
-            </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-        <CheckBox
-    android:id="@+id/checkboxAddAppart"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+             <CheckBox
+            android:id="@+id/checkboxAddAppart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorWhite"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorWhite"
                 android:text="@string/textCheckBoxAdd"/>
 
 
         </LinearLayout>
             <Button
                 android:id="@+id/buttonAddAppart"
-                android:layout_width="match_parent"
-                android:layout_height="160px"
-                android:textAlignment="center"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="@drawable/background_signup"
+                android:layout_centerHorizontal="true"
                 android:text="Valider"
-                android:layout_gravity="bottom"
-                android:gravity="left|center_vertical"
-                android:background="?attr/colorPrimary"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
+                android:textAllCaps="false"
+                android:clickable="true"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
     </ScrollView>
     <LinearLayout

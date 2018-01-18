@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,21 +13,20 @@
     tools:context="owlinone.pae.CalendarExtra">
 
 
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
         android:layout_width="fill_parent"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
         android:layout_height="250dp"
-        app:compactCalendarTargetHeight="250dp"
-        app:compactCalendarTextSize="12sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:compactCalendarBackgroundColor="#00ff"
-        app:compactCalendarTextColor="#000"
-        app:compactCalendarOtherMonthDaysTextColor="#fff"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="#05C7FC"
         app:compactCalendarCurrentDayBackgroundColor="#FF0023"
-        app:compactCalendarMultiEventIndicatorColor="#000"/>
+        app:compactCalendarCurrentSelectedDayBackgroundColor="#05C7FC"
+        app:compactCalendarMultiEventIndicatorColor="#000"
+        app:compactCalendarOtherMonthDaysTextColor="#fff"
+        app:compactCalendarTargetHeight="250dp"
+        app:compactCalendarTextColor="#000"
+        app:compactCalendarTextSize="12sp" />
 
 
     <RelativeLayout
