@@ -371,7 +371,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             HttpPost httpPost = new HttpPost(params[0]);
             String jsonResult = "";
             try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpClient.execute(httpPost);
                 jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
