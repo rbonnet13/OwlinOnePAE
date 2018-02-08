@@ -157,7 +157,7 @@
             android:background="@drawable/background_signup"
             android:layout_centerHorizontal="true"
             android:id="@+id/save_user"
-            android:text="Sauvgarder"
+            android:text="Sauvegarder"
             android:layout_below="@+id/mpd_oublie"
             android:textColor="@color/colorWhite"
             android:textAllCaps="false"
