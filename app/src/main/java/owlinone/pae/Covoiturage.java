@@ -1,15 +1,57 @@
 package owlinone.pae;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 
 public class Covoiturage extends AppCompatActivity {
 
-   /* @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initActionBar();
-    }
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.covoiturage);
+       // Toolbar
+       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar8);
+       setSupportActionBar(toolbar);
+       if (getSupportActionBar() != null) {
+           getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           getSupportActionBar().setDisplayShowHomeEnabled(true);
+       }
+       toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(Covoiturage.this, MainActivity.class);
+               startActivity(intent);             }
+       });
 
+       Button mDriver = (Button) findViewById(R.id.conducteur);
+       Button mCustomer = (Button) findViewById(R.id.client);
+
+
+       mDriver.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(Covoiturage.this, Conducteur.class);
+               startActivity(intent);
+               finish();
+               return;
+           }
+       });
+
+       mCustomer.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(Covoiturage.this, Client.class);
+               startActivity(intent);
+               finish();
+               return;
+           }
+       });
+   }
+    /*
     @SuppressWarnings("deprecation")
     private void initActionBar() {
         if (getSupportActionBar() != null) {

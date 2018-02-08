@@ -6,7 +6,7 @@ package owlinone.pae;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.0.12";
+    private static String strUrl = "192.168.0.23";
     private static String strPort = "80";
     private static String strDossierPhp = "test4";
 
@@ -23,6 +23,8 @@ public class AddressUrl {
     public static final String strTriAppartPrix        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrix.php";
     public static final String strTriAppartPrixDispo   = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrixDispo.php";
     public static final String strTriIndex             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/index.php";
+    public static final String strTriIndexCompte       = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexCompte.php";
+    public static final String strTriIndexGPS      = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGPS.php";
     public static final String strPhoto                = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp + "/";
 
 
@@ -76,6 +78,14 @@ public class AddressUrl {
 
     public String getStrTriIndex() {
         return strTriIndex;
+    }
+
+    public String getStrTriIndexCompte() {
+        return strTriIndexCompte;
+    }
+
+    public String strTriIndexGPS() {
+        return strTriIndexGPS;
     }
 
     public String getStrPhoto() {

@@ -67,6 +67,8 @@
     <string name="inscription">Inscription</string>
     <string name="déconnexion">Déconnexion</string>
     <string name="compte">Compte</string>
+    <string name="conducteur">Conducteur</string>
+    <string name="client">Client</string>
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>
     <string name="calendrier">Calendrier</string>

@@ -84,7 +84,7 @@
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name="owlinone.pae.Covoiturage"
+                android:name=".Covoiturage"
                 android:screenOrientation="portrait">
             </activity>
             <activity
@@ -100,10 +100,16 @@
                 android:label="@string/title_activity_register" >
             </activity>
             <activity
-                android:name=".PasswordReset">
+                android:name=".UserCompte">
             </activity>
             <activity
                 android:name=".PasswordModification">
+            </activity>
+            <activity
+            android:name=".Client">
+        </activity>
+            <activity
+                android:name=".Conducteur">
             </activity>
     </application>
 

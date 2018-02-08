@@ -12,34 +12,33 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         android:textAlignment="center">
 
-
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar5"
+            android:id="@+id/toolbar50"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:elevation="0dp"
-            app:title="@string/connexion"
+            app:title="@string/compte"
             android:layout_gravity="center"
             app:titleMarginStart="20dp"
             android:animateLayoutChanges="false"
             />
     </android.support.design.widget.AppBarLayout>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
+        <TextView
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:background="#11000000"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
             android:drawableLeft="@drawable/ic_action_name"
-            android:layout_marginEnd="20dp"
-            android:id="@+id/username_field"
+            android:id="@+id/user_field"
             android:ems="10"
             android:hint="Pseudo"
             android:textColorHint="@color/colorWhite"
@@ -47,72 +46,127 @@
             android:textSize="16dp"
             android:textColor="@color/colorWhite"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/imageView"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="20dp"/>
 
         <EditText
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:ems="10"
-            android:id="@+id/password_field"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
+            android:id="@+id/nom_user"
             android:textSize="16dp"
-            android:layout_below="@+id/username_field"
-            android:layout_alignLeft="@+id/username_field"
-            android:layout_alignStart="@+id/username_field"
+            android:layout_below="@+id/user_field"
+            android:layout_alignLeft="@+id/user_field"
+            android:layout_alignStart="@+id/user_field"
             android:background="#11000000"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
-            android:drawableLeft="@drawable/ic_action_pass"
-            android:hint="Mot de passe"
-            android:inputType="textPassword"
+            android:drawableLeft="@drawable/ic_nom_user"
+            android:hint="Nom"
+            android:layout_marginBottom="20dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:id="@+id/prenom_user"
+            android:textSize="16dp"
+            android:layout_below="@+id/nom_user"
+            android:layout_alignLeft="@+id/user_field"
+            android:layout_alignStart="@+id/user_field"
+            android:background="#11000000"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_nom_user"
+            android:hint="Prenom"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:id="@+id/user_email"
+            android:textSize="16dp"
+            android:layout_below="@+id/prenom_user"
+            android:layout_alignLeft="@+id/user_field"
+            android:layout_alignStart="@+id/user_field"
+            android:background="#11000000"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_action_mail"
+            android:hint="Email"
+            android:layout_marginBottom="20dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:id="@+id/ville_user"
+            android:textSize="16dp"
+            android:layout_below="@+id/user_email"
+            android:layout_alignLeft="@+id/user_field"
+            android:layout_alignStart="@+id/user_field"
+            android:background="#11000000"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_adresse_user"
+            android:hint="Ville"
+            android:layout_marginBottom="20dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:id="@+id/adresse_user"
+            android:textSize="16dp"
+            android:layout_below="@+id/ville_user"
+            android:layout_alignLeft="@+id/user_field"
+            android:layout_alignStart="@+id/user_field"
+            android:background="#11000000"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_adresse_user"
+            android:hint="Adresse"
             android:layout_marginBottom="20dp"/>
 
-
-
-        <Button
-            android:id="@+id/login"
+        <EditText
+            android:id="@+id/code_postal"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:background="@drawable/background_login"
-            android:layout_below="@+id/password_field"
-            android:layout_centerHorizontal="true"
-            android:text="@string/login"
-            android:textColor="@color/caldroid_holo_blue_light"
-            android:textAllCaps="false"
-            android:clickable="true"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:layout_marginBottom="10dp"/>
-
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:background="@drawable/background_signup"
-            android:layout_below="@+id/login"
-            android:layout_centerHorizontal="true"
-            android:text="@string/sign_up"
+            android:layout_alignStart="@+id/adresse_user"
+            android:layout_below="@+id/adresse_user"
+            android:background="#11000000"
+            android:drawableLeft="@drawable/ic_adresse_user"
+            android:ems="10"
+            android:inputType="numberSigned"
+            android:hint="Code Postal"
             android:textColor="@color/colorWhite"
-            android:textAllCaps="false"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:clickable="true"
-            />
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/mpd_oublie"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:textSize="16dp"
-            android:textColor="@color/colorWhite"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/register_button"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignStart="@+id/nom_user"
+            android:clickable="true"
             android:text="Mot de passe oublié? Cliquez ici"
+            android:layout_below="@+id/code_postal"
             android:textAlignment="center"
-            android:clickable="true"/>
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp" />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="@drawable/background_signup"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/save_user"
+            android:text="Sauvgarder"
+            android:layout_below="@+id/mpd_oublie"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textSize="18sp"
+            android:clickable="true"
+            />
 
     </RelativeLayout>
+    </ScrollView>
 </LinearLayout>

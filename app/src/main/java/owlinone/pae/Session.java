@@ -31,11 +31,17 @@ public class Session {
 
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
-
+    // Email address (make variable public to access from outside)
+    public static final String KEY_EMAIL= "email";
     // Email address (make variable public to access from outside)
     public static final String KEY_PASSWORD = "password";
-
-    // Email address (make variable public to access from outside)
+    public static final String KEY_PRENOM = "prenom";
+    public static final String KEY_NOM = "nom";
+    public static final String KEY_VILLE = "ville";
+    public static final String KEY_ADRESSE = "adresse";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
+    public static final String KEY_CP = "cp";
     public static final String KEY_PHOTO = "photo";
 
 
@@ -47,12 +53,22 @@ public class Session {
     }
 
     //Create login session
-    public void createUserLoginSession(String name, String password, String photo){
+    public void createUserLoginSession(String name,String prenom,String nom,String ville,String adresse,String latitude, String longitude, String cp,String email, String password, String photo){
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
         // Storing name in pref
         editor.putString(KEY_NAME, name);
+        // Storing email in pref
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_PRENOM, prenom);
+        editor.putString(KEY_NOM, nom);
+        editor.putString(KEY_VILLE, ville);
+        editor.putString(KEY_ADRESSE, adresse);
+        editor.putString(KEY_LATITUDE, latitude);
+        editor.putString(KEY_LONGITUDE, longitude);
+
+        editor.putString(KEY_CP, cp);
 
         // Storing email in pref
         editor.putString(KEY_PASSWORD, password);
@@ -100,9 +116,17 @@ public class Session {
 
         // user name
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-
+        // user email id
+        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
         // user email id
         user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
+        user.put(KEY_PRENOM, pref.getString(KEY_PRENOM, null));
+        user.put(KEY_NOM, pref.getString(KEY_NOM, null));
+        user.put(KEY_VILLE, pref.getString(KEY_VILLE, null));
+        user.put(KEY_ADRESSE, pref.getString(KEY_ADRESSE, null));
+        user.put(KEY_LATITUDE, pref.getString(KEY_LATITUDE, null));
+        user.put(KEY_LONGITUDE, pref.getString(KEY_LONGITUDE, null));
+        user.put(KEY_CP, pref.getString(KEY_CP, null));
 
         // user photo id
         user.put(KEY_PHOTO, pref.getString(KEY_PHOTO, "sans image"));

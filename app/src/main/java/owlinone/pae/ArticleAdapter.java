@@ -31,8 +31,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import owlinone.pae.R;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -44,7 +42,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,7 +88,7 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
 
 
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        convertView = layoutInflater.inflate(resource,null,true);
+            convertView = layoutInflater.inflate(resource,null,true);
             viewHolder = new ViewHolder();
             viewHolder.article = article.get(position);
             viewHolder.likeCoeurGris = (ImageButton) convertView.findViewById(R.id.coeurLikeGris);

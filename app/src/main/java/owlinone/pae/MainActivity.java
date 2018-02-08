@@ -13,22 +13,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import owlinone.pae.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,8 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,8 +90,6 @@ public class MainActivity extends AppCompatActivity
         // get name
         String name = user.get(Session.KEY_NAME);
         // get email
-        String pass = user.get(Session.KEY_PASSWORD);
-        // get email
         String photoT = user.get(Session.KEY_PHOTO);
 
 
@@ -106,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
-        ((TextView) header.findViewById(R.id.id_email_user)).setText(pass);
+        ((TextView) header.findViewById(R.id.id_email_user)).setText("BIENVENU SUR OWLINONE");
         ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
         //image
@@ -349,6 +341,12 @@ public class MainActivity extends AppCompatActivity
             itemDeco.setVisible(false);
             session.logoutUser();
 
+        } else if (id == R.id.nav_covoit) {
+            Intent IntCovoiturage = new Intent(getApplicationContext(), Covoiturage.class);
+            startActivity(IntCovoiturage);
+        }else if (id == R.id.nav_compte) {
+            Intent IntCompte = new Intent(getApplicationContext(), UserCompte.class);
+            startActivity(IntCompte);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -487,11 +485,8 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-
                         event.setStrDate(String.valueOf(timeInMilliseconds));
                         arrayListEvent.add(i,event);
-
-
                     }
 
                 } catch (final JSONException e) {

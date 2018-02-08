@@ -30,6 +30,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ public class MainLogin extends AppCompatActivity {
     private EditText password;
     private EditText mdp;
     protected String enteredUsername;
+    protected String enteredPassword;
     protected String enteredPhoto;
 
     private final String serverUrl = AddressUrl.strTriIndex;
@@ -92,7 +94,7 @@ public class MainLogin extends AppCompatActivity {
             public void onClick(View v) {
 
                 enteredUsername = username.getText().toString();
-                String enteredPassword = password.getText().toString();
+                enteredPassword = password.getText().toString();
 
                 if (enteredUsername.equals("") || enteredPassword.equals("")) {
                     Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
@@ -223,10 +225,12 @@ public class MainLogin extends AppCompatActivity {
 
             if (jsonResult == 1) {
                 String jsonresultImg = returnParsedJsonObjectImg(result);
+                String jsonresultEmail = returnParsedJsonObjectEmail(result);
+
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-                session.createUserLoginSession(enteredUsername,"Bienvenue vous êtes connecté",jsonresultImg);
+                session.createUserLoginSession(enteredUsername,null,null,null,null,null,null, null,jsonresultEmail,enteredPassword,jsonresultImg);
                 Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
 
                 startActivity(intent);
@@ -267,6 +271,17 @@ public class MainLogin extends AppCompatActivity {
         try {
             resultObject = new JSONObject(result);
             returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("photo");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectEmail (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("email");
         } catch (JSONException e) {
             e.printStackTrace();
         }
