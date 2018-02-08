@@ -54,6 +54,7 @@ public class UserCompte extends AppCompatActivity {
 
     private TextView user_username;
     private TextView user_email;
+    private EditText user_tel;
     private EditText user_nom;
     private EditText user_prenom;
     private EditText user_ville;
@@ -63,6 +64,7 @@ public class UserCompte extends AppCompatActivity {
     private String enteredPrenom ;
     private String enteredAdress ;
     private String enteredVille;
+    private String enteredTel;
     private String enteredCP ;
     private  String username ="";
     private  String password ="";
@@ -72,6 +74,7 @@ public class UserCompte extends AppCompatActivity {
     private  String adresse ="" ;
     private  String ville ="" ;
     private  String cp  ="";
+    private  String tel  ="";
     private  String photo ="";
     Geocoder geocoder;
     Address addressName = new Address(Locale.FRANCE);
@@ -183,7 +186,7 @@ public class UserCompte extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.compte);
         session = new Session(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
+        final HashMap<String, String> user = session.getUserDetails();
         // get name
           username = user.get(Session.KEY_NAME);
           password = user.get(Session.KEY_PASSWORD);
@@ -194,11 +197,12 @@ public class UserCompte extends AppCompatActivity {
           adresse = user.get(Session.KEY_ADRESSE);
           cp = user.get(Session.KEY_CP);
           photo = user.get(Session.KEY_PHOTO);
+          tel = user.get(Session.KEY_TEL);
 
 
         user_username = (TextView) findViewById(R.id.user_field);
         user_email = (TextView) findViewById(R.id.user_email);
-
+        user_tel = (EditText) findViewById(R.id.user_telephone);
         user_nom = (EditText) findViewById(R.id.nom_user);
         user_prenom = (EditText) findViewById(R.id.prenom_user);
         user_adresse = (EditText) findViewById(R.id.adresse_user);
@@ -212,6 +216,7 @@ public class UserCompte extends AppCompatActivity {
         user_ville.setText(ville);
         user_adresse.setText(adresse);
         user_cp.setText(cp);
+        user_tel.setText(tel);
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar50);
         setSupportActionBar(toolbar);
@@ -235,6 +240,7 @@ public class UserCompte extends AppCompatActivity {
                 enteredVille = user_ville.getText().toString();
                 enteredAdress = user_adresse.getText().toString();
                 enteredCP = user_cp.getText().toString();
+                enteredTel = user_tel.getText().toString();
                 final Context context = getApplicationContext();
 
                 geocoder = new Geocoder(context, Locale.getDefault());
@@ -261,15 +267,15 @@ public class UserCompte extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-                if ( enteredNom.length() <= 1 || enteredPrenom.length() <= 1 || enteredVille.length() <= 1 || enteredAdress.length() <= 1 || enteredCP.length() != 5) {
-                    Toast.makeText(UserCompte.this, "Le pseudo et le login doivent dépasser 1 caractère", Toast.LENGTH_LONG).show();
+                if ( enteredNom.length() <= 1 || enteredPrenom.length() <= 1 || enteredVille.length() <= 1 || enteredAdress.length() <= 1 || enteredCP.length() != 5 || enteredTel.length() != 10) {
+                    Toast.makeText(UserCompte.this, "Remplir tout les champs SVP", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 String test_lat = String.valueOf(latitude);
 // request authentication with remote server4
                 UserCompte.AsyncDataClass asyncRequestObject = new UserCompte.AsyncDataClass();
-                asyncRequestObject.execute(serverUrl,username,enteredPrenom,enteredNom, password ,email,enteredVille,enteredAdress,test_lat,String.valueOf(longitude),enteredCP);
+                asyncRequestObject.execute(serverUrl,username,enteredPrenom,enteredNom, password ,email,enteredTel,enteredVille,enteredAdress,test_lat,String.valueOf(longitude),enteredCP);
 
             }
 
@@ -327,11 +333,12 @@ public class UserCompte extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("nom", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("password", params[4]));
                 nameValuePairs.add(new BasicNameValuePair("email", params[5]));
-                nameValuePairs.add(new BasicNameValuePair("ville", params[6]));
-                nameValuePairs.add(new BasicNameValuePair("adresse", params[7]));
-                nameValuePairs.add(new BasicNameValuePair("latitude", params[8]));
-                nameValuePairs.add(new BasicNameValuePair("longitude", params[9]));
-                nameValuePairs.add(new BasicNameValuePair("cp", params[10]));
+                nameValuePairs.add(new BasicNameValuePair("telephone", params[6]));
+                nameValuePairs.add(new BasicNameValuePair("ville", params[7]));
+                nameValuePairs.add(new BasicNameValuePair("adresse", params[8]));
+                nameValuePairs.add(new BasicNameValuePair("latitude", params[9]));
+                nameValuePairs.add(new BasicNameValuePair("longitude", params[10]));
+                nameValuePairs.add(new BasicNameValuePair("cp", params[11]));
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpClient.execute(httpPost);
                 jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
@@ -368,7 +375,7 @@ public class UserCompte extends AppCompatActivity {
             }
 
             if (jsonResult == 1) {
-                session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,password,photo);
+                session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo);
                 Intent intent = new Intent(UserCompte.this, MainActivity.class);
                 startActivity(intent);
             }

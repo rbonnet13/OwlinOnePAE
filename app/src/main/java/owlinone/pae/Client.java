@@ -209,6 +209,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             return null;
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -280,98 +281,30 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Client.this, Covoiturage.class);
-                startActivity(intent);            }
+                startActivity(intent);
+            }
         });
         mRequest = (Button) findViewById(R.id.request);
 
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Client.AsyncDataClass asyncRequestObject = new Client.AsyncDataClass();
-                asyncRequestObject.execute(serverUrl);
+                Client.AsyncDataClass asyncRequestObjectNEW = new Client.AsyncDataClass();
+                asyncRequestObjectNEW.execute(serverUrl);
             }
         });
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        Marker markerEsaip = map.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_esaip))
-                .position(new LatLng(47.464051, -0.497334)));
-        Marker markerAppart = map.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
-                .position(new LatLng( Double.valueOf(latit),Double.valueOf(longit)
-                )));
-        LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
-        map.animateCamera(yourLocation);
-        // You can customize the marker image using images bundled with
-        // your app, or dynamically generated bitmaps.
-    }
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if(getApplicationContext()!=null){
-            mLastLocation = location;
-
-            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        }
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(Client.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
-    final int LOCATION_REQUEST_CODE = 1;
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    mapFragment.getMapAsync(this);
-
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
-        }
     }
     private class AsyncDataClass extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
+            HttpConnectionParams.setSoTimeout(httpParameters, 15000);
             HttpClient httpClient = new DefaultHttpClient(httpParameters);
             HttpPost httpPost = new HttpPost(params[0]);
             String jsonResult = "";
             try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpClient.execute(httpPost);
                 jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
@@ -463,4 +396,71 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         return returnedResult;
     }
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+        Marker markerEsaip = map.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_esaip))
+                .position(new LatLng(47.464051, -0.497334)));
+        Marker markerAppart = map.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
+                .position(new LatLng( Double.valueOf(latit),Double.valueOf(longit)
+                )));
+        LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
+        map.animateCamera(yourLocation);
+        // You can customize the marker image using images bundled with
+        // your app, or dynamically generated bitmaps.
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if(getApplicationContext()!=null){
+            mLastLocation = location;
+
+            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Client.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+    final int LOCATION_REQUEST_CODE = 1;
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    mapFragment.getMapAsync(this);
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+    }
 }

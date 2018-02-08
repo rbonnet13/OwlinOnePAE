@@ -33,6 +33,8 @@ public class Session {
     public static final String KEY_NAME = "name";
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL= "email";
+    public static final String KEY_TEL= "telephone";
+
     // Email address (make variable public to access from outside)
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PRENOM = "prenom";
@@ -53,7 +55,7 @@ public class Session {
     }
 
     //Create login session
-    public void createUserLoginSession(String name,String prenom,String nom,String ville,String adresse,String latitude, String longitude, String cp,String email, String password, String photo){
+    public void createUserLoginSession(String name,String prenom,String nom,String ville,String adresse,String latitude, String longitude, String cp,String email, String telephone,String password, String photo){
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
@@ -61,6 +63,8 @@ public class Session {
         editor.putString(KEY_NAME, name);
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_TEL, telephone);
+
         editor.putString(KEY_PRENOM, prenom);
         editor.putString(KEY_NOM, nom);
         editor.putString(KEY_VILLE, ville);
@@ -118,6 +122,8 @@ public class Session {
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
         // user email id
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        user.put(KEY_TEL, pref.getString(KEY_TEL, null));
+
         // user email id
         user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
         user.put(KEY_PRENOM, pref.getString(KEY_PRENOM, null));

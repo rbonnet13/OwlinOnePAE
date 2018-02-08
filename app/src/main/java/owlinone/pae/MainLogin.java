@@ -230,7 +230,7 @@ public class MainLogin extends AppCompatActivity {
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-                session.createUserLoginSession(enteredUsername,null,null,null,null,null,null, null,jsonresultEmail,enteredPassword,jsonresultImg);
+                session.createUserLoginSession(enteredUsername,null,null,null,null,null,null, null,jsonresultEmail,null,enteredPassword,jsonresultImg);
                 Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
 
                 startActivity(intent);
