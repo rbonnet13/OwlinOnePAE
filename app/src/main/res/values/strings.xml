@@ -73,7 +73,9 @@
     <string name="newMdp2">Nouveau mot de passe</string>
     <string name="calendrier">Calendrier</string>
 
-
+    <string name="DestinationNotif">Destination</string>
+    <string name="HomeNotif">Home</string>
+    <string name="SchoolNotif">School</string>
 
 
 

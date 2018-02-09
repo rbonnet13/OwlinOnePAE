@@ -6,8 +6,8 @@ package owlinone.pae;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.0.23";
-    private static String strPort = "80";
+    private static String strUrl = "192.168.137.155";
+    private static String strPort = "8888";
     private static String strDossierPhp = "test4";
 
     public static final String strChemin               = "http://" + strUrl;
@@ -23,78 +23,14 @@ public class AddressUrl {
     public static final String strTriAppartPrix        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrix.php";
     public static final String strTriAppartPrixDispo   = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrixDispo.php";
     public static final String strTriIndex             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/index.php";
+    public static final String strNotification         = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/connexionnotification.php";
+    public static final String strNotifHome            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationHome.php";
+    public static final String strNotifSchool          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationSchool.php";
     public static final String strTriIndexCompte       = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexCompte.php";
     public static final String strTriIndexGPS          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGPS.php";
     public static final String strPhoto                = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp + "/";
 
 
-
-
-
-
-    public String getStrTriAppartPrixDispo() {
-        return strTriAppartPrixDispo;
-    }
-
-    public String getStrTriAppartPrix() {
-        return strTriAppartPrix;
-    }
-
-    public String getStrTriAppartDispo() {
-        return strTriAppartDispo;
-    }
-
-    public String getStrNumberViewArticle() {
-        return strNumberViewArticle;
-    }
-
-    public String getStrNumberLikeArticle() {
-        return strNumberLikeArticle;
-    }
-
-    public String getStrNumberUnlikeArticle() {
-        return strNumberUnlikeArticle;
-    }
-
-    public String getStrConnexionEvent() {
-        return strConnexionEvent;
-    }
-
-    public String getStrConnexionAppartement() {
-        return strConnexionAppartement;
-    }
-
-    public String getStrArticle() {
-        return strArticle;
-    }
-
-    public String getStrModifierDispo() {
-        return strModifierDispo;
-    }
-
-    public String getStrAddAppart() {
-        return strAddAppart;
-    }
-
-    public String getStrTriIndex() {
-        return strTriIndex;
-    }
-
-    public String getStrTriIndexCompte() {
-        return strTriIndexCompte;
-    }
-
-    public String strTriIndexGPS() {
-        return strTriIndexGPS;
-    }
-
-    public String getStrPhoto() {
-       return strPhoto;
-   }
-
-    public String getStrChemin() {
-        return strChemin;
-    }
 
 
 

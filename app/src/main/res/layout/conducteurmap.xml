@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@drawable/fond2"
-    tools:context="owlinone.pae.Conducteur">
+    android:fitsSystemWindows="true"
+    tools:context="owlinone.pae.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:textAlignment="center">
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar9"
@@ -28,8 +26,20 @@
             />
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+
+    <include layout="@layout/content_main" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/notification_activity_swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <ListView
+            android:id="@+id/listNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+

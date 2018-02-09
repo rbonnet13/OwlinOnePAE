@@ -43,7 +43,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+            <activity
+                android:name="owlinone.pae.DetailNotif"
+                android:screenOrientation="portrait"
+                android:label="@string/app_name"
+                >
+            </activity>
         <activity
             android:name="owlinone.pae.AddApart"
             android:screenOrientation="portrait"
