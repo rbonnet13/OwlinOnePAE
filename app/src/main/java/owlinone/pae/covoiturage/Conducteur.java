@@ -26,12 +26,13 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.R;
 import owlinone.pae.session.Session;
 
 /**
@@ -202,12 +203,18 @@ public class Conducteur extends AppCompatActivity {
                 parameters.put("PSEUDO_CONDUCTEUR_NOTIF", strNameUser);
                 if(getIntent().getSerializableExtra("url")==null)
                 {
-                    responseRequete = sh.performPostCall(AddressUrl.strNotification, parameters);
+                    Calendar c = Calendar.getInstance();
+                    int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+                    if(timeOfDay >= 0 && timeOfDay < 12){
+                        responseRequete = sh.performPostCall(AddressUrl.strNotifSchool, parameters);
+
+                    }else{
+                        responseRequete = sh.performPostCall(AddressUrl.strNotifHome, parameters);
+                    }
                 }
                 else {responseRequete = sh.performPostCall(url, parameters);}
                 Log.e(TAG, "url: " + url);
-                Log.e(TAG, "url Test: " + AddressUrl.strNotification);
-                Log.e(TAG, "Response from url: " + responseRequete);
                 System.out.println("User :: " + strNameUser);
 
                 JSONArray jsonArray = new JSONArray(responseRequete);
@@ -242,7 +249,8 @@ public class Conducteur extends AppCompatActivity {
                     notification.put("PRENOM_NOTIF", prenom_notif);
                     notification.put("ADRESSE_NOTIF", adresse_notif);
                     notification.put("TELEPHONE_NOTIF", tel_notif);
-                    notification.put("DESTINATION_NOTIF", destination_notif);
+                    if(new String("Home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.notif_vers_home));}
+                    else {notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.notif_vers_esaip));}
                     notification.put("DATE_NOTIF", agoTime);
                     // adding contact to contact list
                     notifList.add(notification);

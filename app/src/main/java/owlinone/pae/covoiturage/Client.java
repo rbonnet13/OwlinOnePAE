@@ -242,7 +242,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         final Context context = getApplicationContext();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map); //Récupération de la lontitude et de la latitude de l'addresse finale
+                .findFragmentById(R.id.map);
+        //Récupération de la lontitude et de la latitude de l'addresse finale
         geocoder = new Geocoder(context, Locale.getDefault());
         try {
             for (int i=0; i<10;i++)
