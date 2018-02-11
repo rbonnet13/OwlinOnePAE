@@ -74,7 +74,7 @@
         android:textColorHint="@color/colorWhite"
         android:drawableLeft="@drawable/ic_action_pass"
         android:hint="Mot de passe"
-        android:inputType="textPassword"
+        android:inputType="textPassword|textCapSentences"
         android:layout_marginBottom="20dp"/>
 
 
