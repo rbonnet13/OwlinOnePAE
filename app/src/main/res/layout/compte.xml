@@ -125,6 +125,7 @@
             android:layout_alignLeft="@+id/user_field"
             android:layout_alignStart="@+id/user_field"
             android:background="#11000000"
+            android:inputType="textCapSentences"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
             android:drawableLeft="@drawable/ic_adresse_user"
