@@ -22,7 +22,7 @@
             android:minHeight="?attr/actionBarSize"
             android:id="@+id/toolbar20" />
 
-        <owlinone.pae.AutoResizeTextView
+        <owlinone.pae.configuration.AutoResizeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/categorie_detail"

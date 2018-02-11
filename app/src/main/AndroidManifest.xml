@@ -33,7 +33,7 @@
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <activity
-            android:name="owlinone.pae.SplashScreen"
+            android:name="owlinone.pae.main.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -44,77 +44,71 @@
             </intent-filter>
         </activity>
             <activity
-                android:name="owlinone.pae.DetailNotif"
-                android:screenOrientation="portrait"
-                android:label="@string/app_name"
-                >
-            </activity>
-        <activity
-            android:name="owlinone.pae.AddApart"
+            android:name="owlinone.pae.appartement.AddApart"
             android:screenOrientation="portrait"
             android:label="@string/app_name"
             >
         </activity>
             <activity
-                android:name="owlinone.pae.MainActivity"
+                android:name="owlinone.pae.main.MainActivity"
                 android:screenOrientation="portrait"
                 android:label="@string/app_name"
                 >
             </activity>
             <activity
-            android:name="owlinone.pae.Appartement"
+            android:name="owlinone.pae.appartement.Appartement"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
         </activity>
             <activity
-                android:name="owlinone.pae.DetailArticle"
+                android:name="owlinone.pae.article.DetailArticle"
                 android:screenOrientation="portrait">
             </activity>
 
         <activity
-            android:name="owlinone.pae.DetailAppart"
+            android:name="owlinone.pae.appartement.DetailAppart"
             android:screenOrientation="portrait">
         </activity>
             <activity
-                android:name="owlinone.pae.CalendarExtra"
+                android:name="owlinone.pae.calendrier.CalendarExtra"
                 android:theme="@style/CustomActionBarTheme"
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name="owlinone.pae.Stage"
+                android:name="owlinone.pae.stage.Stage"
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name="owlinone.pae.Parametre"
+                android:name="owlinone.pae.session.Parametre"
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name=".Covoiturage"
+                android:name=".covoiturage.Covoiturage"
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name=".MainLogin"
+                android:name=".session.MainLogin"
                 android:label="@string/title_activity_login" >
             </activity>
             <activity
-                android:name=".LoginActivity"
+                android:name=".session.LoginActivity"
                 android:label="@string/title_activity_login" >
             </activity>
             <activity
-                android:name=".RegisterActivity"
+                android:name=".session.RegisterActivity"
                 android:label="@string/title_activity_register" >
             </activity>
             <activity
-                android:name=".UserCompte">
+                android:name=".session.UserCompte">
             </activity>
             <activity
-                android:name=".PasswordModification">
+                android:name=".session.PasswordModification">
             </activity>
             <activity
-            android:name=".Client">
+            android:name=".covoiturage.Client">
         </activity>
             <activity
-                android:name=".Conducteur">
+                android:name=".covoiturage.Conducteur">
             </activity>
     </application>
 

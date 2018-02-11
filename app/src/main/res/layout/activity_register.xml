@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/fond2"
-    tools:context="owlinone.pae.RegisterActivity">
+    tools:context="owlinone.pae.session.RegisterActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

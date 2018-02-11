@@ -23,7 +23,7 @@
             android:minHeight="?attr/actionBarSize"
             android:id="@+id/toolbar3" />
 
-        <owlinone.pae.AutoResizeTextView
+        <owlinone.pae.configuration.AutoResizeTextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:layout_above="@+id/detail_mail"
             class="com.google.android.gms.maps.SupportMapFragment"/>
 
-        <owlinone.pae.AutoResizeTextView
+        <owlinone.pae.configuration.AutoResizeTextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:clickable="true"
