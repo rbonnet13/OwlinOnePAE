@@ -13,7 +13,19 @@
 
 <bool name="ga_reportUncaughtExceptions">true</bool>
 
-<screenName name="owlineone.pae.appartement.DetailAppart">Detail Appart</screenName>
+    <screenName name="owlinone.pae.appartement.Appartement">Liste des appartements</screenName>
+    <screenName name="owlinone.pae.appartement.DetailAppart">Detail d'un appartement</screenName>
+    <screenName name="owlinone.pae.appartement.AddApart">Ajout d'un appartement</screenName>
+    <screenName name="owlinone.pae.article.DetailArticle">Detail d'un article</screenName>
+    <screenName name="owlinone.pae.calendrier.CalendarExtra">Calendrier extra-scolaire</screenName>
+    <screenName name="owlinone.pae.main.SplashScreen">Splash Screen</screenName>
+    <screenName name="owlinone.pae.covoiturage.Covoiturage">Covoiturage</screenName>
+    <screenName name="owlinone.pae.session.RegisterActivity">Inscription</screenName>
+    <screenName name="owlinone.pae.session.LoginActivity">Connexion</screenName>
+    <screenName name="owlinone.pae.main.MainActivity">Fil d'actualité</screenName>
+
+
+
 
 <!--
   See Project Structure -> Analytics -> Google Analytics -> Learn More

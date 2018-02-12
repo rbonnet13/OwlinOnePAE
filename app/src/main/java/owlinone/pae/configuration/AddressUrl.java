@@ -6,8 +6,8 @@ package owlinone.pae.configuration;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.1.68";
-    private static String strPort = "8888";
+    private static String strUrl = "192.168.137.57";
+    private static String strPort = "80";
     private static String strDossierPhp = "test4";
 
     public static final String strChemin               = "http://" + strUrl;
