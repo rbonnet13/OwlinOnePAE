@@ -89,31 +89,39 @@
             </activity>
             <activity
                 android:name=".session.MainLogin"
+                android:screenOrientation="portrait"
                 android:label="@string/title_activity_login" >
             </activity>
             <activity
                 android:name=".session.LoginActivity"
+                android:screenOrientation="portrait"
                 android:label="@string/title_activity_login" >
             </activity>
             <activity
                 android:name=".session.RegisterActivity"
+                android:screenOrientation="portrait"
                 android:label="@string/title_activity_register" >
             </activity>
             <activity
-                android:name=".session.UserCompte">
+                android:name=".session.UserCompte"
+                android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name=".session.PasswordModification">
+                android:name=".session.PasswordModification"
+                android:screenOrientation="portrait">
             </activity>
 
             <activity
-            android:name=".covoiturage.Client">
+                android:name=".covoiturage.Client"
+                android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name=".covoiturage.Conducteur">
+                android:name=".covoiturage.Conducteur"
+                android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name="owlinone.pae.covoiturage.DetailNotif">
+                android:name="owlinone.pae.covoiturage.DetailNotif"
+                android:screenOrientation="portrait">
             </activity>
 
 
