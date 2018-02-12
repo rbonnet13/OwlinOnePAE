@@ -61,7 +61,7 @@ public class UserCompte extends AppCompatActivity {
     private  String adresse ="" ;
     private  String ville ="" ;
     private  String cp  ="";
-    private  String tel  ="";
+    private  String telephone  ="";
     private  String photo ="";
     private  String response ="";
     HttpHandler sh = new HttpHandler();
@@ -185,7 +185,7 @@ public class UserCompte extends AppCompatActivity {
           adresse = user.get(Session.KEY_ADRESSE);
           cp = user.get(Session.KEY_CP);
           photo = user.get(Session.KEY_PHOTO);
-          tel = user.get(Session.KEY_TEL);
+          telephone = user.get(Session.KEY_TEL);
 
         user_username = (TextView) findViewById(R.id.user_field);
         user_email = (TextView) findViewById(R.id.user_email);
@@ -196,6 +196,7 @@ public class UserCompte extends AppCompatActivity {
         user_ville = (EditText) findViewById(R.id.ville_user);
         user_cp= (EditText) findViewById(R.id.code_postal);
         Button SaveButton = (Button) findViewById(R.id.save_user);
+
         user_username.setText(username);
         user_email.setText(email);
         user_nom.setText(nom);
@@ -203,7 +204,7 @@ public class UserCompte extends AppCompatActivity {
         user_ville.setText(ville);
         user_adresse.setText(adresse);
         user_cp.setText(cp);
-        user_tel.setText(tel);
+        user_tel.setText(telephone);
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar50);
         setSupportActionBar(toolbar);
@@ -234,8 +235,6 @@ public class UserCompte extends AppCompatActivity {
                         + ", "+ country;
                 geocoder = new Geocoder(context, Locale.getDefault());
                 try {
-                    for (int i=0; i<10;i++)
-                    {
                         addresses = geocoder.getFromLocationName(strFinalAdresse, 1);
                         Log.e("adresse:", String.valueOf(addresses));
                         if(addresses != null && addresses.size() > 0){
@@ -248,10 +247,7 @@ public class UserCompte extends AppCompatActivity {
                         {
                             longitude = addressName.getLongitude();
                             latitude = addressName.getLatitude();
-                            i=10;
                         }
-                        i++;
-                    }
                 } catch (IOException e)
                 {
                     e.printStackTrace();

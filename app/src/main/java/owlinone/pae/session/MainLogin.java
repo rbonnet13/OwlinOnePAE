@@ -46,10 +46,8 @@ public class MainLogin extends AppCompatActivity {
 
     protected EditText username;
     private EditText password;
-    private EditText mdp;
     protected String enteredUsername;
     protected String enteredPassword;
-    protected String enteredPhoto;
 
     private final String serverUrl = AddressUrl.strTriIndex;
 
@@ -227,13 +225,42 @@ public class MainLogin extends AppCompatActivity {
             }
 
             if (jsonResult == 1) {
+
                 String jsonresultImg = returnParsedJsonObjectImg(result);
                 String jsonresultEmail = returnParsedJsonObjectEmail(result);
+                String jsonresultPrenom = returnParsedJsonObjectPrenom(result);
+                String jsonresultNom = returnParsedJsonObjectNom(result);
+                String jsonresultVille = returnParsedJsonObjectVille(result);
+                String jsonresultAdresse = returnParsedJsonObjectAdresse(result);
+                String jsonresultLatitude = returnParsedJsonObjectLat(result);
+                String jsonresultLongitude = returnParsedJsonObjectLong(result);
+                String jsonresultTelephone = returnParsedJsonObjectTelephone(result);
+                String jsonresultCP = returnParsedJsonObjectCP(result);
+
+                if( jsonresultPrenom.equals("null")){
+                     jsonresultPrenom = null;
+                }
+                if (jsonresultNom.equals("null")){
+                    jsonresultNom = null;
+                }
+                if (jsonresultAdresse.equals("null")){
+                    jsonresultAdresse = null;
+                }
+                if (jsonresultVille.equals("null")){
+                    jsonresultVille = null;
+                }
+                if (jsonresultCP.equals("null")){
+                    jsonresultCP = null;
+                }
+                if(jsonresultTelephone.equals("null")){
+                    jsonresultTelephone = null;
+                }
+
 
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-                session.createUserLoginSession(enteredUsername,null,null,null,null,null,null, null,jsonresultEmail,null,enteredPassword,jsonresultImg);
+                session.createUserLoginSession(enteredUsername,jsonresultPrenom,jsonresultNom,jsonresultVille,jsonresultAdresse,jsonresultLatitude,jsonresultLongitude, jsonresultCP,jsonresultEmail,jsonresultTelephone,enteredPassword,jsonresultImg);
                 Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
 
                 startActivity(intent);
@@ -285,6 +312,94 @@ public class MainLogin extends AppCompatActivity {
         try {
             resultObject = new JSONObject(result);
             returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectNom (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("NOM");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectPrenom (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("PRENOM");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectAdresse (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("ADRESSE");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectVille (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("VILLE");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectCP (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("CP");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectLat (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("LATITUDE");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectLong (String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("LONGITUDE");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResultImg;
+    }
+    private String returnParsedJsonObjectTelephone(String result){
+        JSONObject resultObject = null;
+        String returnedResultImg = "";
+        try {
+            resultObject = new JSONObject(result);
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("TELEPHONE");
         } catch (JSONException e) {
             e.printStackTrace();
         }

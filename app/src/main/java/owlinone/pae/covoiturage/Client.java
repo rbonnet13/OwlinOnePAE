@@ -246,15 +246,12 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         //Récupération de la lontitude et de la latitude de l'addresse finale
         geocoder = new Geocoder(context, Locale.getDefault());
         try {
-            for (int i=0; i<10;i++)
-            {
                 String fulladresse = adresse + ville ;
                 addresses = geocoder.getFromLocationName(fulladresse, 1);
                 Log.e("adresse:", String.valueOf(addresses));
                 if(addresses != null && addresses.size() > 0){
                     addressName = addresses.get(0);
                 }
-
                 Log.e("adresse:", String.valueOf(addressName.getLongitude()));
 
                 if(addressName.getLongitude() != 0.0)
@@ -262,8 +259,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     longitude = addressName.getLongitude();
                     latitude = addressName.getLatitude();
                 }
-                i++;
-            }
         } catch (IOException e)
         {
             e.printStackTrace();
