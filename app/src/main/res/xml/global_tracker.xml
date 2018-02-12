@@ -14,10 +14,10 @@
 <bool name="ga_reportUncaughtExceptions">true</bool>
 
     <screenName name="owlinone.pae.appartement.Appartement">Liste des appartements</screenName>
-    <screenName name="owlinone.pae.appartement.DetailAppart">Detail d'un appartement</screenName>
+    <screenName name="owlinone.pae.appartement.DetailAppart">Détail d'un appartement</screenName>
     <screenName name="owlinone.pae.appartement.AddApart">Ajout d'un appartement</screenName>
 
-    <screenName name="owlinone.pae.article.DetailArticle">Detail d'un article</screenName>
+    <screenName name="owlinone.pae.article.DetailArticle">Détail d'un article</screenName>
 
     <screenName name="owlinone.pae.calendrier.CalendarExtra">Calendrier extra-scolaire</screenName>
 
@@ -26,6 +26,10 @@
 
     <screenName name="owlinone.pae.session.RegisterActivity">Inscription</screenName>
     <screenName name="owlinone.pae.session.LoginActivity">Connexion</screenName>
+    <screenName name="owlinone.pae.session.MainLogin">Connexion/Inscription/MDP oublié</screenName>
+    <screenName name="owlinone.pae.session.UserCompte">Modification du compte utilisateur</screenName>
+
+
 
     <screenName name="owlinone.pae.covoiturage.Client">Covoiturage Client</screenName>
     <screenName name="owlinone.pae.covoiturage.Conducteur">Covoiturage Conducteur</screenName>
