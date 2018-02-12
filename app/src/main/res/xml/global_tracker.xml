@@ -16,19 +16,20 @@
     <screenName name="owlinone.pae.appartement.Appartement">Liste des appartements</screenName>
     <screenName name="owlinone.pae.appartement.DetailAppart">Detail d'un appartement</screenName>
     <screenName name="owlinone.pae.appartement.AddApart">Ajout d'un appartement</screenName>
+
     <screenName name="owlinone.pae.article.DetailArticle">Detail d'un article</screenName>
+
     <screenName name="owlinone.pae.calendrier.CalendarExtra">Calendrier extra-scolaire</screenName>
+
     <screenName name="owlinone.pae.main.SplashScreen">Splash Screen</screenName>
-    <screenName name="owlinone.pae.covoiturage.Covoiturage">Covoiturage</screenName>
-    <screenName name="owlinone.pae.session.RegisterActivity">Inscription</screenName>
-    <screenName name="owlinone.pae.session.LoginActivity">Connexion</screenName>
     <screenName name="owlinone.pae.main.MainActivity">Fil d'actualité</screenName>
 
+    <screenName name="owlinone.pae.session.RegisterActivity">Inscription</screenName>
+    <screenName name="owlinone.pae.session.LoginActivity">Connexion</screenName>
 
+    <screenName name="owlinone.pae.covoiturage.Client">Covoiturage Client</screenName>
+    <screenName name="owlinone.pae.covoiturage.Conducteur">Covoiturage Conducteur</screenName>
+    <screenName name="owlinone.pae.covoiturage.Covoiturage">Accueil Covoiturage</screenName>
+    <screenName name="owlinone.pae.covoiturage.DetailNotif">Détail notification conducteur</screenName>
 
-
-<!--
-  See Project Structure -> Analytics -> Google Analytics -> Learn More
-  to learn more about configuring this file.
--->
 </resources>
