@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -37,23 +38,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -62,8 +51,10 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.R;
+import owlinone.pae.appartement.Appartement;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.session.Session;
 
 /**
@@ -83,6 +74,18 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String photo ="";
     private  String latit ="";
     private  String longit ="";
+    private  String response ="";
+    HttpHandler sh = new HttpHandler();
+    private String TAG = Appartement.class.getSimpleName();
+    private ListView lv;
+    String url= null;
+    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "";
+    String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
+    String strNomContext = "", strIdContext = "", disponible = "Disponible", nonDisponible = "Non disponible";
+
+    HashMap <String, String> obj = new HashMap();
+    HashMap <String, String> objDispo = new HashMap();
+    ArrayList<HashMap<String, String>> covoitList;
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -289,112 +292,110 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Client.AsyncDataClass asyncRequestObjectNEW = new Client.AsyncDataClass();
-                asyncRequestObjectNEW.execute(serverUrl);
+                new Client.AsyncDataClass().execute();
+
             }
         });
     }
-    private class AsyncDataClass extends AsyncTask<String, Void, String> {
+    private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
         @Override
-        protected String doInBackground(String... params) {
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 15000);
-            HttpClient httpClient = new DefaultHttpClient(httpParameters);
-            HttpPost httpPost = new HttpPost(params[0]);
-            String jsonResult = "";
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpClient.execute(httpPost);
-                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-                System.out.println("Returned Json object " + jsonResult.toString());
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return jsonResult;
-        }
-
-        @Override
-
-        protected void onPreExecute() {
-
+        protected void onPreExecute()
+        {
             super.onPreExecute();
         }
+        public double convertRad(double input){
+            return (Math.PI * input)/180;
+        }
 
+        public double Distance(double lat_a_degre, double lon_a_degre, double lat_b_degre, double lon_b_degre){
+
+            int R = 6378000 ; //Rayon de la terre en mètre
+
+            double lat_a = convertRad(lat_a_degre);
+            double lon_a = convertRad(lon_a_degre);
+            double lat_b = convertRad(lat_b_degre);
+            double lon_b = convertRad(lon_b_degre);
+
+            double d = R * (Math.PI/2 - Math.asin( Math.sin(lat_b) * Math.sin(lat_a) + Math.cos(lon_b - lon_a) * Math.cos(lat_b) * Math.cos(lat_a)));
+            return d;
+        }
         @Override
+        protected Void doInBackground(Void... arg0)
+        {
+        HttpHandler sh = new HttpHandler();
+        String jsonStr = null;
 
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            System.out.println("Resulted Value: " + result);
-            if (result.equals("") || result == null) {
-                Toast.makeText(Client.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
-                return;
-            }
+        jsonStr = sh.makeServiceCall(AddressUrl.strTriIndexGPS);
 
-            int jsonResult = returnParsedJsonObject(result);
-            if (jsonResult == 0) {
-                Toast.makeText(Client.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
-                return;
-            }
+        Log.e(TAG, "Response from url: " + jsonStr);
+        if (jsonStr != null)
+        {
+            try
+            {
+                JSONArray jsonArray = new JSONArray(jsonStr);
+                // looping through All Appartements
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    JSONObject a            = jsonArray.getJSONObject(i);
+                    int id_covoit           = a.getInt("id");
+                    String prenom           = a.getString("PRENOM");
+                    String nom              = a.getString("NOM");
+                    String adresseMail      = a.getString("email");
+                    String telephone        = a.getString("TELEPHONE");
+                    String ville            = a.getString("VILLE");
+                    String adresse          = a.getString("ADRESSE");
+                    String CP               = a.getString("CP");
+                    Double latitudeAppart   = a.getDouble("LATITUDE");
+                    Double longitudeAppart  = a.getDouble("LONGITUDE");
 
-            if (jsonResult == 1) {
-                String jsonresultLat = returnParsedJsonObjectLat(result);
-                String jsonresultLong = returnParsedJsonObjectLong(result);
-            }
-        }
-        private StringBuilder inputStreamToString(InputStream is) {
-            String rLine = "";
-            StringBuilder answer = new StringBuilder();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            try {
-                while ((rLine = br.readLine()) != null) {
-                    answer.append(rLine);
+                    double result_covoitureage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
+
+                    // Affiche les appartements que s'il est disponible ou non disponible
+                    if(adresseMail.equals(email))
+                    {
+                        //on n'ajoute pas l'adresse de l'utilisateur courant
+                    }else{
+                        if (result_covoitureage <= 500.0 ){
+                            HashMap<String, String> covoit = new HashMap<>();
+                            // adding each child node to HashMap key => value
+                            covoit.put("id", String.valueOf(id_covoit));
+                            covoit.put("PRENOM", prenom);
+                            covoit.put("NOM", nom);
+                            covoit.put("email", adresseMail);
+                            covoit.put("TELEPHONE", telephone);
+                            covoit.put("VILLE", ville);
+                            covoit.put("ADRESSE", adresse);
+                            covoit.put("CP", CP);
+                            covoit.put("LATITUDE", String.valueOf(latitudeAppart));
+                            covoit.put("LONGITUDE", String.valueOf(longitudeAppart));
+                            // adding contact to contact list
+                            covoitList.add(covoit);
+                        }
+                    }
                 }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch (final JSONException e)
+            {
+                Log.e(TAG, "Json parsing error: " + e.getMessage());
             }
-            return answer;
+        } else
+        {
+            Log.e(TAG, "Problème de chargement");
+            runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "OUPS!! Essayer plus tard!",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+            return null;
         }
     }
 
-    private int returnParsedJsonObject(String result){
-        JSONObject resultObject = null;
-        int returnedResult = 0;
-        try {
-            resultObject = new JSONObject(result);
-            returnedResult = resultObject.getInt("success");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return returnedResult;
-    }
 
-    private String returnParsedJsonObjectLat(String result){
-        JSONObject resultObject = null;
-        String returnedResult = "";
-        try {
-            resultObject = new JSONObject(result);
-            returnedResult = resultObject.getJSONArray("user").getJSONObject(0).getString("LATITUDE");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return returnedResult;
-    }
-    private String returnParsedJsonObjectLong(String result){
-        JSONObject resultObject = null;
-        String returnedResult = "";
-        try {
-            resultObject = new JSONObject(result);
-            returnedResult = resultObject.getJSONArray("user").getJSONObject(0).getString("LONGITUDE");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return returnedResult;
-    }
 
     @Override
     public void onMapReady(GoogleMap map) {
