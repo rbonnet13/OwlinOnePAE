@@ -52,6 +52,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    compile 'com.google.android.gms:play-services-analytics:9.0.1'
     testCompile 'junit:junit:4.12'
 
 }
