@@ -6,17 +6,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.R;
+import owlinone.pae.session.Session;
+import owlinone.pae.session.UserCompte;
 
 public class Covoiturage extends AppCompatActivity {
+    Session session;
+    private  String adresse ="" ;
+    private  String ville ="" ;
+    private  String cp  ="";
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        setContentView(R.layout.covoiturage);
-       // Toolbar
+       session = new Session(getApplicationContext());
+       final HashMap<String, String> user = session.getUserDetails();
+        ville = user.get(Session.KEY_VILLE);
+        adresse = user.get(Session.KEY_ADRESSE);
+        cp = user.get(Session.KEY_CP);
+        // Toolbar
        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar8);
        setSupportActionBar(toolbar);
        if (getSupportActionBar() != null) {
@@ -31,7 +45,7 @@ public class Covoiturage extends AppCompatActivity {
        });
 
        Button mDriver = (Button) findViewById(R.id.conducteur);
-       Button mCustomer = (Button) findViewById(R.id.client);
+       final Button mCustomer = (Button) findViewById(R.id.client);
 
 
        mDriver.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +61,16 @@ public class Covoiturage extends AppCompatActivity {
        mCustomer.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(Covoiturage.this, Client.class);
-               startActivity(intent);
+               if (adresse == null && ville == null)
+               {
+                   Toast.makeText(getApplicationContext(), "Merci de saisir vos coordonnées", Toast.LENGTH_LONG).show();
+                   Intent intent = new Intent(Covoiturage.this, UserCompte.class);
+                   startActivity(intent);
+               }
+               else{
+                   Intent intent = new Intent(Covoiturage.this, Client.class);
+                   startActivity(intent);
+               }
                finish();
                return;
            }

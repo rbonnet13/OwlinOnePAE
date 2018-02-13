@@ -71,7 +71,7 @@ public class PasswordReset extends AppCompatActivity {
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(inputStr);
                 if (!matcher.matches()) {
-                    Toast.makeText(PasswordReset.this, "Email doit sous la forme @esaip.org", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordReset.this, "Email doit être sous la forme @esaip.org", Toast.LENGTH_LONG).show();
                     return;
                 }
                 else{

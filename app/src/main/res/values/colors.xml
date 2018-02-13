@@ -6,6 +6,7 @@
     <color name="colorPrix">#69bbfa</color>
     <color name="colorRed">#D80027</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#C0C0C0</color>
     <color name="my_spinner_text_color">#05C7FC</color>
     <color name="my_spinner_text_color2">#FFFFFF</color>
 </resources>

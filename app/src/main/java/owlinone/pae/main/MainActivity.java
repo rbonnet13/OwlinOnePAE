@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity
         ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
         //image
-        Toast.makeText(MainActivity.this, "Photo = "+ photoT, Toast.LENGTH_LONG).show();
         if(!user.get(Session.KEY_PHOTO).equals("sans image")){
             String url_image = strPhoto + user.get(Session.KEY_PHOTO);
             url_image = url_image.replace(" ","%20");

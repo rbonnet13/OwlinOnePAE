@@ -48,7 +48,7 @@
                     android:layout_alignStart="@+id/nom_prop_add"
                     android:layout_marginTop="9dp"
                     android:background="#11000000"
-                    android:textColor="#FF0000" />;
+                    android:textColor="#FF0000" />
 
                 <EditText
                     android:id="@+id/nom_prop_add"
@@ -101,6 +101,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorWhite"
+                android:inputType="textCapSentences"
                 android:textColorHint="@color/colorWhite"
                 android:layout_centerHorizontal="true"
                 android:hint="@string/adresse_apart_add"/>

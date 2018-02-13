@@ -82,6 +82,16 @@
     <string name="HomeNotif">Home</string>
     <string name="SchoolNotif">School</string>
 
+    <string name="prenomBold"><i>Prénom</i></string>
+    <string name="nomBold"><i>Nom</i></string>
+    <string name="telephoneBold"><i>Téléphone</i></string>
+    <string name="adresseBold"><i>Adresse</i></string>
+    <string name="codePostalBold"><i>Code Postal</i></string>
+    <string name="villeBold"><i>Ville</i></string>
+
+
+
+
 
 
 

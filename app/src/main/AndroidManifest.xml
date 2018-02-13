@@ -107,6 +107,7 @@
             </activity>
             <activity
                 android:name=".session.UserCompte"
+                android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait">
             </activity>
             <activity

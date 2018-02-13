@@ -1,7 +1,11 @@
 package owlinone.pae.covoiturage;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +51,8 @@ public class Conducteur extends AppCompatActivity {
     private ListView lv;
     String url= null;
     String  strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "";
+
+
 
 
     HashMap <String, String> obj = new HashMap();
@@ -116,7 +122,7 @@ public class Conducteur extends AppCompatActivity {
         }
 
         //Glisser du doigt pour rafraichir----------------------------------------------------------
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_refresh_layout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5,199,252));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -190,6 +196,14 @@ public class Conducteur extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         String responseRequete= "";
+        // Lire de Drawable
+        Drawable drawableEsaip = getResources().getDrawable(R.drawable.notif_vers_esaip);
+        Drawable drawableHome = getResources().getDrawable(R.drawable.notif_vers_home);
+        Bitmap versEsaip = ((BitmapDrawable) drawableEsaip).getBitmap();
+        Bitmap versHome = ((BitmapDrawable) drawableHome).getBitmap();
+        // On resize le drawable
+        Drawable finalVersEsaip = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(versEsaip, 50, 50, true));
+        Drawable finalVersHome = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(versHome, 50, 50, true));
         @Override
         protected void onPreExecute()
         {
@@ -249,8 +263,8 @@ public class Conducteur extends AppCompatActivity {
                     notification.put("PRENOM_NOTIF", prenom_notif);
                     notification.put("ADRESSE_NOTIF", adresse_notif);
                     notification.put("TELEPHONE_NOTIF", tel_notif);
-                    if(new String("Home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.notif_vers_home));}
-                    else {notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.notif_vers_esaip));}
+                    if(new String("Home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(finalVersEsaip));}
+                    else notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.notif_vers_home));
                     notification.put("DATE_NOTIF", agoTime);
                     // adding contact to contact list
                     notifList.add(notification);

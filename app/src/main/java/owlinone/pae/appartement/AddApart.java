@@ -269,7 +269,7 @@ public class AddApart extends AppCompatActivity {
                 strTelProp       = tel_prop.getText().toString();
                 strPrixAppart    = prix_appart.getText().toString();
                 strCPAppart      = cp_appart.getText().toString();
-                String strFinalAdresse = strAdresseAppart + "," + strCPAppart + " "+ strAdresseGoogle
+                String strFinalAdresse = strAdresseAppart + "," + strAdresseGoogle + " "+ strCPAppart
                         + ", "+ country;
                 strMail_prop     = mail_prop.getText().toString().trim();
 

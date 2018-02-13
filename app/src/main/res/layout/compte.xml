@@ -53,41 +53,43 @@
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:ems="10"
-            android:id="@+id/nom_user"
+            android:id="@+id/prenom_user"
+            android:inputType="textCapSentences"
             android:textSize="16dp"
             android:layout_below="@+id/user_field"
             android:layout_alignLeft="@+id/user_field"
-            android:inputType="textCapSentences"
             android:layout_alignStart="@+id/user_field"
             android:background="#11000000"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
             android:drawableLeft="@drawable/ic_nom_user"
-            android:hint="Nom"
+            android:hint="@string/prenomBold"
             android:layout_marginBottom="20dp"/>
+
         <EditText
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:ems="10"
-            android:id="@+id/prenom_user"
-            android:inputType="textCapSentences"
+            android:id="@+id/nom_user"
             android:textSize="16dp"
-            android:layout_below="@+id/nom_user"
+            android:layout_below="@+id/prenom_user"
             android:layout_alignLeft="@+id/user_field"
+            android:inputType="textCapSentences"
             android:layout_alignStart="@+id/user_field"
             android:background="#11000000"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
             android:drawableLeft="@drawable/ic_nom_user"
-            android:hint="Prénom"
+            android:hint="@string/nomBold"
             android:layout_marginBottom="20dp"/>
+
         <TextView
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:ems="10"
             android:id="@+id/user_email"
             android:textSize="16dp"
-            android:layout_below="@+id/prenom_user"
+            android:layout_below="@+id/nom_user"
             android:layout_alignLeft="@+id/user_field"
             android:layout_alignStart="@+id/user_field"
             android:background="#11000000"
@@ -110,9 +112,9 @@
             android:layout_alignStart="@+id/user_field"
             android:background="#11000000"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
             android:drawableLeft="@drawable/ic_action_tel"
-            android:hint="Téléphone"
+            android:hint="@string/telephoneBold"
             android:layout_marginBottom="20dp"/>
 
         <EditText
@@ -127,9 +129,9 @@
             android:background="#11000000"
             android:inputType="textCapSentences"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
             android:drawableLeft="@drawable/ic_adresse_user"
-            android:hint="Adresse"
+            android:hint="@string/adresseBold"
             android:layout_marginBottom="20dp"/>
 
         <EditText
@@ -142,9 +144,9 @@
             android:drawableLeft="@drawable/ic_adresse_user"
             android:ems="5"
             android:inputType="numberSigned"
-            android:hint="Code Postal"
+            android:hint="@string/codePostalBold"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
             android:textSize="16dp"
             android:layout_marginBottom="20dp"/>
 
@@ -158,11 +160,11 @@
             android:layout_alignLeft="@+id/user_field"
             android:background="#11000000"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
             android:inputType="textCapSentences"
             android:drawableLeft="@drawable/ic_adresse_user"
-            android:hint="Ville"
-            android:layout_marginBottom="10dp"/>
+            android:hint="@string/villeBold"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/save_user"

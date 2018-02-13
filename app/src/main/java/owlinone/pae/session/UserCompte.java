@@ -231,7 +231,7 @@ public class UserCompte extends AppCompatActivity {
                 enteredCP = user_cp.getText().toString();
                 enteredTel = user_tel.getText().toString();
                 final Context context = getApplicationContext();
-                String strFinalAdresse = enteredAdress + "," + enteredCP + " "+ enteredVille
+                String strFinalAdresse = enteredAdress + "," + enteredVille + " "+ enteredCP
                         + ", "+ country;
                 geocoder = new Geocoder(context, Locale.getDefault());
                 try {
@@ -263,7 +263,7 @@ public class UserCompte extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
-
+        finish();
     }
     @Override
 
