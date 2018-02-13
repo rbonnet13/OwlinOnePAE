@@ -232,9 +232,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
@@ -243,20 +240,19 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
 
-    //Navigation de la partie du menu principal-----------------------------------------------------
+
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_planning) {
+        if (id == R.id.nav_calendrier) {
             Intent intentPlanning = new Intent(getApplicationContext(), CalendarExtra.class);
             intentPlanning.putExtra("mylist", arrayListEvent);
             startActivity(intentPlanning);
 
-        } else if (id == R.id.nav_appartements) {
+        } else if (id == R.id.nav_appartement) {
             Intent intentAppart = new Intent(getApplicationContext(), Appartement.class);
             startActivity(intentAppart);
-        } else if (id == R.id.nav_covoit) {
+        } else if (id == R.id.nav_covoiturage) {
             Intent intentCovoit = new Intent(getApplicationContext(), Covoiturage.class);
             startActivity(intentCovoit);
         } else if (id == R.id.nav_stage) {
@@ -283,7 +279,7 @@ public class MainActivity extends AppCompatActivity
             itemDeco.setVisible(false);
             session.logoutUser();
 
-        } else if (id == R.id.nav_covoit) {
+        } else if (id == R.id.nav_covoiturage) {
             Intent IntCovoiturage = new Intent(getApplicationContext(), Covoiturage.class);
             startActivity(IntCovoiturage);
         }else if (id == R.id.nav_compte) {

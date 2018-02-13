@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_connexion"
+            android:icon="@drawable/ic_account"
+            android:title="@string/connexion"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_deconnexion"
+            android:icon="@drawable/ic_deconnexion"
+            android:title="@string/déconnexion"
+            android:visible="true"/>
+        <item
+            android:id="@+id/nav_compte"
+            android:icon="@drawable/ic_compte"
+            android:title="@string/compte"
+            android:visible="true"/>
+    </group>
 
-        <item android:title="Compte">
-            <menu>
+    <item android:title="Fonctionnalités">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_connexion"
-                    android:icon="@drawable/ic_account"
-                    android:title="@string/connexion"
-                    android:visible="false"/>
+                    android:id="@+id/nav_article"
+                    android:icon="@drawable/ic_article"
+                    android:title="@string/app_article" />
                 <item
-                    android:id="@+id/nav_deconnexion"
-                    android:icon="@drawable/ic_logout"
-                    android:title="@string/déconnexion"
-                    android:visible="true"/>
+                    android:id="@+id/nav_appartement"
+                    android:icon="@drawable/ic_appartement"
+                    android:title="@string/app_appartement" />
                 <item
-                    android:id="@+id/nav_compte"
-                    android:icon="@drawable/ic_compte"
-                    android:title="@string/compte"
-                    android:visible="true"/>
-            </menu>
-        </item>
-
-        <item android:title="Fonctionnalités">
-            <menu>
+                    android:id="@+id/nav_covoiturage"
+                    android:icon="@drawable/ic_covoiturage"
+                    android:title="@string/app_covoiturage" />
                 <item
-                    android:id="@+id/nav_planning"
-                    android:icon="@drawable/ic_planning"
-                    android:title="Calendrier" />
-                <item
-                    android:id="@+id/nav_appartements"
-                    android:icon="@drawable/ic_appartements"
-                    android:title="@string/appartements" />
-            </menu>
-        </item>
-
-
-        <item android:title="A venir">
-            <menu>
-                <item
-                    android:id="@+id/nav_covoit"
-                    android:icon="@drawable/ic_covoit"
-                    android:title="@string/covoiturage" />
+                    android:id="@+id/nav_calendrier"
+                    android:icon="@drawable/ic_calendrier"
+                    android:title="@string/app_calendrier" />
                 <item
                     android:id="@+id/nav_stage"
                     android:icon="@drawable/ic_stage"
-                    android:title="@string/stage" />
-            </menu>
-        </item>
+                    android:title="@string/app_stage" />
+            </group>
+        </menu>
+    </item>
 
-    </group>
+    <item android:title="Divers">
+        <menu>
+            <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_bug"
+                android:icon="@drawable/ic_bug"
+                android:title="@string/app_bug" />
+            <item
+                android:id="@+id/nav_a_propos"
+                android:icon="@drawable/ic_a_propos"
+                android:title="@string/app_a_propos" />
+            </group>
+        </menu>
+    </item>
+
 </menu>

@@ -2,10 +2,19 @@
     <string name="app_name">Owl In One</string>
     <string name="app_name_2">Owl In One</string>
 
-    <string name="titre_page_principale">News</string>
+    <string name="titre_page_principale">Articles</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--Définition des strings concernant le nom des activités dans le drawer et les toolbars-->
+    <string name="app_article">Articles</string>
+    <string name="app_calendrier">Événements</string>
+    <string name="app_covoiturage">Co-voiturage</string>
+    <string name="app_appartement">Appartements</string>
+    <string name="app_stage">Stages</string>
+    <string name="app_bug">Signaler un bug</string>
+    <string name="app_a_propos">À propos</string>
 
     <string name="action_settings">Settings</string>
 
@@ -33,9 +42,6 @@
     <string name="disponible">Disponible</string>
     <string name="nonDisponible">Non disponible</string>
     <string name="vendu">Vendu</string>
-    <string name="appartements">Appartements</string>
-    <string name="covoiturage">Co-voiturage</string>
-    <string name="stage">Stage</string>
     <string name="parametre">Paramètres</string>
     <string name="rechercheCovoit">Recherche</string>
     <string name="notificationCovoit">Notifications</string>
@@ -71,7 +77,6 @@
     <string name="client">Client</string>
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>
-    <string name="calendrier">Calendrier</string>
 
     <string name="DestinationNotif">Destination</string>
     <string name="HomeNotif">Home</string>
