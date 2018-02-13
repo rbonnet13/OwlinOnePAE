@@ -80,7 +80,29 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Affichage du contenu de la page home (activity_main)
         setContentView(R.layout.activity_main);
+
+        // Affiche la toolbar correspondant à l'activité affichée
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Active le drawer dans l'activité affichée
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Met en surbrillance dans le drawer l'activité affichée
+        navigationView.setCheckedItem(R.id.nav_article);
+
         // User Session Manager
         session = new Session(getApplicationContext());
         Toast.makeText(getApplicationContext(),
@@ -114,23 +136,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         arrayListEvent = new ArrayList<EventCalendar>();
         new ReadJsonEvent().execute();
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         //Glisser du doigt pour rafraichir la page donc l'activité----------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_article);
@@ -212,6 +222,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -222,67 +233,49 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-
-
+    // Ouverture d'une activité en cas de clic dans le drawer
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_calendrier) {
-            Intent intentPlanning = new Intent(getApplicationContext(), CalendarExtra.class);
-            intentPlanning.putExtra("mylist", arrayListEvent);
-            startActivity(intentPlanning);
-
-        } else if (id == R.id.nav_appartement) {
-            Intent intentAppart = new Intent(getApplicationContext(), Appartement.class);
-            startActivity(intentAppart);
-        } else if (id == R.id.nav_covoiturage) {
-            Intent intentCovoit = new Intent(getApplicationContext(), Covoiturage.class);
-            startActivity(intentCovoit);
-        } else if (id == R.id.nav_stage) {
-            Intent intentStage = new Intent(getApplicationContext(), Stage.class);
-            startActivity(intentStage);
-        } else if (id == R.id.nav_connexion) {
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            Menu menu = navigationView.getMenu();
-            MenuItem itemCo = menu.findItem(R.id.nav_deconnexion);
-            itemCo.setVisible(false);
-            Intent intentConnexion = new Intent(getApplicationContext(), MainLogin.class);
-            startActivity(intentConnexion);
-        } else if(id == R.id.nav_deconnexion){
-            View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
-            ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("");
-            ((TextView) header.findViewById(R.id.id_email_user)).setText("Vous n'êtes pas connecté");
-            ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
-            photo.setImageResource(R.drawable.profile);
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            Menu menu = navigationView.getMenu();
-            MenuItem itemCo = menu.findItem(R.id.nav_connexion);
-            itemCo.setVisible(true);
-            MenuItem itemDeco = menu.findItem(R.id.nav_deconnexion);
-            itemDeco.setVisible(false);
+        if(id == R.id.nav_deconnexion){
             session.logoutUser();
-
+        } else if (id == R.id.nav_compte) {
+            Intent searchIntent = new Intent(getApplicationContext(), UserCompte.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_article) {
+            Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_appartement) {
+            Intent searchIntent = new Intent(getApplicationContext(), Appartement.class);
+            startActivity(searchIntent);
         } else if (id == R.id.nav_covoiturage) {
-            Intent IntCovoiturage = new Intent(getApplicationContext(), Covoiturage.class);
-            startActivity(IntCovoiturage);
-        }else if (id == R.id.nav_compte) {
-            Intent IntCompte = new Intent(getApplicationContext(), UserCompte.class);
-            startActivity(IntCompte);
-        }
+            Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_calendrier) {
+            Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
+            searchIntent.putExtra("mylist", arrayListEvent);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_stage) {
+            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
+            startActivity(searchIntent);
+        } /*else if (id == R.id.nav_bug) {
+            Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_a_propos) {
+            Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
+            startActivity(searchIntent);
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        // Animation de fermeture du drawer
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /**********************************************************
+    * Scripts concernant l'affichage de la liste des articles *
+    ***********************************************************/
 
     class ReadJson extends AsyncTask<Void, Void, Void> {
         @Override
