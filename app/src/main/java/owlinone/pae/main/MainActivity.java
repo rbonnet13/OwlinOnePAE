@@ -93,12 +93,13 @@ public class MainActivity extends AppCompatActivity
         // get name
         String name = user.get(Session.KEY_NAME);
         // get email
+        String email = user.get(Session.KEY_EMAIL);
         String photoT = user.get(Session.KEY_PHOTO);
 
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
-        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText(name);
-        ((TextView) header.findViewById(R.id.id_email_user)).setText("BIENVENU SUR OWLINONE");
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
+        ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
         ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
         //image
