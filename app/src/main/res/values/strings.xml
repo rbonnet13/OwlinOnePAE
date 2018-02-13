@@ -79,8 +79,8 @@
     <string name="newMdp2">Nouveau mot de passe</string>
 
     <string name="DestinationNotif">Destination</string>
-    <string name="HomeNotif">Home</string>
-    <string name="SchoolNotif">School</string>
+    <string name="HomeNotif">Domicile</string>
+    <string name="SchoolNotif">Esaip</string>
 
     <string name="prenomBold"><i>Prénom</i></string>
     <string name="nomBold"><i>Nom</i></string>
