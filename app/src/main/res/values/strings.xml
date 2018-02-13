@@ -78,9 +78,9 @@
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>
 
-    <string name="DestinationNotif">Destination</string>
-    <string name="HomeNotif">Domicile</string>
-    <string name="SchoolNotif">Esaip</string>
+    <string name="DestinationNotif">Destination:</string>
+    <string name="HomeNotif">Vers Domicile</string>
+    <string name="SchoolNotif">Vers Esaip</string>
 
     <string name="prenomBold"><i>Prénom</i></string>
     <string name="nomBold"><i>Nom</i></string>
@@ -88,6 +88,13 @@
     <string name="adresseBold"><i>Adresse</i></string>
     <string name="codePostalBold"><i>Code Postal</i></string>
     <string name="villeBold"><i>Ville</i></string>
+
+    <string name="pseudoBold"><i>Pseudo</i></string>
+    <string name="mdpBold"><i>Mot de passe</i></string>
+    <string name="emailBold"><i>Email (@esaip.org)</i></string>
+
+
+
 
 
 

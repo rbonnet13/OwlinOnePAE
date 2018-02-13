@@ -76,6 +76,9 @@ public class Covoiturage extends AppCompatActivity {
            }
        });
    }
+
+
+    //onActivityResult
     /*
     @SuppressWarnings("deprecation")
     private void initActionBar() {

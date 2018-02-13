@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -50,6 +49,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Map;
 
 import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
@@ -75,9 +75,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String latit ="";
     private  String longit ="";
     private  String response ="";
+    private String geolat ="0";
+    private String geolong ="0";
+
     HttpHandler sh = new HttpHandler();
     private String TAG = Appartement.class.getSimpleName();
-    private ListView lv;
     String url= null;
     String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "";
     String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
@@ -86,6 +88,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     HashMap <String, String> obj = new HashMap();
     HashMap <String, String> objDispo = new HashMap();
     ArrayList<HashMap<String, String>> covoitList;
+
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -119,7 +122,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     private RadioGroup mRadioGroup;
 
-    private RatingBar mRatingBar;List<Address> addresses = new List<Address>() {
+    private RatingBar mRatingBar;
+    List<Address> addresses = new List<Address>() {
         @Override
         public int size() {
             return 0;
@@ -292,12 +296,16 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                covoitList = new ArrayList<>();
                 new Client.AsyncDataClass().execute();
+
 
             }
         });
     }
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
+        // public List<ArrayList<HashMap<String,String>>> Covoite = new ArrayList<ArrayList<HashMap<String,String>>>();
+
         @Override
         protected void onPreExecute()
         {
@@ -309,16 +317,19 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         public double Distance(double lat_a_degre, double lon_a_degre, double lat_b_degre, double lon_b_degre){
 
-            int R = 6378000 ; //Rayon de la terre en mètre
+            int R = 6378137 ; //Rayon de la terre en mètre
 
             double lat_a = convertRad(lat_a_degre);
             double lon_a = convertRad(lon_a_degre);
             double lat_b = convertRad(lat_b_degre);
             double lon_b = convertRad(lon_b_degre);
-
-            double d = R * (Math.PI/2 - Math.asin( Math.sin(lat_b) * Math.sin(lat_a) + Math.cos(lon_b - lon_a) * Math.cos(lat_b) * Math.cos(lat_a)));
-            return d;
+            double dlo = (lon_b - lon_a)/2 ;
+            double dla = (lat_b - lat_a)/2 ;
+            double a = (Math.sin(dla) * Math.sin(dla)) + Math.cos(lat_a) * Math.cos(lat_b) * (Math.sin(dlo) * Math.sin(dlo));
+            double d = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return (R * d);
         }
+
         @Override
         protected Void doInBackground(Void... arg0)
         {
@@ -348,14 +359,14 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     Double latitudeAppart   = a.getDouble("LATITUDE");
                     Double longitudeAppart  = a.getDouble("LONGITUDE");
 
-                    double result_covoitureage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
+                    double result_covoiturage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
 
                     // Affiche les appartements que s'il est disponible ou non disponible
                     if(adresseMail.equals(email))
                     {
                         //on n'ajoute pas l'adresse de l'utilisateur courant
                     }else{
-                        if (result_covoitureage <= 500.0 ){
+                        if (result_covoiturage <= 10000.0 ){
                             HashMap<String, String> covoit = new HashMap<>();
                             // adding each child node to HashMap key => value
                             covoit.put("id", String.valueOf(id_covoit));
@@ -393,12 +404,43 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
             return null;
         }
-    }
+        @Override
+        protected void onPostExecute(Void result)
+        {
+            super.onPostExecute(result);
+            List<Marker> markers = new ArrayList<Marker>();
+            for (HashMap<String, String> map : covoitList){
+                for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+                    String key = mapEntry.getKey();
+                    String value = mapEntry.getValue();
+                    if (key == "LATITUDE") {
+                        geolat = value;
+                    }
+                    if (key == "LONGITUDE") {
+                        geolong = value;
+                    }
+                }
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
+                        .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
+                        )));
+                markers.add(marker);
+            }
+            markers.size();
 
+            if(mMap != null) {
+                for (int i = 0; i < markers.size(); i++) {
+                    Marker mark = markers.get(i);
+                }
+            }
+        }
+    }
 
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.mMap = map;
+
         Marker markerEsaip = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_esaip))
                 .position(new LatLng(47.464051, -0.497334)));
@@ -412,8 +454,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         // You can customize the marker image using images bundled with
         // your app, or dynamically generated bitmaps.
     }
-
-
     @Override
     public void onLocationChanged(Location location) {
         if(getApplicationContext()!=null){

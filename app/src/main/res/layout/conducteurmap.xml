@@ -21,7 +21,7 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:elevation="0dp"
-            app:title="Je suis conducteur"
+            app:title="Conducteur"
             android:layout_gravity="center"
             android:animateLayoutChanges="false"
             />

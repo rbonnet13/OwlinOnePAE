@@ -49,8 +49,8 @@
         android:layout_marginEnd="20dp"
         android:id="@+id/username_field"
         android:ems="10"
-        android:hint="Pseudo"
-        android:textColorHint="@color/colorWhite"
+        android:hint="@string/pseudoBold"
+        android:textColorHint="@color/colorGrey"
         android:inputType="textCapSentences"
         android:textSize="16dp"
         android:textColor="@color/colorWhite"
@@ -71,9 +71,9 @@
         android:layout_alignStart="@+id/username_field"
         android:background="#11000000"
         android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
+        android:textColorHint="@color/colorGrey"
         android:drawableLeft="@drawable/ic_action_pass"
-        android:hint="Mot de passe"
+        android:hint="@string/mdpBold"
         android:inputType="textPassword|textCapSentences"
         android:layout_marginBottom="20dp"/>
 

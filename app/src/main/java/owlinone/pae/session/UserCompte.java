@@ -30,6 +30,8 @@ import java.util.Locale;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.covoiturage.Conducteur;
+import owlinone.pae.covoiturage.Covoiturage;
 import owlinone.pae.main.MainActivity;
 
 /**
