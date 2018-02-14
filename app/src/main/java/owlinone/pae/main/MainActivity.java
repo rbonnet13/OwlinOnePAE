@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,20 +35,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import owlinone.pae.R;
-import owlinone.pae.appartement.Appartement;
-import owlinone.pae.article.Article;
-import owlinone.pae.article.ArticleAdapter;
-import owlinone.pae.article.DetailArticle;
-import owlinone.pae.calendrier.CalendarExtra;
-import owlinone.pae.calendrier.EventCalendar;
-import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.covoiturage.Covoiturage;
-import owlinone.pae.session.MainLogin;
-import owlinone.pae.session.Session;
-import owlinone.pae.session.UserCompte;
-import owlinone.pae.stage.Stage;
+import owlinone.pae.*;
+import owlinone.pae.appartement.*;
+import owlinone.pae.article.*;
+import owlinone.pae.calendrier.*;
+import owlinone.pae.configuration.*;
+import owlinone.pae.covoiturage.*;
+import owlinone.pae.divers.*;
+import owlinone.pae.session.*;
+import owlinone.pae.stage.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Affichage du contenu de la page home (activity_main)
+        // Affiche le contenu de la page home (activity_main)
         setContentView(R.layout.activity_main);
 
         // Affiche la toolbar correspondant à l'activité affichée
@@ -158,7 +152,7 @@ public class MainActivity extends AppCompatActivity
                         new ReadJson().execute();
 
                     }
-                }, 3000);
+                }, 2000);
             }
         });
         new ReadJson().execute();
@@ -258,13 +252,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_stage) {
             Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
             startActivity(searchIntent);
-        } /*else if (id == R.id.nav_bug) {
+        } else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
         } else if (id == R.id.nav_a_propos) {
             Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
             startActivity(searchIntent);
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 

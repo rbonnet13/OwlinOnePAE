@@ -80,6 +80,7 @@
             </activity>
             <activity
                 android:name="owlinone.pae.stage.Stage"
+                android:label="@string/app_stage"
                 android:screenOrientation="portrait">
             </activity>
             <activity
@@ -88,6 +89,7 @@
             </activity>
             <activity
                 android:name=".covoiturage.Covoiturage"
+                android:label="@string/app_covoiturage"
                 android:screenOrientation="portrait">
             </activity>
             <activity
@@ -126,6 +128,17 @@
             <activity
                 android:name="owlinone.pae.covoiturage.DetailNotif"
                 android:screenOrientation="portrait">
+            </activity>
+
+            <activity
+                android:name="owlinone.pae.divers.APropos"
+                android:label="@string/app_a_propos"
+                android:screenOrientation="portrait" >
+            </activity>
+            <activity
+                android:name="owlinone.pae.divers.Bug"
+                android:label="@string/app_bug"
+                android:screenOrientation="portrait" >
             </activity>
 
 

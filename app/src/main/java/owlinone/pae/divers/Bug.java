@@ -1,12 +1,10 @@
-package owlinone.pae.stage;
+package owlinone.pae.divers;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,20 +12,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import owlinone.pae.*;
@@ -47,7 +37,8 @@ import static owlinone.pae.configuration.AddressUrl.strPhoto;
  * Created by emile on 13/02/2018.
  */
 
-public class Stage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Bug extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
 
     // Déclaration des variables
     ArrayList<EventCalendar> arrayListEvent;
@@ -58,7 +49,7 @@ public class Stage extends AppCompatActivity implements NavigationView.OnNavigat
         super.onCreate(savedInstanceState);
 
         // Affiche le contenu de l'activté sélectionnée
-        setContentView(R.layout.activity_stage);
+        setContentView(R.layout.activity_bug);
 
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,7 +68,7 @@ public class Stage extends AppCompatActivity implements NavigationView.OnNavigat
         navigationView.setNavigationItemSelectedListener(this);
 
         // Met en surbrillance dans le drawer l'activité affichée
-        navigationView.setCheckedItem(R.id.nav_stage);
+        navigationView.setCheckedItem(R.id.nav_bug);
 
         // User Session Manager
         session = new Session(getApplicationContext());
