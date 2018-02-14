@@ -8,7 +8,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +23,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,13 +40,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.main.MainActivity;
-import owlinone.pae.R;
+import owlinone.pae.*;
+import owlinone.pae.calendrier.*;
+import owlinone.pae.configuration.*;
+import owlinone.pae.covoiturage.*;
+import owlinone.pae.divers.*;
+import owlinone.pae.main.*;
+import owlinone.pae.session.*;
+import owlinone.pae.stage.*;
 
-public class Appartement extends AppCompatActivity
-{
+import static owlinone.pae.configuration.AddressUrl.strPhoto;
+
+
+
+public class Appartement extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Déclaration des variables
+    ArrayList<EventCalendar> arrayListEvent;
+    Session session;
+
     private String TAG = Appartement.class.getSimpleName();
     private ListView lv;
     String url= null;
@@ -97,28 +117,78 @@ public class Appartement extends AppCompatActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.appartement_activity);
 
+        // Affiche le contenu de l'activté sélectionnée
+        setContentView(R.layout.activity_appartement);
+
+        // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Affichage de la flèche de retour-----------------------------------
+        // Active le drawer dans l'activité affichée
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Met en surbrillance dans le drawer l'activité affichée
+        navigationView.setCheckedItem(R.id.nav_appartement);
+
+        // User Session Manager
+        session = new Session(getApplicationContext());
+        Toast.makeText(getApplicationContext(),
+                "User Login Status: " + session.isUserLoggedIn(),
+                Toast.LENGTH_LONG).show();
+        if(session.checkLogin())
+            finish();
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        // get name
+        String name = user.get(Session.KEY_NAME);
+        // get email
+        String email = user.get(Session.KEY_EMAIL);
+        String photoT = user.get(Session.KEY_PHOTO);
+
+        // Show user data on activity
+        View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
+        ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
+        ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
+
+        //image
+        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
+            url_image = url_image.replace(" ","%20");
+            try {
+                Log.i("RESPUESTA IMAGE: ",""+url_image);
+                Glide.with(this).load(url_image).into(photo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        /*//Affichage de la flèche de retour-----------------------------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        }*/
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Appartement.this, MainActivity.class);
                 startActivity(i);
                 finish();
             }
-        });
+        });*/
 
         //Glisser du doigt pour rafraichir----------------------------------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.appartement_activity_swipe_refresh_layout);
@@ -193,6 +263,57 @@ public class Appartement extends AppCompatActivity
 
         //Sert pour l'appuie long (Entregistre le context du menu
         registerForContextMenu(lv);
+    }
+
+    // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // Ouverture d'une activité en cas de clic dans le drawer
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.nav_deconnexion){
+            session.logoutUser();
+        } else if (id == R.id.nav_compte) {
+            Intent searchIntent = new Intent(getApplicationContext(), UserCompte.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_article) {
+            Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_appartement) {
+            Intent searchIntent = new Intent(getApplicationContext(), Appartement.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_covoiturage) {
+            Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_calendrier) {
+            Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
+            searchIntent.putExtra("mylist", arrayListEvent);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_stage) {
+            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_bug) {
+            Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_a_propos) {
+            Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
+            startActivity(searchIntent);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        // Animation de fermeture du drawer
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
@@ -367,7 +488,7 @@ public class Appartement extends AppCompatActivity
         {
             super.onPostExecute(result);
             ListAdapter adapter = new SimpleAdapter(Appartement.this, appartList,
-                    R.layout.list_appart, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
+                    R.layout.content_appart, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
                     new int[]{R.id.descrip_appart,R.id.prix_appart, R.id.adresse_apart,R.id.cp_appart,R.id.ville_apart,R.id.dispo_appart,R.id.nom_prop});
             lv.setAdapter(adapter);
         }

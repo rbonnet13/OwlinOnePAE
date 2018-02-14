@@ -273,7 +273,7 @@ public class AddApart extends AppCompatActivity {
                         + ", "+ country;
                 strMail_prop     = mail_prop.getText().toString().trim();
 
-                //Récupération de la lontitude et de la latitude de l'addresse finale
+                //Récupération de la longitude et de la latitude de l'addresse finale
                 geocoder = new Geocoder(context, Locale.getDefault());
                 try {
                     for (int i=0; i<10;i++)
