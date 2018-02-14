@@ -50,7 +50,7 @@
             <activity
             android:name="owlinone.pae.appartement.AddApart"
             android:screenOrientation="portrait"
-            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden"
             >
         </activity>
             <activity
