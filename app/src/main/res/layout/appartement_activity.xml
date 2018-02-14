@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/fond2"
     tools:context="owlinone.pae.main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
