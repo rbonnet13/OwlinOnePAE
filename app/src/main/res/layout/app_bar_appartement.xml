@@ -22,10 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-
-        layout="@layout/content_appart" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonAddAppart"
         android:layout_width="wrap_content"

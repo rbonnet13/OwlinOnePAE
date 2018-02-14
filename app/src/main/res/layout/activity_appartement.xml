@@ -8,23 +8,23 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/fond2"
-    tools:openDrawer="">
-
-    <include
-        layout="@layout/app_bar_appartement"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    tools:openDrawer="start">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/appartement_activity_swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent" >
 
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        layout="@layout/app_bar_appartement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

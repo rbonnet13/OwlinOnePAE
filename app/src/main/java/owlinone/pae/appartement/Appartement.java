@@ -210,7 +210,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         new GetApparts().execute();
 
                     }
-                }, 3000);
+                }, 2000);
             }
         });
 
