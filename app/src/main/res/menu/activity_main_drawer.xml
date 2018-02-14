@@ -4,11 +4,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_connexion"
-            android:icon="@drawable/ic_account"
-            android:title="@string/connexion"
-            android:visible="false"/>
-        <item
             android:id="@+id/nav_deconnexion"
             android:icon="@drawable/ic_deconnexion"
             android:title="@string/déconnexion"

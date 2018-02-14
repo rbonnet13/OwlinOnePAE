@@ -1,4 +1,4 @@
-package owlinone.pae.stage;
+package owlinone.pae.divers;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -47,7 +47,7 @@ import static owlinone.pae.configuration.AddressUrl.strPhoto;
  * Created by emile on 13/02/2018.
  */
 
-public class Stage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class APropos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Déclaration des variables
     ArrayList<EventCalendar> arrayListEvent;
@@ -58,7 +58,7 @@ public class Stage extends AppCompatActivity implements NavigationView.OnNavigat
         super.onCreate(savedInstanceState);
 
         // Affiche le contenu de l'activté sélectionnée
-        setContentView(R.layout.activity_stage);
+        setContentView(R.layout.activity_a_propos);
 
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,7 +77,7 @@ public class Stage extends AppCompatActivity implements NavigationView.OnNavigat
         navigationView.setNavigationItemSelectedListener(this);
 
         // Met en surbrillance dans le drawer l'activité affichée
-        navigationView.setCheckedItem(R.id.nav_stage);
+        navigationView.setCheckedItem(R.id.nav_a_propos);
 
         // User Session Manager
         session = new Session(getApplicationContext());
