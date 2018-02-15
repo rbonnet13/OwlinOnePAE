@@ -47,10 +47,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-            <activity
+        <activity
             android:name="owlinone.pae.appartement.AddApart"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
+            android:noHistory="true"
             >
         </activity>
             <activity
@@ -95,17 +96,17 @@
             <activity
                 android:name=".session.MainLogin"
                 android:screenOrientation="portrait"
-                android:label="@string/title_activity_login" >
+                android:label="@string/title_activity_login">
             </activity>
             <activity
                 android:name=".session.LoginActivity"
                 android:screenOrientation="portrait"
-                android:label="@string/title_activity_login" >
+                android:label="@string/title_activity_login">
             </activity>
             <activity
                 android:name=".session.RegisterActivity"
                 android:screenOrientation="portrait"
-                android:label="@string/title_activity_register" >
+                android:label="@string/title_activity_register">
             </activity>
             <activity
                 android:name=".session.Compte"

@@ -115,15 +115,17 @@ public class Conducteur extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Conducteur.this, Covoiturage.class);
-                startActivity(intent);              }
+                Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
         });
 
-        //Affichage de la flèche de retour-----------------------------------
+        /*//Affichage de la flèche de retour-----------------------------------
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        }*/
 
         //Glisser du doigt pour rafraichir----------------------------------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
@@ -295,5 +297,13 @@ public class Conducteur extends AppCompatActivity {
                     new int[]{R.id.nom_notif, R.id.prenom_notif,R.id.adresse_notif,R.id.tel_notif,R.id.destination_notif,R.id.date_notif});
             lv.setAdapter(adapter);
         }
+    }
+
+    // Fonction appelée quand appuie sur la touche retour
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

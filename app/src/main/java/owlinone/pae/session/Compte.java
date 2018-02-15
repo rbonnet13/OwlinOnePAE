@@ -430,8 +430,8 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             if (jsonResult == 1) {
                 session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo,covoiturage);
                 Intent intent = new Intent(Compte.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
             }
         }
     }

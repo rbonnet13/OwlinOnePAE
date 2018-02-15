@@ -289,10 +289,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Client.this, Covoiturage.class);
+                Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
+
+
         mRequest = (Button) findViewById(R.id.request);
 
         mRequest.setOnClickListener(new View.OnClickListener() {
@@ -644,5 +647,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 return null;
             }
         }
+    }
+
+    // Fonction appelée quand appuie sur la touche retour
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

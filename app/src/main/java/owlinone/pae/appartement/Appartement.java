@@ -77,7 +77,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     {
         Intent intent = getIntent();
         intent.putExtra("url",url);
-        finish();
+        // finish();
         startActivity(intent);
     }
 

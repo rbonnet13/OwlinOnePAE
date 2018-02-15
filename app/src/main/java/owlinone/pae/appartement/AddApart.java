@@ -165,11 +165,12 @@ public class AddApart extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(), Appartement.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
@@ -419,5 +420,13 @@ public class AddApart extends AppCompatActivity {
                 return null;
             }
         }
+    }
+
+    // Fonction appelée quand appuie sur la touche retour
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Appartement.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

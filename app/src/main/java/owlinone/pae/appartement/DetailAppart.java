@@ -57,11 +57,12 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(), Appartement.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
@@ -233,6 +234,14 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
         map.animateCamera(yourLocation);
+    }
+
+    // Fonction appelée quand appuie sur la touche retour
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Appartement.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
 
