@@ -7,19 +7,26 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,20 +34,26 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-import owlinone.pae.R;
-import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.covoiturage.Conducteur;
-import owlinone.pae.covoiturage.Covoiturage;
-import owlinone.pae.main.MainActivity;
+import owlinone.pae.*;
+import owlinone.pae.appartement.*;
+import owlinone.pae.calendrier.*;
+import owlinone.pae.configuration.*;
+import owlinone.pae.covoiturage.*;
+import owlinone.pae.divers.*;
+import owlinone.pae.main.*;
+import owlinone.pae.stage.*;
+
+import static owlinone.pae.configuration.AddressUrl.strPhoto;
 
 /**
  * Created by rudyb on 17/01/2018.
  */
 
-public class UserCompte extends AppCompatActivity {
+public class Compte extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    // Déclaration des variables
+    ArrayList<EventCalendar> arrayListEvent;
+    Session session;
     private TextView user_username;
     private TextView user_email;
     private EditText user_tel;
@@ -72,7 +85,7 @@ public class UserCompte extends AppCompatActivity {
     double latitude = 0.0;
     double longitude = 0.0;
     private final String serverUrl = AddressUrl.strTriIndexCompte;
-    Session session;
+
     private RatingBar mRatingBar;List<Address> addresses = new List<Address>() {
         @Override
         public int size() {
@@ -174,20 +187,43 @@ public class UserCompte extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.compte);
+
+        // Affiche le contenu de l'activté sélectionnée
+        setContentView(R.layout.activity_compte);
+
+        // Affiche la toolbar correspondant à l'activité affichée
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Active le drawer dans l'activité affichée
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setStatusBarBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Met en surbrillance dans le drawer l'activité affichée
+        navigationView.setCheckedItem(R.id.nav_compte);
+        // User Session Manager
         session = new Session(getApplicationContext());
         final HashMap<String, String> user = session.getUserDetails();
-        // get name
-          username = user.get(Session.KEY_NAME);
-          password = user.get(Session.KEY_PASSWORD);
-          email = user.get(Session.KEY_EMAIL);
-          prenom = user.get(Session.KEY_PRENOM);
-          nom = user.get(Session.KEY_NOM);
-          ville = user.get(Session.KEY_VILLE);
-          adresse = user.get(Session.KEY_ADRESSE);
-          cp = user.get(Session.KEY_CP);
-          photo = user.get(Session.KEY_PHOTO);
-          telephone = user.get(Session.KEY_TEL);
+
+        // Récupération des données utilisateur
+        username = user.get(Session.KEY_NAME);
+        password = user.get(Session.KEY_PASSWORD);
+        email = user.get(Session.KEY_EMAIL);
+        prenom = user.get(Session.KEY_PRENOM);
+        nom = user.get(Session.KEY_NOM);
+        ville = user.get(Session.KEY_VILLE);
+        adresse = user.get(Session.KEY_ADRESSE);
+        cp = user.get(Session.KEY_CP);
+        photo = user.get(Session.KEY_PHOTO);
+        telephone = user.get(Session.KEY_TEL);
 
         user_username = (TextView) findViewById(R.id.user_field);
         user_email = (TextView) findViewById(R.id.user_email);
@@ -207,19 +243,25 @@ public class UserCompte extends AppCompatActivity {
         user_adresse.setText(adresse);
         user_cp.setText(cp);
         user_tel.setText(telephone);
-        // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar50);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        // Affiche les données utilisateur dans le header du drawer
+        View header = (navigationView).getHeaderView(0);
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + username);
+        ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
+        ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
+
+        // Affiche l'image dans le header du drawer
+        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
+            url_image = url_image.replace(" ","%20");
+            try {
+                Log.i("RESPUESTA IMAGE: ",""+url_image);
+                Glide.with(this).load(url_image).into(photo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserCompte.this, MainActivity.class);
-                startActivity(intent);            }
-        });
+
         SaveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -255,39 +297,64 @@ public class UserCompte extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if ( enteredNom.length() <= 1 || enteredPrenom.length() <= 1 || enteredVille.length() <= 1 || enteredAdress.length() <= 1 || enteredCP.length() != 5 || enteredTel.length() != 10) {
-                    Toast.makeText(UserCompte.this, "Remplir tout les champs SVP", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Compte.this, "Remplir tout les champs SVP", Toast.LENGTH_LONG).show();
                     return;
                 }
-                new UserCompte.AsyncDataClass().execute();
+                new Compte.AsyncDataClass().execute();
             }
 
         });
     }
+
+    // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
     @Override
-    public void onBackPressed(){
-        finish();
-    }
-    @Override
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-// Inflate the menu; this adds items to the action bar if it is present.
-
-
-        return true;
-
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
+    // Ouverture d'une activité en cas de clic dans le drawer
+    public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.actionsettings) {
-            return true;
+        if(id == R.id.nav_deconnexion){
+            session.logoutUser();
+        } else if (id == R.id.nav_compte) {
+            Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_article) {
+            Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_appartement) {
+            Intent searchIntent = new Intent(getApplicationContext(), Appartement.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_covoiturage) {
+            Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_calendrier) {
+            Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
+            searchIntent.putExtra("mylist", arrayListEvent);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_stage) {
+            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_bug) {
+            Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
+            startActivity(searchIntent);
+        } else if (id == R.id.nav_a_propos) {
+            Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
+            startActivity(searchIntent);
         }
 
-        return super.onOptionsItemSelected(item);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        // Animation de fermeture du drawer
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
@@ -329,19 +396,19 @@ public class UserCompte extends AppCompatActivity {
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + response);
             if (response == null) {
-                Toast.makeText(UserCompte.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                Toast.makeText(Compte.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = sh.returnParsedJsonObject(response);
             if(jsonResult == 0){
-                Toast.makeText(UserCompte.this, "erreur", Toast.LENGTH_LONG).show();
+                Toast.makeText(Compte.this, "erreur", Toast.LENGTH_LONG).show();
                 return;
             }
 
             if (jsonResult == 1) {
                 session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo);
-                Intent intent = new Intent(UserCompte.this, MainActivity.class);
+                Intent intent = new Intent(Compte.this, MainActivity.class);
                 startActivity(intent);
             }
         }

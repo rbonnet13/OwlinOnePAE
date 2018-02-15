@@ -1,12 +1,10 @@
 package owlinone.pae.divers;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,29 +12,18 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import owlinone.pae.*;
 import owlinone.pae.appartement.*;
-import owlinone.pae.article.*;
 import owlinone.pae.calendrier.*;
-import owlinone.pae.configuration.*;
 import owlinone.pae.covoiturage.*;
-import owlinone.pae.divers.*;
 import owlinone.pae.main.*;
 import owlinone.pae.session.*;
 import owlinone.pae.stage.*;
@@ -130,7 +117,7 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
         if(id == R.id.nav_deconnexion){
             session.logoutUser();
         } else if (id == R.id.nav_compte) {
-            Intent searchIntent = new Intent(getApplicationContext(), UserCompte.class);
+            Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
         } else if (id == R.id.nav_article) {
             Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);

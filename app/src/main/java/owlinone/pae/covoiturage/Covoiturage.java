@@ -23,9 +23,7 @@ import java.util.HashMap;
 
 import owlinone.pae.*;
 import owlinone.pae.appartement.*;
-import owlinone.pae.article.*;
 import owlinone.pae.calendrier.*;
-import owlinone.pae.configuration.*;
 import owlinone.pae.divers.*;
 import owlinone.pae.main.*;
 import owlinone.pae.session.*;
@@ -121,7 +119,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
                if (adresse == null && ville == null)
                {
                    Toast.makeText(getApplicationContext(), "Merci de saisir vos coordonnées", Toast.LENGTH_LONG).show();
-                   Intent intent = new Intent(Covoiturage.this, UserCompte.class);
+                   Intent intent = new Intent(Covoiturage.this, Compte.class);
                    startActivity(intent);
                }
                else{
@@ -152,7 +150,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         if(id == R.id.nav_deconnexion){
             session.logoutUser();
         } else if (id == R.id.nav_compte) {
-            Intent searchIntent = new Intent(getApplicationContext(), UserCompte.class);
+            Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
         } else if (id == R.id.nav_article) {
             Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);

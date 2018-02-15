@@ -283,7 +283,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         if(id == R.id.nav_deconnexion){
             session.logoutUser();
         } else if (id == R.id.nav_compte) {
-            Intent searchIntent = new Intent(getApplicationContext(), UserCompte.class);
+            Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
         } else if (id == R.id.nav_article) {
             Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);

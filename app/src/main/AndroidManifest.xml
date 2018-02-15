@@ -108,7 +108,8 @@
                 android:label="@string/title_activity_register" >
             </activity>
             <activity
-                android:name=".session.UserCompte"
+                android:name=".session.Compte"
+                android:label="@string/app_compte"
                 android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait">
             </activity>

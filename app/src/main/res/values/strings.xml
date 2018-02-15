@@ -8,6 +8,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--Définition des strings concernant le nom des activités dans le drawer et les toolbars-->
+    <string name="app_compte">Compte</string>
     <string name="app_article">Articles</string>
     <string name="app_calendrier">Événements</string>
     <string name="app_covoiturage">Co-voiturage</string>
@@ -16,8 +17,12 @@
     <string name="app_bug">Signaler un bug</string>
     <string name="app_a_propos">À propos</string>
 
+    <!--Définition des strings concernant le header du drawer-->
+    <string name="bienvenue">Bienvenue</string>
+
     <string name="action_settings">Settings</string>
 
+    <!-- Définition des strings pour l'activité appartement -->
     <string name="euro">€/mois</string>
     <string name="Trierpar">Trier par:</string>
     <string name="TrierDispo">Disponibilité</string>
@@ -43,19 +48,13 @@
     <string name="nonDisponible">Non disponible</string>
     <string name="vendu">Vendu</string>
     <string name="parametre">Paramètres</string>
-    <string name="rechercheCovoit">Recherche</string>
-    <string name="notificationCovoit">Notifications</string>
     <string name="signaler">Signaler</string>
     <string name="merci">MERCI!!!</string>
     <string name="textCheckBoxAdd">Je certifie l\'exactitude et l\'authenticité des données saisies. Les
     données ne pourront pas être modifiées.</string>
     <string name="about">About</string>
-    <string name="about_body"><![CDATA[
-        Floating Action Button, a library by <a href="https://plus.google.com/+OleksandrMelnykov">Oleksandr Melnykov</a>.<br/>
-        <a href=\'https://github.com/makovkastar/FloatingActionButton\'>https://github.com/makovkastar/FloatingActionButton</a>
-    ]]></string>
     <string name="hello_world">Hello world!</string>
-    <string name="actionsettings">Settings</string>
+
     <string name="username">Pseudo</string>
     <string name="password">Mot de passe</string>
     <string name="email">Adresse Email (@esaip.org)</string>
@@ -78,6 +77,9 @@
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>
 
+    <string name="rechercheCovoit">Recherche</string>
+    <string name="notificationCovoit">Notifications</string>
+
     <string name="DestinationNotif">Destination:</string>
     <string name="HomeNotif">Vers Domicile</string>
     <string name="SchoolNotif">Vers Esaip</string>
@@ -92,17 +94,5 @@
     <string name="pseudoBold"><i>Pseudo</i></string>
     <string name="mdpBold"><i>Mot de passe</i></string>
     <string name="emailBold"><i>Email (@esaip.org)</i></string>
-
-
-
-
-
-
-
-
-
-
-
-
 
 </resources>

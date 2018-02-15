@@ -27,7 +27,7 @@
     <screenName name="owlinone.pae.session.RegisterActivity">Inscription</screenName>
     <screenName name="owlinone.pae.session.LoginActivity">Connexion</screenName>
     <screenName name="owlinone.pae.session.MainLogin">Connexion/Inscription/MDP oublié</screenName>
-    <screenName name="owlinone.pae.session.UserCompte">Modification du compte utilisateur</screenName>
+    <screenName name="owlinone.pae.session.Compte">Modification du compte utilisateur</screenName>
 
 
 

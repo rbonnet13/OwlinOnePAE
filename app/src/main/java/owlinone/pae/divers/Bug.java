@@ -22,11 +22,8 @@ import java.util.HashMap;
 
 import owlinone.pae.*;
 import owlinone.pae.appartement.*;
-import owlinone.pae.article.*;
 import owlinone.pae.calendrier.*;
-import owlinone.pae.configuration.*;
 import owlinone.pae.covoiturage.*;
-import owlinone.pae.divers.*;
 import owlinone.pae.main.*;
 import owlinone.pae.session.*;
 import owlinone.pae.stage.*;
@@ -122,7 +119,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
         if(id == R.id.nav_deconnexion){
             session.logoutUser();
         } else if (id == R.id.nav_compte) {
-            Intent searchIntent = new Intent(getApplicationContext(), UserCompte.class);
+            Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
         } else if (id == R.id.nav_article) {
             Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
