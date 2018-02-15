@@ -262,14 +262,17 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         registerForContextMenu(lv);
     }
 
-    // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
+    // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        // Check si le drawer est ouvert. Si oui, on le ferme
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        } else { // Sinon on va à l'activité Articles
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 
@@ -485,7 +488,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         {
             super.onPostExecute(result);
             ListAdapter adapter = new SimpleAdapter(Appartement.this, appartList,
-                    R.layout.content_appart, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
+                    R.layout.content_appartement, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
                     new int[]{R.id.descrip_appart,R.id.prix_appart, R.id.adresse_apart,R.id.cp_appart,R.id.ville_apart,R.id.dispo_appart,R.id.nom_prop});
             lv.setAdapter(adapter);
         }

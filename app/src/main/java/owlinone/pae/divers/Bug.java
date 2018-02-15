@@ -98,14 +98,17 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
         }
     }
 
-    // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
+    // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        // Check si le drawer est ouvert. Si oui, on le ferme
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        } else { // Sinon on va à l'activité Articles
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 
