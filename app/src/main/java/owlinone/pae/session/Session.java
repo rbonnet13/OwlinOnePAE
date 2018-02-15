@@ -47,6 +47,7 @@ public class Session {
     public static final String KEY_LONGITUDE = "longitude";
     public static final String KEY_CP = "cp";
     public static final String KEY_PHOTO = "photo";
+    public static final String KEY_COVOITURAGE = "covoiturage";
 
 
     // Constructor
@@ -57,7 +58,7 @@ public class Session {
     }
 
     //Create login session
-    public void createUserLoginSession(String name,String prenom,String nom,String ville,String adresse,String latitude, String longitude, String cp,String email, String telephone,String password, String photo){
+    public void createUserLoginSession(String name,String prenom,String nom,String ville,String adresse,String latitude, String longitude, String cp,String email, String telephone,String password, String photo, String covoiturage){
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
@@ -80,6 +81,8 @@ public class Session {
         editor.putString(KEY_PASSWORD, password);
         // Storing email in pref
         editor.putString(KEY_PHOTO, photo);
+        editor.putString(KEY_COVOITURAGE, covoiturage);
+
         // commit changes
         editor.commit();
     }
@@ -138,6 +141,7 @@ public class Session {
 
         // user photo id
         user.put(KEY_PHOTO, pref.getString(KEY_PHOTO, "sans image"));
+        user.put(KEY_COVOITURAGE, pref.getString(KEY_COVOITURAGE, "false"));
 
         // return user
         return user;

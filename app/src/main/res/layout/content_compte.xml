@@ -147,6 +147,18 @@
             android:drawableLeft="@drawable/ic_adresse_user"
             android:hint="@string/villeBold"
             android:layout_marginBottom="20dp"/>
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#11000000"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
+            android:inputType="textCapSentences"
+            android:layout_below="@+id/ville_user"
+            android:layout_centerHorizontal="true"
+            android:buttonTint="@color/caldroid_white"
+            android:text="Participer au covoiturage" />
 
         <Button
             android:id="@+id/save_user"
@@ -155,14 +167,13 @@
             android:background="@drawable/background_signup"
             android:layout_centerHorizontal="true"
             android:text="Sauvegarder"
-            android:layout_below="@+id/ville_user"
+            android:layout_below="@+id/checkBox"
             android:textColor="@color/colorWhite"
             android:textAllCaps="false"
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
             android:clickable="true"
             />
-
     </RelativeLayout>
     </ScrollView>
 </LinearLayout>

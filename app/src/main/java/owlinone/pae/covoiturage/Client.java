@@ -303,8 +303,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             public void onClick(View v) {
                 covoitList = new ArrayList<>();
                 new Client.AsyncDataClass().execute();
-
-
+                LatLng position = new LatLng(Double.valueOf(latit),Double.valueOf(longit));
+                CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 15);
+                mMap.animateCamera(yourLocation);
             }
         });
     }

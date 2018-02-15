@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -62,12 +63,16 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private EditText user_ville;
     private EditText user_adresse ;
     private EditText user_cp;
+    private CheckBox user_covoiturage;
+
     private String enteredNom;
     private String enteredPrenom ;
     private String enteredAdress ;
     private String enteredVille;
     private String enteredTel;
     private String enteredCP ;
+    private String enteredCovoiturage ;
+
     private  String username ="";
     private  String password ="";
     private  String email ="";
@@ -78,7 +83,10 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private  String cp  ="";
     private  String telephone  ="";
     private  String photo ="";
+    private  String covoiturage ="";
+
     private  String response ="";
+
     HttpHandler sh = new HttpHandler();
     Geocoder geocoder;
     Address addressName = new Address(Locale.FRANCE);
@@ -184,6 +192,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +233,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         cp = user.get(Session.KEY_CP);
         photo = user.get(Session.KEY_PHOTO);
         telephone = user.get(Session.KEY_TEL);
+        covoiturage = user.get(Session.KEY_COVOITURAGE);
 
         user_username = (TextView) findViewById(R.id.user_field);
         user_email = (TextView) findViewById(R.id.user_email);
@@ -233,6 +243,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_adresse = (EditText) findViewById(R.id.adresse_user);
         user_ville = (EditText) findViewById(R.id.ville_user);
         user_cp= (EditText) findViewById(R.id.code_postal);
+        user_covoiturage = (CheckBox) findViewById(R.id.checkBox);
         Button SaveButton = (Button) findViewById(R.id.save_user);
 
         user_username.setText(username);
@@ -243,6 +254,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_adresse.setText(adresse);
         user_cp.setText(cp);
         user_tel.setText(telephone);
+        user_covoiturage.setChecked(Boolean.valueOf(covoiturage));
 
         // Affiche les données utilisateur dans le header du drawer
         View header = (navigationView).getHeaderView(0);
@@ -274,6 +286,11 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 enteredAdress = user_adresse.getText().toString();
                 enteredCP = user_cp.getText().toString();
                 enteredTel = user_tel.getText().toString();
+                if (user_covoiturage.isChecked()) {
+                    covoiturage ="true";
+                }else
+                    covoiturage ="false";
+
                 final Context context = getApplicationContext();
                 String strFinalAdresse = enteredAdress + "," + enteredVille + " "+ enteredCP
                         + ", "+ country;
@@ -376,6 +393,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 parameters.put("latitude", String.valueOf(latitude));
                 parameters.put("longitude", String.valueOf(longitude));
                 parameters.put("cp", enteredCP);
+                parameters.put("covoiturage", covoiturage);
                 response = sh.performPostCall(serverUrl, parameters);
                 return null;
             } catch (Exception e)
@@ -407,7 +425,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             }
 
             if (jsonResult == 1) {
-                session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo);
+                session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo,covoiturage);
                 Intent intent = new Intent(Compte.this, MainActivity.class);
                 startActivity(intent);
             }
