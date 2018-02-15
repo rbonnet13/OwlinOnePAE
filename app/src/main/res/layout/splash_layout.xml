@@ -6,34 +6,19 @@
     android:background="@color/colorWhite">
 
     <ImageView
-        android:id="@+id/hibou_cherche"
-        android:layout_width="100dp"
-        android:layout_height="130dp"
-        android:src="@mipmap/hibou_cherche"
-        android:clickable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
-
-    <ImageView
         android:id="@+id/imgOwlDepart"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@mipmap/owlinonelogo"
-        android:layout_centerVertical="true" />
-    <ImageView
-        android:id="@+id/imgBulle"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bulle_hibou"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"/>
+
     <ImageView
         android:id="@+id/imgOwlEcole"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:src="@mipmap/hibou_selphi"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"/>
     <TextView
         android:id="@+id/merci"
         android:layout_width="wrap_content"
@@ -42,6 +27,5 @@
         android:textSize="80dp"
         android:textColor="@color/colorPrimaryDark"
         android:text="@string/merci"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

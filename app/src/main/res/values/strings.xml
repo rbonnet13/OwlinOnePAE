@@ -49,7 +49,7 @@
     <string name="vendu">Vendu</string>
     <string name="parametre">Paramètres</string>
     <string name="signaler">Signaler</string>
-    <string name="merci">MERCI!!!</string>
+    <string name="merci">Merci !</string>
     <string name="textCheckBoxAdd">Je certifie l\'exactitude et l\'authenticité des données saisies. Les
     données ne pourront pas être modifiées.</string>
     <string name="about">About</string>
@@ -88,11 +88,16 @@
     <string name="nomBold"><i>Nom</i></string>
     <string name="telephoneBold"><i>Téléphone</i></string>
     <string name="adresseBold"><i>Adresse</i></string>
+    <string name="adresse2Bold"><i>Adresse de l\'appartement</i></string>
     <string name="codePostalBold"><i>Code Postal</i></string>
     <string name="villeBold"><i>Ville</i></string>
 
     <string name="pseudoBold"><i>Pseudo</i></string>
     <string name="mdpBold"><i>Mot de passe</i></string>
     <string name="emailBold"><i>Email (@esaip.org)</i></string>
+    <string name="email2Bold"><i>Email</i></string>
+    <string name="prixBold"><i>Prix</i></string>
+    <string name="descriptionBold"><i>Description</i></string>
+
 
 </resources>

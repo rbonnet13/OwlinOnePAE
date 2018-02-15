@@ -1,6 +1,8 @@
 package owlinone.pae.configuration;
 
 
+import static owlinone.pae.configuration.AddressUrl.strIndexMDP;
+
 public class Constants {
 
     public static final String REGISTER_OPERATION = "register";
@@ -18,4 +20,5 @@ public class Constants {
     public static final String UNIQUE_ID = "unique_id";
 
     public static final String TAG = "Learn2Crack";
+    public static final String BASE_URL = strIndexMDP;
 }

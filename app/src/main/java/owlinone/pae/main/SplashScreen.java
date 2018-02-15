@@ -21,8 +21,6 @@ public class SplashScreen extends Activity {
     TextView textMerci = null;
     ImageView imgView = null;
     ImageView imgViewHibou = null;
-    ImageView imghibou_cherche = null;
-    ImageView imgBulle = null;
     long timeInMilliseconds = 0;
 
     Intent i = getIntent();
@@ -34,32 +32,19 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_layout);
 
-
         textMerci             = (TextView) findViewById(R.id.merci);
         imgView               = (ImageView) findViewById(R.id.imgOwlDepart);
         imgViewHibou          = (ImageView) findViewById(R.id.imgOwlEcole);
-        imghibou_cherche      = (ImageView) findViewById(R.id.hibou_cherche);
-        imgBulle              = (ImageView) findViewById(R.id.imgBulle);
         Intent intent         = getIntent();
         final String activity = intent.getStringExtra("activity");
         textMerci .setVisibility(View.INVISIBLE);
         imgViewHibou .setVisibility(View.INVISIBLE);
-        imgBulle .setVisibility(View.INVISIBLE);
-
-        imghibou_cherche.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                imgView .setVisibility(View.INVISIBLE);
-                imgBulle .setVisibility(View.VISIBLE);
-            }
-        });
 
         if("first".equals(activity))
         {
             imgView .setVisibility(View.INVISIBLE);
             textMerci .setVisibility(View.VISIBLE);
             imgViewHibou .setVisibility(View.VISIBLE);
-            imghibou_cherche.setVisibility(View.INVISIBLE);
-            imgBulle .setVisibility(View.INVISIBLE);
         }
         new Handler().postDelayed(new Runnable() {
 

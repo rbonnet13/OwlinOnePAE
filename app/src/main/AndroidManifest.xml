@@ -114,7 +114,11 @@
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name=".session.PasswordModification"
+                android:name=".session.PasswordReset"
+                android:screenOrientation="portrait">
+            </activity>
+            <activity
+                android:name=".session.ResetPasswordFragment"
                 android:screenOrientation="portrait">
             </activity>
 

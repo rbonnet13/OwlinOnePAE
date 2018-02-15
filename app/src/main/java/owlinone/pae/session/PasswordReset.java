@@ -38,8 +38,7 @@ import owlinone.pae.configuration.AddressUrl;
 
 public class PasswordReset extends AppCompatActivity {
     private EditText email;
-    private int request_code = 1;
-    private final String serverUrl = AddressUrl.strTriIndex;
+    //private final String serverUrl = AddressUrl.StrIndexMDP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +70,17 @@ public class PasswordReset extends AppCompatActivity {
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(inputStr);
                 if (!matcher.matches()) {
-                    Toast.makeText(PasswordReset.this, "Email doit être sous la forme @esaip.org", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordReset.this, "Cet email est inconnu", Toast.LENGTH_LONG).show();
                     return;
                 }
                 else{
-                    Intent intent = new Intent(PasswordReset.this, PasswordModification.class);
+                    Intent intent = new Intent(PasswordReset.this, ResetPasswordFragment.class);
                     startActivity(intent);
                 }
 
 // request authentication with remote server4
                 AsyncDataClass asyncRequestObject = new AsyncDataClass();
-                asyncRequestObject.execute(serverUrl, enteredEmail);
+                //asyncRequestObject.execute(serverUrl, enteredEmail);
             }
         });
 
