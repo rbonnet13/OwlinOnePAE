@@ -149,8 +149,8 @@
             android:layout_marginBottom="20dp"/>
         <CheckBox
             android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
             android:background="#11000000"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGrey"
@@ -158,12 +158,16 @@
             android:layout_below="@+id/ville_user"
             android:layout_centerHorizontal="true"
             android:buttonTint="@color/caldroid_white"
+            android:layout_marginBottom="20dp"
+            android:textSize="16dp"
+            android:checked="true"
             android:text="Participer au covoiturage" />
 
         <Button
             android:id="@+id/save_user"
             android:layout_width="250dp"
             android:layout_height="40dp"
+            android:gravity="center"
             android:background="@drawable/background_signup"
             android:layout_centerHorizontal="true"
             android:text="Sauvegarder"

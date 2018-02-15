@@ -47,8 +47,7 @@
             android:layout_below="@+id/texteCovoiturage"
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
-            android:clickable="true"
-            />
+            android:clickable="true"/>
 
         <Button
             android:layout_width="250dp"

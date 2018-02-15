@@ -431,6 +431,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo,covoiturage);
                 Intent intent = new Intent(Compte.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     }
