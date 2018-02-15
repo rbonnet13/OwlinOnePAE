@@ -351,10 +351,10 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     JSONObject a            = jsonArray.getJSONObject(i);
-                    int id_covoit           = a.getInt("id");
                     String username         = a.getString("username");
                     String prenom           = a.getString("PRENOM");
                     String nom              = a.getString("NOM");
+                    int id_covoit           = a.getInt("id");
                     String adresseMail      = a.getString("email");
                     String telephone        = a.getString("TELEPHONE");
                     String ville            = a.getString("VILLE");
