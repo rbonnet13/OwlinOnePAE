@@ -80,11 +80,6 @@ public class MainLogin extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password_field);
         TextView mdpValiation = (TextView) findViewById(R.id.mpd_oublie);
 
-
-        Toast.makeText(getApplicationContext(),
-                "User Login Status: " + session.isUserLoggedIn(),
-                Toast.LENGTH_LONG).show();
-
         Button loginButton = (Button) findViewById(R.id.login);
         Button registerButton = (Button) findViewById(R.id.register_button);
 

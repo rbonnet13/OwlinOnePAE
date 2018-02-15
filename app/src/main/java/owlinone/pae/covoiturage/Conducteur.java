@@ -151,9 +151,6 @@ public class Conducteur extends AppCompatActivity {
 
         // User Session Manager
         session = new Session(getApplicationContext());
-        Toast.makeText(getApplicationContext(),
-                "User Login Status: " + session.isUserLoggedIn(),
-                Toast.LENGTH_LONG).show();
         if(session.checkLogin())
             finish();
         // get user data from session
