@@ -522,10 +522,10 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         TimeOfClick = currentTime ;
                         new Client.sendUsers().execute();
                         Toast.makeText(getApplicationContext(),
-                                "Notification envoyée",
+                                "Notification envoyée !",
                                 Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(),
-                                "Merci d'attendre 1 minutes avant d'envoyé une nouvelle notification",
+                                "Merci d'attendre 1 minute avant d'envoyer une nouvelle notification",
                                 Toast.LENGTH_LONG).show();
 
                 }

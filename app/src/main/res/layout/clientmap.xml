@@ -79,16 +79,15 @@
                     android:stepSize="0.1"/>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="60dp"
+            android:layout_gravity="center">
             <Button
                 android:background="@drawable/background_login"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
                 android:textColor="@color/caldroid_holo_blue_light"
                 android:textAllCaps="false"
                 android:clickable="true"
@@ -97,24 +96,22 @@
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rechercher Covoiturage"
+                android:text="Rechercher covoiturage"
                 android:id="@+id/request"/>
             <Button
                 android:visibility="invisible"
+                android:background="@drawable/background_signup"
                 android:id="@+id/btn_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_login"
                 android:layout_centerHorizontal="true"
-                android:text="Envoyer Notif"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/caldroid_holo_blue_light"
+                android:text="Envoyer notification"
+                android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
                 android:clickable="true"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp"/>
+        </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
 
 </FrameLayout>
