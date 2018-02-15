@@ -44,7 +44,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -456,7 +458,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     }
                 }
                 Marker marker = mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker))
                         .title(IdConducteur)
                         .snippet("Conducteur :"+getNom+" "+getPrenom)
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
@@ -480,40 +482,57 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     }
     public boolean onMarkerClick(final Marker marker) {
 
-        // Check if a click count was set, then display the click count.
-             for (HashMap<String, String> map : covoitList) {
+        if (marker.getTitle().equals("Maison") || marker.getTitle().equals("ESAIP")){
+            mRequest.setVisibility(View.VISIBLE);
+            Button notifButton = (Button) findViewById(R.id.btn_notification);
+            notifButton.setVisibility(View.INVISIBLE);
+        }else {
+            // Check if a click count was set, then display the click count.
+            for (HashMap<String, String> map : covoitList) {
                 for (Map.Entry<String, String> mapEntry : map.entrySet()) {
                     String key = mapEntry.getKey();
                     String value = mapEntry.getValue();
                     if(key == "id") {
                         IdConducteurtest = value ;
                     }
-                    if (marker.getTitle().equals(IdConducteurtest)) {
-                        if (key == "username") {
-                            strUsernameConducteur = value;
+                    if (marker.getTitle().isEmpty()){
+
+                    }else{
+                        if (marker.getTitle().equals(IdConducteurtest)){
+                            if (key == "username") {
+                                strUsernameConducteur = value;
+                            }
+                            strNom = nom;
+                            strPrenom = prenom;
+                            strAdresse = adresse;
+                            strTelephone = telephone;
+                            strDestination = "home";
                         }
-                        strNom = nom;
-                        strPrenom = prenom;
-                        strAdresse = adresse;
-                        strTelephone = telephone;
-                        strDestination = "home";
                     }
                 }
             }
-        mRequest.setVisibility(View.INVISIBLE);
-        Button notifButton = (Button) findViewById(R.id.btn_notification);
-        notifButton.setVisibility(View.VISIBLE);
-        notifButton.setOnClickListener(new View.OnClickListener() {
+            mRequest.setVisibility(View.INVISIBLE);
+            Button notifButton = (Button) findViewById(R.id.btn_notification);
+            notifButton.setVisibility(View.VISIBLE);
+            notifButton.setOnClickListener(new View.OnClickListener() {
+                Date currentTime = Calendar.getInstance().getTime();
+                Date TimeOfClick;
+                @Override
 
-            @Override
+                public void onClick(View v) {
 
-            public void onClick(View v) {
-                new Client.sendUsers().execute();
-            }
-        });
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
+                        TimeOfClick = currentTime ;
+                        new Client.sendUsers().execute();
+                        Toast.makeText(getApplicationContext(),
+                                "Notification envoyée",
+                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),
+                                "Merci d'attendre 1 minutes avant d'envoyé une nouvelle notification",
+                                Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
         return false;
     }
 
@@ -523,11 +542,25 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         Marker markerEsaip = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_esaip))
+                .title("ESAIP")
                 .position(new LatLng(47.464051, -0.497334)));
+        InfoWindowData info = new InfoWindowData();
+        info.setImage("");
+        info.setHotel("EMAIL : contact.esaip@esaip.org");
+        info.setFood("TELEPHONE : 02414517475");
+        info.setTransport("ADRESSE : 3rue du 8 mai 1945 ");
+        markerEsaip.setTag(info);
         Marker markerAppart = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
+                .title("Maison")
                 .position(new LatLng( Double.valueOf(latit),Double.valueOf(longit)
                 )));
+        InfoWindowData info1 = new InfoWindowData();
+        info1.setImage("");
+        info1.setHotel("EMAIL : "+email);
+        info1.setFood("TELEPHONE : "+telephone);
+        info1.setTransport("ADRESSE : "+adresse);
+        markerAppart.setTag(info1);
         CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
 
         mMap.setInfoWindowAdapter(customInfoWindow);
