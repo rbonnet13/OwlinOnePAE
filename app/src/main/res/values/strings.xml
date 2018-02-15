@@ -24,7 +24,7 @@
 
     <!-- Définition des strings pour l'activité appartement -->
     <string name="euro">€/mois</string>
-    <string name="Trierpar">Trier par:</string>
+    <string name="Trierpar">Trier par</string>
     <string name="TrierDispo">Disponibilité</string>
     <string name="TrierPrix">Prix</string>
     <string name="TrierDeux">Les deux</string>
@@ -80,7 +80,7 @@
     <string name="rechercheCovoit">Recherche</string>
     <string name="notificationCovoit">Notifications</string>
 
-    <string name="DestinationNotif">Destination:</string>
+    <string name="DestinationNotif">Destination</string>
     <string name="HomeNotif">Vers Domicile</string>
     <string name="SchoolNotif">Vers Esaip</string>
 

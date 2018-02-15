@@ -151,9 +151,6 @@ public class Conducteur extends AppCompatActivity {
 
         // User Session Manager
         session = new Session(getApplicationContext());
-        Toast.makeText(getApplicationContext(),
-                "User Login Status: " + session.isUserLoggedIn(),
-                Toast.LENGTH_LONG).show();
         if(session.checkLogin())
             finish();
         // get user data from session
@@ -216,14 +213,7 @@ public class Conducteur extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         String responseRequete= "";
-        // Lire de Drawable
-        Drawable drawableEsaip = getResources().getDrawable(R.drawable.notif_vers_esaip);
-        Drawable drawableHome = getResources().getDrawable(R.drawable.notif_vers_home);
-        Bitmap versEsaip = ((BitmapDrawable) drawableEsaip).getBitmap();
-        Bitmap versHome = ((BitmapDrawable) drawableHome).getBitmap();
-        // On resize le drawable
-        Drawable finalVersEsaip = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(versEsaip, 50, 50, true));
-        Drawable finalVersHome = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(versHome, 50, 50, true));
+
         @Override
         protected void onPreExecute()
         {
@@ -283,7 +273,7 @@ public class Conducteur extends AppCompatActivity {
                     notification.put("PRENOM_NOTIF", prenom_notif);
                     notification.put("ADRESSE_NOTIF", adresse_notif);
                     notification.put("TELEPHONE_NOTIF", tel_notif);
-                    if(new String("Home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.vers_home));}
+                    if(new String("home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.vers_home));}
                     else notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.vers_esaip));
                     notification.put("DATE_NOTIF", agoTime);
                     // adding contact to contact list
