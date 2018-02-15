@@ -5,14 +5,16 @@
     <item
         android:id="@+id/DestinationNotif"
         android:orderInCategory="100"
-        android:title="@string/DestinationNotif"/>
+        android:title="@string/DestinationNotif"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/HomeNotif"
         android:orderInCategory="100"
-        android:title="@string/HomeNotif" />
+        android:title="@string/HomeNotif"
+        app:showAsAction="withText"/>
     <item
         android:id="@+id/SchoolNotif"
         android:orderInCategory="100"
         android:title="@string/SchoolNotif"
-        app:showAsAction="never" />
+        app:showAsAction="withText" />
 </menu>
