@@ -22,10 +22,13 @@
     <TextView
         android:id="@+id/merci"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:textStyle="bold"
-        android:textSize="80dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50dp"
+        android:background="@drawable/fond2"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:textColor="@color/colorWhite"
         android:text="@string/merci"
         android:layout_centerHorizontal="true"/>
 </RelativeLayout>

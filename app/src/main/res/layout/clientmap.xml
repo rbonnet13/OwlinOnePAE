@@ -97,7 +97,7 @@
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rechercher Co-Voiturage"
+                android:text="Rechercher Covoiturage"
                 android:id="@+id/request"/>
             <Button
                 android:visibility="invisible"

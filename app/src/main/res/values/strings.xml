@@ -11,7 +11,7 @@
     <string name="app_compte">Compte</string>
     <string name="app_article">Articles</string>
     <string name="app_calendrier">Événements</string>
-    <string name="app_covoiturage">Co-voiturage</string>
+    <string name="app_covoiturage">Covoiturage</string>
     <string name="app_appartement">Appartements</string>
     <string name="app_stage">Stages</string>
     <string name="app_bug">Signaler un bug</string>
@@ -49,7 +49,7 @@
     <string name="vendu">Vendu</string>
     <string name="parametre">Paramètres</string>
     <string name="signaler">Signaler</string>
-    <string name="merci">Merci !</string>
+    <string name="merci">Merci, votre appartement à été ajouté avec succès</string>
     <string name="textCheckBoxAdd">Je certifie l\'exactitude et l\'authenticité des données saisies. Les
     données ne pourront pas être modifiées.</string>
     <string name="about">About</string>
@@ -72,8 +72,8 @@
     <string name="inscription">Inscription</string>
     <string name="déconnexion">Déconnexion</string>
     <string name="compte">Compte</string>
-    <string name="conducteur">Conducteur</string>
-    <string name="client">Client</string>
+    <string name="conducteur">Voir vos notifications</string>
+    <string name="client">Rechercher un trajet</string>
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>
 

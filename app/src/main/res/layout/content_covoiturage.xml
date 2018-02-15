@@ -15,27 +15,36 @@
         <TextView
             android:id="@+id/texteCovoiturage"
             android:layout_width="350dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
             android:textSize="16dp"
             android:textAlignment="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:text="BIENVENUE SUR LE CO-VOITURAGE" />
+            android:fontFamily="casual"
+            android:text="Avec Owlinone, rentrez chez vous ou venez à l'ESAIP en quelques clics !" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/covoiturage_photo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:background="@drawable/background_signup"
+            android:background="@drawable/background_login"
             android:layout_centerHorizontal="true"
             android:id="@+id/conducteur"
             android:text="@string/conducteur"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/caldroid_holo_blue_light"
             android:textAllCaps="false"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="300dp"
             android:layout_below="@+id/texteCovoiturage"
-
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
             android:clickable="true"
@@ -52,7 +61,6 @@
             android:textAllCaps="false"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/conducteur"
-
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
             android:clickable="true"
