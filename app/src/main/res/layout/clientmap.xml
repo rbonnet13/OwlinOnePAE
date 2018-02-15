@@ -83,20 +83,36 @@
             android:background="@android:color/white"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/request"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@drawable/background_signup"
-                android:layout_gravity="center"
-                android:text="Rechercher Co-Voiturage"
-                android:textColor="@color/colorWhite"
+                android:background="@drawable/background_login"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/caldroid_holo_blue_light"
                 android:textAllCaps="false"
+                android:clickable="true"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rechercher Co-Voiturage"
+                android:id="@+id/request"/>
+            <Button
+                android:visibility="invisible"
+                android:id="@+id/btn_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_login"
+                android:layout_centerHorizontal="true"
+                android:text="Envoyer Notif"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/caldroid_holo_blue_light"
+                android:textAllCaps="false"
                 android:clickable="true"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:textSize="18sp"
                 />
         </LinearLayout>
     </LinearLayout>

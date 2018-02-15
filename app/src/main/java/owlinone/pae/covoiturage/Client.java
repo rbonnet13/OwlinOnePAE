@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -61,7 +62,7 @@ import owlinone.pae.session.Session;
  * Created by rudyb on 15/01/2018.
  */
 
-public class Client extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class Client extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener {
     Session session;
     private  String username ="";
     private  String password ="";
@@ -74,16 +75,15 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String photo ="";
     private  String latit ="";
     private  String longit ="";
-    private  String response ="";
-    private String geolat ="0";
-    private String geolong ="0";
-
+    private  String telephone ="";
+    private  String geolat ="0";
+    private  String geolong ="0";
+    private  String IdConducteur ="";
+    private  String IdConducteurtest ="";
     HttpHandler sh = new HttpHandler();
     private String TAG = Appartement.class.getSimpleName();
     String url= null;
-    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "";
-    String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
-    String strNomContext = "", strIdContext = "", disponible = "Disponible", nonDisponible = "Non disponible";
+    String strUsernameConducteur = "", strNom = "", strPrenom = "", strAdresse = "", strTelephone = "", strDestination = "";
 
     HashMap <String, String> obj = new HashMap();
     HashMap <String, String> objDispo = new HashMap();
@@ -225,6 +225,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
+
+
         session = new Session(getApplicationContext());
         Toast.makeText(getApplicationContext(),
                 "User Login Status: " + session.isUserLoggedIn(),
@@ -245,6 +247,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         photo = user.get(Session.KEY_PHOTO);
         latit = user.get(Session.KEY_LATITUDE);
         longit = user.get(Session.KEY_LONGITUDE);
+        telephone = user.get(Session.KEY_TEL);
 
         final Context context = getApplicationContext();
 
@@ -349,6 +352,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 {
                     JSONObject a            = jsonArray.getJSONObject(i);
                     int id_covoit           = a.getInt("id");
+                    String username         = a.getString("username");
                     String prenom           = a.getString("PRENOM");
                     String nom              = a.getString("NOM");
                     String adresseMail      = a.getString("email");
@@ -358,6 +362,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     String CP               = a.getString("CP");
                     Double latitudeAppart   = a.getDouble("LATITUDE");
                     Double longitudeAppart  = a.getDouble("LONGITUDE");
+                    String Photo            = a.getString("photo");
 
                     double result_covoiturage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
 
@@ -370,6 +375,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             HashMap<String, String> covoit = new HashMap<>();
                             // adding each child node to HashMap key => value
                             covoit.put("id", String.valueOf(id_covoit));
+                            covoit.put("username", username);
                             covoit.put("PRENOM", prenom);
                             covoit.put("NOM", nom);
                             covoit.put("email", adresseMail);
@@ -379,6 +385,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             covoit.put("CP", CP);
                             covoit.put("LATITUDE", String.valueOf(latitudeAppart));
                             covoit.put("LONGITUDE", String.valueOf(longitudeAppart));
+                            covoit.put("photo", Photo);
                             // adding contact to contact list
                             covoitList.add(covoit);
                         }
@@ -407,6 +414,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         @Override
         protected void onPostExecute(Void result)
         {
+            String getNom ="" ;
+            String getPrenom ="" ;
+            String getEmail="" ;
+            String getAdresse ="" ;
+            String getTelephone ="" ;
+            String getPhoto ="" ;
+
             super.onPostExecute(result);
             List<Marker> markers = new ArrayList<Marker>();
             for (HashMap<String, String> map : covoitList){
@@ -419,11 +433,40 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     if (key == "LONGITUDE") {
                         geolong = value;
                     }
+                    if (key == "id") {
+                        IdConducteur = value;
+                    }
+                    if (key == "NOM") {
+                        getNom = value;
+                    }
+                    if (key == "PRENOM") {
+                        getPrenom = value;
+                    }
+                    if (key == "email") {
+                        getEmail = value;
+                    }
+                    if (key == "ADRESSE") {
+                        getAdresse = value;
+                    }
+                    if (key == "TELEPHONE") {
+                        getTelephone = value;
+                    }
+                    if (key == "photo") {
+                        getPhoto = value;
+                    }
                 }
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
+                        .title(IdConducteur)
+                        .snippet("Conducteur :"+getNom+" "+getPrenom)
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
                         )));
+                InfoWindowData info = new InfoWindowData();
+                info.setImage(getPhoto);
+                info.setHotel("EMAIL : "+getEmail);
+                info.setFood("TELEPHONE : "+getTelephone);
+                info.setTransport("ADRESSE : "+getAdresse);
+                marker.setTag(info);
                 markers.add(marker);
             }
             markers.size();
@@ -435,7 +478,44 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         }
     }
+    public boolean onMarkerClick(final Marker marker) {
 
+        // Check if a click count was set, then display the click count.
+             for (HashMap<String, String> map : covoitList) {
+                for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+                    String key = mapEntry.getKey();
+                    String value = mapEntry.getValue();
+                    if(key == "id") {
+                        IdConducteurtest = value ;
+                    }
+                    if (marker.getTitle().equals(IdConducteurtest)) {
+                        if (key == "username") {
+                            strUsernameConducteur = value;
+                        }
+                        strNom = nom;
+                        strPrenom = prenom;
+                        strAdresse = adresse;
+                        strTelephone = telephone;
+                        strDestination = "home";
+                    }
+                }
+            }
+        mRequest.setVisibility(View.INVISIBLE);
+        Button notifButton = (Button) findViewById(R.id.btn_notification);
+        notifButton.setVisibility(View.VISIBLE);
+        notifButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+                new Client.sendUsers().execute();
+            }
+        });
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
+    }
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -448,12 +528,21 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
                 .position(new LatLng( Double.valueOf(latit),Double.valueOf(longit)
                 )));
+        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
+
+        mMap.setInfoWindowAdapter(customInfoWindow);
+        mMap.setOnMarkerClickListener(this);
+
+
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
         map.animateCamera(yourLocation);
+
         // You can customize the marker image using images bundled with
         // your app, or dynamically generated bitmaps.
     }
+
+
     @Override
     public void onLocationChanged(Location location) {
         if(getApplicationContext()!=null){
@@ -501,6 +590,27 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
                 }
                 break;
+            }
+        }
+    }
+    private class sendUsers extends AsyncTask<Void, Void, Void> {
+        Exception exception;
+        protected Void doInBackground(Void... arg0) {
+            try {
+                HttpHandler sh = new HttpHandler();
+                HashMap<String, String> parametersConducteur = new HashMap<>();
+                String urlNotification = AddressUrl.strNotifUser;
+                parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteur);
+                parametersConducteur.put("NOM_NOTIF",strNom);
+                parametersConducteur.put("PRENOM_NOTIF", strPrenom);
+                parametersConducteur.put("ADRESSE_NOTIF",strAdresse );
+                parametersConducteur.put("TELEPHONE_NOTIF", strTelephone);
+                parametersConducteur.put("DESTINATION_NOTIF", strDestination );
+                sh.performPostCall(urlNotification, parametersConducteur);
+                return null;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
             }
         }
     }
