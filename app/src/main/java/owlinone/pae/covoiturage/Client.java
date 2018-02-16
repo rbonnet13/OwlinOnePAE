@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -44,9 +45,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -278,6 +277,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             {
                 longitude = addressName.getLongitude();
                 latitude = addressName.getLatitude();
+            }else{
+                Toast.makeText(getApplicationContext(),
+                        "Erreur de localisation veuillez vous déconnecter",
+                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         } catch (IOException e)
         {
@@ -530,21 +536,25 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             Button notifButton = (Button) findViewById(R.id.btn_notification);
             notifButton.setVisibility(View.VISIBLE);
             notifButton.setOnClickListener(new View.OnClickListener() {
-                Date currentTime = Calendar.getInstance().getTime();
-                Date TimeOfClick;
+
                 @Override
 
-                public void onClick(View v) {
+                public void onClick(final View v) {
 
-                        TimeOfClick = currentTime ;
-                        new Client.sendUsers().execute();
-                        Toast.makeText(getApplicationContext(),
-                                "Notification envoyée !",
-                                Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(),
-                                "Merci d'attendre 1 minute avant d'envoyer une nouvelle notification",
-                                Toast.LENGTH_LONG).show();
-
+                    new Client.sendUsers().execute();
+                    Toast.makeText(getApplicationContext(), "Notification envoyée !", Toast.LENGTH_LONG).show();
+                    v.setEnabled(false);
+                    v.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Merci d'attendre 15 sec avant d'envoyer une nouvelle notification", Toast.LENGTH_LONG).show();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do something after 5s = 5000ms
+                            v.setVisibility(View.VISIBLE);
+                            v.setEnabled(true);
+                        }
+                    }, 15000);
                 }
             });
         }
