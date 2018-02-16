@@ -23,6 +23,7 @@
             android:animateLayoutChanges="false"
             />
     </android.support.design.widget.AppBarLayout>
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -79,6 +80,24 @@
                     android:stepSize="0.1"/>
             </LinearLayout>
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="410dp"
+            android:gravity="center">
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:thumb="@drawable/background_signup"
+                android:showText="true"
+                android:switchTextAppearance="@style/SwitchTextAppearance"
+                android:scaleY="2"
+                android:textOff="Vers domicile"
+                android:textOn="Vers ESAIP"/>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="250dp"
@@ -113,5 +132,7 @@
                 android:textSize="18sp"/>
         </RelativeLayout>
         </LinearLayout>
+
+
 
 </FrameLayout>
