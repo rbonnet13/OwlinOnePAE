@@ -73,6 +73,7 @@
         android:drawableStart="@drawable/ic_action_pass"
         android:hint="@string/mdpBold"
         android:inputType="textPassword|textCapSentences"
+        android:imeOptions="actionDone"
         android:layout_marginBottom="30dp"/>
 
 

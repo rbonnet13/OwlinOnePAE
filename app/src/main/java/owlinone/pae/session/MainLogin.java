@@ -9,7 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -68,8 +70,20 @@ public class MainLogin extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password_field);
         TextView mdpValiation = (TextView) findViewById(R.id.mpd_oublie);
 
-        Button loginButton = (Button) findViewById(R.id.login);
+        final Button loginButton = (Button) findViewById(R.id.login);
         Button registerButton = (Button) findViewById(R.id.register_button);
+
+        // Lorsque appui sur la touche Enter du clavier à la fin du MDP, simule un clic sur loginButton
+        password.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    loginButton.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -219,8 +233,6 @@ public class MainLogin extends AppCompatActivity {
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
                 session.createUserLoginSession(enteredUsername,jsonresultPrenom,jsonresultNom,jsonresultVille,jsonresultAdresse,jsonresultLatitude,jsonresultLongitude, jsonresultCP,jsonresultEmail,jsonresultTelephone,enteredPassword,jsonresultImg,"true");
-                Toast.makeText(MainLogin.this, "Pseudo = "+enteredUsername, Toast.LENGTH_LONG).show();
-
                 startActivity(intent);
                 finish();
             }
