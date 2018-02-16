@@ -77,7 +77,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     {
         Intent intent = getIntent();
         intent.putExtra("url",url);
-        // finish();
         startActivity(intent);
     }
 
@@ -171,21 +170,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 e.printStackTrace();
             }
         }
-
-        /*//Affichage de la flèche de retour-----------------------------------
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }*/
-
-        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Appartement.this, MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });*/
 
         //Glisser du doigt pour rafraichir----------------------------------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.appartement_activity_swipe_refresh_layout);
@@ -282,31 +266,40 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
 
         if(id == R.id.nav_deconnexion){
             session.logoutUser();
+            finish();
         } else if (id == R.id.nav_compte) {
             Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_article) {
             Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(searchIntent);
-        } else if (id == R.id.nav_appartement) {
+            finish();
+        /*} else if (id == R.id.nav_appartement) {
             Intent searchIntent = new Intent(getApplicationContext(), Appartement.class);
             startActivity(searchIntent);
+            finish();*/
         } else if (id == R.id.nav_covoiturage) {
             Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
             searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_stage) {
             Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_a_propos) {
             Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
             startActivity(searchIntent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

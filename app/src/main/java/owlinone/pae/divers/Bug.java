@@ -118,31 +118,40 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
 
         if(id == R.id.nav_deconnexion){
             session.logoutUser();
+            finish();
         } else if (id == R.id.nav_compte) {
             Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_article) {
             Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_appartement) {
             Intent searchIntent = new Intent(getApplicationContext(), Appartement.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_covoiturage) {
             Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
             searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
+            finish();
         } else if (id == R.id.nav_stage) {
             Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
             startActivity(searchIntent);
-        } else if (id == R.id.nav_bug) {
+            finish();
+        /*} else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
+            finish();*/
         } else if (id == R.id.nav_a_propos) {
             Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
             startActivity(searchIntent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
