@@ -21,12 +21,15 @@ import owlinone.pae.main.MainActivity;
 import owlinone.pae.R;
 
 public class LoginActivity extends AppCompatActivity {
+
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
+        // Affiche la vue du login
         setContentView(R.layout.activity_login);
+
+        // Déclaration des variables
         int TIME_OUT = 1500;
         Intent intent = getIntent();
         Bundle intentBundle = intent.getExtras();

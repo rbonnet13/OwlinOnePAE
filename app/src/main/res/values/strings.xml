@@ -72,6 +72,9 @@
     <string name="inscription">Inscription</string>
     <string name="déconnexion">Déconnexion</string>
     <string name="compte">Compte</string>
+
+    <!-- Définition des strings pour le covoiturage -->
+    <string name="intro_covoiturage">Avec Owl In One, rentrez chez vous ou venez à l\'ESAIP en quelques clics !</string>
     <string name="conducteur">Voir vos notifications</string>
     <string name="client">Rechercher un trajet</string>
     <string name="newMdp">Mot de passe oublié</string>
