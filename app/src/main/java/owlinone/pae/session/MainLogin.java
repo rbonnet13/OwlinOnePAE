@@ -9,8 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,37 +42,27 @@ import owlinone.pae.configuration.AddressUrl;
 
 public class MainLogin extends AppCompatActivity {
 
+    // Déclaration des variables
     protected EditText username;
     private EditText password;
     protected String enteredUsername;
     protected String enteredPassword;
-
     private final String serverUrl = AddressUrl.strTriIndex;
-
     private Session session;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Affiche la vue du login
         setContentView(R.layout.login_main_view);
+
         // User Session Manager
         session = new Session(getApplicationContext());
+
+        // Affichage la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar5);
         setSupportActionBar(toolbar);
-
-        //Affichage de la flèche de retour-----------------------------------
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         username = (EditText) findViewById(R.id.username_field);
         password = (EditText) findViewById(R.id.password_field);
@@ -126,40 +114,15 @@ public class MainLogin extends AppCompatActivity {
         });
     }
 
+    // On kill l'application pour économiser la batterie
     @Override
     public void onBackPressed(){
-        Toast.makeText(MainLogin.this, "Connexion obligatoire", Toast.LENGTH_LONG).show();
-    }
-    @Override
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-// Inflate the menu; this adds items to the action bar if it is present.
-
-
-        return true;
-
-    }
-
-    @Override
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-// Handle action bar item clicks here. The action bar will
-
-// automatically handle clicks on the Home/Up button, so long
-
-// as you specify a parent activity in AndroidManifest.xml.
-
-        int id = item.getItemId();
-
-//noinspection SimplifiableIfStatement
-
-        if (id == R.id.actionsettings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        System.exit(0);
     }
 
     private class AsyncDataClass extends AsyncTask<String, Void, String> {
