@@ -49,6 +49,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -58,6 +59,7 @@ import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Session;
 
 /**
@@ -82,6 +84,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String geolong ="0";
     private  String IdConducteur ="";
     private  String IdConducteurtest ="";
+    private  String Usernametest ="";
+
     HttpHandler sh = new HttpHandler();
     private String TAG = Appartement.class.getSimpleName();
     String url= null;
@@ -89,7 +93,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     HashMap <String, String> obj = new HashMap();
     HashMap <String, String> objDispo = new HashMap();
-    ArrayList<HashMap<String, String>> covoitList;
+    ArrayList<LinkedHashMap<String, String>> covoitList;
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
@@ -260,9 +264,16 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             Log.e("adresse:", String.valueOf(addresses));
             if(addresses != null && addresses.size() > 0){
                 addressName = addresses.get(0);
-            }
-            Log.e("adresse:", String.valueOf(addressName.getLongitude()));
+                Log.e("adresse:", String.valueOf(addressName.getLongitude()));
 
+            }else{
+                Toast.makeText(getApplicationContext(),
+                        "Erreur de localisation veuillez vous déconnecter",
+                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
             if(addressName.getLongitude() != 0.0)
             {
                 longitude = addressName.getLongitude();
@@ -354,10 +365,10 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     JSONObject a            = jsonArray.getJSONObject(i);
+                    int id_covoit           = a.getInt("id");
                     String username         = a.getString("username");
                     String prenom           = a.getString("PRENOM");
                     String nom              = a.getString("NOM");
-                    int id_covoit           = a.getInt("id");
                     String adresseMail      = a.getString("email");
                     String telephone        = a.getString("TELEPHONE");
                     String ville            = a.getString("VILLE");
@@ -375,7 +386,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         //on n'ajoute pas l'adresse de l'utilisateur courant
                     }else{
                         if (result_covoiturage <= 10000.0 ){
-                            HashMap<String, String> covoit = new HashMap<>();
+                            LinkedHashMap<String, String> covoit = new LinkedHashMap<>();
                             // adding each child node to HashMap key => value
                             covoit.put("id", String.valueOf(id_covoit));
                             covoit.put("username", username);
@@ -426,7 +437,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
             super.onPostExecute(result);
             List<Marker> markers = new ArrayList<Marker>();
-            for (HashMap<String, String> map : covoitList){
+            for (LinkedHashMap<String, String> map : covoitList){
                 for (Map.Entry<String, String> mapEntry : map.entrySet()) {
                     String key = mapEntry.getKey();
                     String value = mapEntry.getValue();
@@ -489,20 +500,23 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             notifButton.setVisibility(View.INVISIBLE);
         }else {
             // Check if a click count was set, then display the click count.
-            for (HashMap<String, String> map : covoitList) {
+            for (LinkedHashMap<String, String> map : covoitList) {
                 for (Map.Entry<String, String> mapEntry : map.entrySet()) {
                     String key = mapEntry.getKey();
                     String value = mapEntry.getValue();
                     if(key == "id") {
                         IdConducteurtest = value ;
                     }
+                    if(key == "username") {
+                        Usernametest = value ;
+                    }
+
                     if (marker.getTitle().isEmpty()){
 
                     }else{
                         if (marker.getTitle().equals(IdConducteurtest)){
-                            if (key == "username") {
-                                strUsernameConducteur = value;
-                            }
+
+                            strUsernameConducteur = Usernametest;
                             strNom = nom;
                             strPrenom = prenom;
                             strAdresse = adresse;
