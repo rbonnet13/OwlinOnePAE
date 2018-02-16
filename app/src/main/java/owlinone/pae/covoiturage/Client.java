@@ -470,7 +470,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     }
                 }
                 Marker marker = mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker))
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_conducteur))
                         .title(IdConducteur)
                         .snippet("Conducteur :"+getNom+" "+getPrenom)
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
@@ -586,7 +586,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
         map.animateCamera(yourLocation);
 
-        // You can customize the marker image using images bundled with
+        // You can customize the marker_conducteur image using images bundled with
         // your app, or dynamically generated bitmaps.
     }
 
