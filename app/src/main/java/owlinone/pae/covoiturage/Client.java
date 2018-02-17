@@ -479,14 +479,14 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_conducteur))
                         .title(IdConducteur)
-                        .snippet("Conducteur :"+getNom+" "+getPrenom)
+                        .snippet(getPrenom + " " + getNom)
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
                         )));
                 InfoWindowData info = new InfoWindowData();
-                info.setImage(getPhoto);
-                info.setHotel("EMAIL : "+getEmail);
-                info.setFood("TELEPHONE : "+getTelephone);
-                info.setTransport("ADRESSE : "+getAdresse);
+                info.setImage(String.valueOf(R.drawable.ic_action_name) + getPhoto);
+                info.setHotel(getEmail);
+                info.setFood(getTelephone);
+                info.setTransport(getAdresse);
                 marker.setTag(info);
                 markers.add(marker);
             }
@@ -571,10 +571,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 .title("ESAIP")
                 .position(new LatLng(47.464051, -0.497334)));
         InfoWindowData info = new InfoWindowData();
-        info.setImage("");
-        info.setHotel("EMAIL : contact.esaip@esaip.org");
-        info.setFood("TELEPHONE : 02414517475");
-        info.setTransport("ADRESSE : 3rue du 8 mai 1945 ");
+        info.setHotel("contact.esaip@esaip.org");
+        info.setFood("02414517475");
+        info.setTransport("3 rue du 8 mai 1945");
         markerEsaip.setTag(info);
         Marker markerAppart = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
@@ -583,9 +582,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 )));
         InfoWindowData info1 = new InfoWindowData();
         info1.setImage("");
-        info1.setHotel("EMAIL : "+email);
-        info1.setFood("TELEPHONE : "+telephone);
-        info1.setTransport("ADRESSE : "+adresse);
+        info1.setHotel(email);
+        info1.setFood(telephone);
+        info1.setTransport(adresse);
         markerAppart.setTag(info1);
         CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
 

@@ -37,7 +37,6 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
 
         TextView name_tv = (TextView) view.findViewById(R.id.name);
         TextView details_tv = (TextView) view.findViewById(R.id.details);
-        ImageView img = (ImageView) view.findViewById(R.id.image_conducteur);
 
         TextView hotel_tv = (TextView) view.findViewById(R.id.hotels);
         TextView food_tv = (TextView) view.findViewById(R.id.food);
@@ -47,15 +46,6 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
         details_tv.setText(marker.getSnippet());
 
         InfoWindowData infoWindowData = (InfoWindowData) marker.getTag();
-
-        String url_image = infoWindowData.getImage();
-        url_image = url_image.replace(" ","%20");
-        try {
-            Log.i("RESPUESTA IMAGE: ",""+url_image);
-            Glide.with(this.context).load(url_image).into(img);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         hotel_tv.setText(infoWindowData.getHotel());
         food_tv.setText(infoWindowData.getFood());
