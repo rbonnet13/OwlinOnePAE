@@ -13,7 +13,7 @@
     tools:context="owlinone.pae.calendrier.CalendarExtra">
 
 
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.github.sundeepk.compactcalendarview.CompactCalendarView
         android:id="@+id/compactcalendar_view"
         android:layout_width="fill_parent"
         android:layout_height="250dp"
@@ -27,7 +27,6 @@
         app:compactCalendarTargetHeight="250dp"
         app:compactCalendarTextColor="#000"
         app:compactCalendarTextSize="12sp" />
-
 
     <RelativeLayout
         android:layout_width="wrap_content"
