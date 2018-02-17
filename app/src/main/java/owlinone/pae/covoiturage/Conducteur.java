@@ -275,8 +275,8 @@ public class Conducteur extends AppCompatActivity {
                     notification.put("PRENOM_NOTIF", prenom_notif);
                     notification.put("ADRESSE_NOTIF", adresse_notif);
                     notification.put("TELEPHONE_NOTIF", tel_notif);
-                    if(new String("home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.vers_home));}
-                    else notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.vers_esaip));
+                    if(new String("home").equals(destination_notif)){notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.logo_maison));}
+                    else notification.put("DESTINATION_NOTIF", String.valueOf(R.drawable.logo_esaip));
                     notification.put("DATE_NOTIF", agoTime);
                     // adding contact to contact list
                     notifList.add(notification);

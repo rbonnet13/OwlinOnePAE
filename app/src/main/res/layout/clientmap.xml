@@ -80,29 +80,12 @@
                     android:stepSize="0.1"/>
             </LinearLayout>
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="410dp"
-            android:gravity="center">
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:thumb="@drawable/background_signup"
-                android:showText="true"
-                android:switchTextAppearance="@style/SwitchTextAppearance"
-                android:scaleY="2"
-                android:textOff="Vers domicile"
-                android:textOn="Vers ESAIP"/>
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="20dp"
             android:layout_gravity="center">
             <Button
                 android:background="@drawable/background_login"
@@ -130,6 +113,24 @@
                 android:clickable="true"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+
+            <ToggleButton
+                android:id="@+id/toggleDestination"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:background="@drawable/check"
+                android:textOn=""
+                android:textOff=""
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_centerVertical="true"/>
+
         </RelativeLayout>
         </LinearLayout>
 
