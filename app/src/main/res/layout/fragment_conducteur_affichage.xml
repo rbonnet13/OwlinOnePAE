@@ -4,17 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:padding="7dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="bottom"
+        android:minWidth="150dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_gravity="center">
 
             <TextView
@@ -32,48 +33,105 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Informations"/>
+                android:text="Informations"
+                android:textColor="@color/colorPrimary"/>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/details"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
-        <TextView
-            android:id="@+id/hotels"
+            android:orientation="horizontal"
+            android:layout_gravity="left|center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_name_bleu"/>
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:layout_marginTop="8dp"
+                android:paddingStart="2dp"
+                android:hint="Nom"
+                android:layout_gravity="left|center_horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+            </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Mail"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details"/>
-        <TextView
-            android:id="@+id/food"
+            android:orientation="horizontal"
+            android:layout_gravity="left|center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_adresse_bleu"/>
+
+            <TextView
+                android:id="@+id/transport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Adresse"
+                android:layout_marginTop="8dp"
+                android:paddingStart="2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_gravity="left|center_horizontal"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/food"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Tel"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hotels"/>
-        <TextView
-            android:id="@+id/transport"
+            android:orientation="horizontal"
+            android:layout_gravity="left|center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_email_bleu"/>
+
+            <TextView
+                android:id="@+id/hotels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Mail"
+                android:paddingStart="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="left|center_horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Adresse"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/food"/>
+            android:orientation="horizontal"
+            android:layout_gravity="left|center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_tel_bleu"/>
+
+            <TextView
+                android:id="@+id/food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Tel"
+                android:layout_marginTop="8dp"
+                android:paddingStart="2dp"
+                android:layout_gravity="left|center_horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hotels"/>
+        </LinearLayout>
+
     </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
