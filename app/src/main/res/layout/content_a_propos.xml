@@ -5,19 +5,221 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fond2"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/texte1"
+        android:orientation="vertical">
+
     <TextView
+        android:id="@+id/texteCovoiturage1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:singleLine="false"
+        android:text="Bienvenue sur l'application officielle du BDE Owl In One de l'ESAIP"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:id="@+id/logo_esaip_propos">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_esaip_2"
+            android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/texteCovoiturage2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Ici sera la description de l'onglet A propos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:singleLine="false"
+        android:text="Développeurs:"
+        android:layout_marginTop="20dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:layout_below="@+id/texte1"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_rudy"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/rudy_bonnet"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/rudy_bonnet"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="casual"
+                android:text="Rudy Bonnet"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layout_julian"
+            android:layout_marginTop="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/julian_fouillade"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/julian_fouillade"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="casual"
+                android:text="Julian Fouillade"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layout_emile"
+            android:layout_marginTop="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/emile_ageneau"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/emile_ageneau"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="casual"
+                android:text="Emile Ageneau"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layout_anthony"
+            android:layout_marginTop="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/anthony_coppin"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/anthony_coppin"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="casual"
+                android:text="Anthony Coppin"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layout_matteo"
+            android:layout_marginTop="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/matteo_gibellini"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/matteo_gibellini"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="casual"
+                android:text="Matteo Gibellini"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layout_benjamin"
+            android:layout_marginTop="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/benjamin_marty"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/benjamin_marty"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="casual"
+                android:text="Benjamin Marty"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

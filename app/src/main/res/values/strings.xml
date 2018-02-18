@@ -101,5 +101,8 @@
     <string name="prixBold"><i>Prix</i></string>
     <string name="descriptionBold"><i>Description</i></string>
 
+    <string name="a_propos_text">Avec Owl In One, /n rentrez chez vous
+        ou venez à l\'ESAIP en quelques clics !</string>
+
 
 </resources>

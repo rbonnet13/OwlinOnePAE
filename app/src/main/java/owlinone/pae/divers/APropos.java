@@ -1,6 +1,7 @@
 package owlinone.pae.divers;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +96,84 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
                 e.printStackTrace();
             }
         }
+
+        LinearLayout rudy_bonnet = (LinearLayout)findViewById(R.id.layout_rudy);
+        rudy_bonnet.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.linkedin.com/in/bonnetr/"));
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout julian_fouillade = (LinearLayout)findViewById(R.id.layout_julian);
+        julian_fouillade.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.linkedin.com/in/julianfouillade/"));
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout emile_ageneau = (LinearLayout)findViewById(R.id.layout_emile);
+        emile_ageneau.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.linkedin.com/in/emileageneau/"));
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout anthony_coppin = (LinearLayout)findViewById(R.id.layout_anthony);
+        anthony_coppin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.linkedin.com/in/anthony-coppin-353405106/"));
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout matteo_gibellini = (LinearLayout)findViewById(R.id.layout_matteo);
+        matteo_gibellini.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.linkedin.com/in/matteogibe/"));
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout benjamin_marty = (LinearLayout)findViewById(R.id.layout_benjamin);
+        benjamin_marty.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.linkedin.com/in/benmarty/"));
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout logo_esaip = (LinearLayout)findViewById(R.id.logo_esaip_propos);
+        logo_esaip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.esaip.org"));
+                startActivity(intent);
+            }
+        });
+
     }
 
     // Fonction appelée quand appuie sur la touche retour
@@ -158,4 +238,6 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
