@@ -18,12 +18,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -60,7 +62,6 @@ import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.main.MainActivity;
-import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
 
 
@@ -69,7 +70,7 @@ import owlinone.pae.session.Session;
  */
 
 public class Client extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,
-        GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnInfoWindowLongClickListener {
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnInfoWindowLongClickListener{
     Session session;
     private  String username ="";
     private  String password ="";
@@ -93,7 +94,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private String TAG = Appartement.class.getSimpleName();
     String url= null;
     String strUsernameConducteur = "", strNom = "", strPrenom = "", strAdresse = "", strTelephone = "", strDestination = "";
-
     HashMap <String, String> obj = new HashMap();
     HashMap <String, String> objDispo = new HashMap();
     ArrayList<LinkedHashMap<String, String>> covoitList;
@@ -110,7 +110,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     SupportMapFragment supportMapFragment = new SupportMapFragment();
     private Button  mRequest;
-
+    private ToggleButton toggle;
     private LatLng pickupLocation;
 
     private Boolean requestBol = false;
@@ -262,7 +262,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         //Récupération de la lontitude et de la latitude de l'addresse finale
         geocoder = new Geocoder(context, Locale.getDefault());
         try {
-            String fulladresse = adresse + " " + ville ;
+            String fulladresse = adresse +" "+ ville ;
             addresses = geocoder.getFromLocationName(fulladresse, 1);
             Log.e("adresse:", String.valueOf(addresses));
             if(addresses != null && addresses.size() > 0){
@@ -315,10 +315,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 startActivity(intent);
             }
         });
-
-
+        strDestination ="school";
+        toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
         mRequest = (Button) findViewById(R.id.request);
-
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -542,17 +541,27 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
                     }else{
                         if (marker.getTitle().equals(IdConducteurtest)){
-
                             strUsernameConducteur = Usernametest;
                             strNom = nom;
                             strPrenom = prenom;
                             strAdresse = adresse;
                             strTelephone = telephone;
-                            strDestination = "home";
                         }
                     }
                 }
             }
+            toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        // The toggle is enabled
+                        strDestination ="home";
+                    } else {
+                        // The toggle is disabled
+                        strDestination ="school";
+                    }
+                }
+            });
+
             mRequest.setVisibility(View.INVISIBLE);
             Button notifButton = (Button) findViewById(R.id.btn_notification);
             notifButton.setVisibility(View.VISIBLE);
@@ -561,7 +570,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 @Override
 
                 public void onClick(final View v) {
-
                     new Client.sendUsers().execute();
                     Toast.makeText(getApplicationContext(), "Notification envoyée !", Toast.LENGTH_LONG).show();
                     v.setEnabled(false);
@@ -578,6 +586,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     }, 15000);
                 }
             });
+
+
         }
         return false;
     }
@@ -627,7 +637,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         // You can customize the marker_conducteur image using images bundled with
         // your app, or dynamically generated bitmaps.
     }
-
 
 
     @Override
