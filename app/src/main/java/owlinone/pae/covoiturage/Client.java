@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,6 +60,7 @@ import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.main.MainActivity;
+import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
 
 
@@ -66,7 +68,8 @@ import owlinone.pae.session.Session;
  * Created by rudyb on 15/01/2018.
  */
 
-public class Client extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener {
+public class Client extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnInfoWindowLongClickListener {
     Session session;
     private  String username ="";
     private  String password ="";
@@ -259,7 +262,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         //Récupération de la lontitude et de la latitude de l'addresse finale
         geocoder = new Geocoder(context, Locale.getDefault());
         try {
-            String fulladresse = adresse + ville ;
+            String fulladresse = adresse + " " + ville ;
             addresses = geocoder.getFromLocationName(fulladresse, 1);
             Log.e("adresse:", String.valueOf(addresses));
             if(addresses != null && addresses.size() > 0){
@@ -327,6 +330,23 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         });
     }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("sms:" + telephone));
+        startActivity(sendIntent);
+
+    }
+
+    @Override
+    public void onInfoWindowLongClick(Marker marker) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data = Uri.parse("mailto:" + email);
+        intent.setData(data);
+        startActivity(intent);
+    }
+
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
         // public List<ArrayList<HashMap<String,String>>> Covoite = new ArrayList<ArrayList<HashMap<String,String>>>();
 
@@ -483,7 +503,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
                         )));
                 InfoWindowData info = new InfoWindowData();
-                info.setImage(String.valueOf(R.drawable.ic_action_name) + getPhoto);
+                info.setImage(getPhoto);
                 info.setHotel(getEmail);
                 info.setFood(getTelephone);
                 info.setTransport(getAdresse);
@@ -568,28 +588,36 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         Marker markerEsaip = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_esaip))
+                .snippet("GROUPE ESAIP")
                 .title("ESAIP")
                 .position(new LatLng(47.464051, -0.497334)));
         InfoWindowData info = new InfoWindowData();
+        info.setImage("");
         info.setHotel("contact.esaip@esaip.org");
         info.setFood("02414517475");
         info.setTransport("3 rue du 8 mai 1945");
         markerEsaip.setTag(info);
+
+        // Infos marker Domicile
         Marker markerAppart = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
+                .snippet(" DOMICILE")
                 .title("Maison")
                 .position(new LatLng( Double.valueOf(latit),Double.valueOf(longit)
                 )));
         InfoWindowData info1 = new InfoWindowData();
         info1.setImage("");
-        info1.setHotel(email);
-        info1.setFood(telephone);
-        info1.setTransport(adresse);
+        info1.setHotel(" " + email);
+        info1.setFood(" " + telephone);
+        info1.setTransport(" " + adresse);
         markerAppart.setTag(info1);
         CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
 
         mMap.setInfoWindowAdapter(customInfoWindow);
         mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnInfoWindowLongClickListener(this);
+
 
 
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
@@ -599,6 +627,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         // You can customize the marker_conducteur image using images bundled with
         // your app, or dynamically generated bitmaps.
     }
+
 
 
     @Override
