@@ -125,7 +125,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
         TextView dateText = (TextView) findViewById(R.id.date_calendar);
         dateText.setText(dateFormatMonth.format(date));
 
-
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
         for(EventCalendar d : myList)
