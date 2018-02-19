@@ -74,8 +74,8 @@
         </activity>
             <activity
                 android:name="owlinone.pae.calendrier.CalendarExtra"
-                android:theme="@style/CustomActionBarTheme"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:label="@string/app_calendrier">
             </activity>
             <activity
                 android:name="owlinone.pae.stage.Stage"

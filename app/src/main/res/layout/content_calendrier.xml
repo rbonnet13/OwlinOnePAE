@@ -10,7 +10,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="owlinone.pae.calendrier.CalendarExtra">
+    tools:context="owlinone.pae.calendrier.CalendarExtra"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_calendar"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:textSize="18dp"
+        android:hint="Date"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
 
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView
@@ -19,6 +30,7 @@
         android:layout_height="250dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
         app:compactCalendarBackgroundColor="#00ff"
         app:compactCalendarCurrentDayBackgroundColor="#FF0023"
         app:compactCalendarCurrentSelectedDayBackgroundColor="#05C7FC"
@@ -37,21 +49,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/listEvent"
+            <ListView
+                android:id="@+id/listEvent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+            </ListView>
+
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-        </ListView>
-
-
-    </LinearLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgOwlEvent"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:src="@drawable/owl_in_one_logo" />
+            android:id="@+id/imgOwlEvent"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:src="@drawable/owl_in_one_logo" />
     </RelativeLayout>
 
 
