@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity
     long timeInMilliseconds = 0;
     int index;
     int top;
-    ArrayList<EventCalendar> arrayListEvent;
     Session session;
     private final String strPhoto = AddressUrl.strPhoto;
 
@@ -66,9 +65,6 @@ public class MainActivity extends AppCompatActivity
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
         new ReadJson().execute();
-        arrayListEvent = new ArrayList<EventCalendar>();
-        new ReadJsonEvent().execute();
-
     }
 
     @Override
@@ -130,8 +126,7 @@ public class MainActivity extends AppCompatActivity
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
 
-        arrayListEvent = new ArrayList<EventCalendar>();
-        new ReadJsonEvent().execute();
+
 
         //Glisser du doigt pour rafraichir la page donc l'activité----------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_article);
@@ -254,7 +249,6 @@ public class MainActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_stage) {
@@ -369,76 +363,6 @@ public class MainActivity extends AppCompatActivity
                 lv.setSelectionFromTop(index, top);
             }
 
-        }
-    }
-    class ReadJsonEvent extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            HttpHandler sh = new HttpHandler();
-            String jsonStr = null;
-            jsonStr = sh.makeServiceCall(AddressUrl.strConnexionEvent);
-            Log.e(TAG, "Reponse from url: " + jsonStr);
-            if (jsonStr != null) {
-                try {
-                    JSONArray jsonArray = new JSONArray(jsonStr);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject a        = jsonArray.getJSONObject(i);
-                        int id_event      = a.getInt("ID_EVENEMENT");
-                        String date_event = a.getString("DEBUT_EVENEMENT");
-                        String titre_event  = a.getString("NOM_EVENEMENT");
-                        EventCalendar event         = new EventCalendar();
-                        event.setStrID(id_event);
-                        event.setStrTitre(titre_event);
-
-                        //AgoTime: récupération de la date de publication et actuelle
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        try {
-                            Date mDate = sdf.parse(date_event);
-                            Log.e(TAG, "Reponse from url: " + mDate.getHours());
-                            event.setiDay(mDate.getDate());
-                            event.setiMonth(mDate.getMonth());
-                            event.setiYear(mDate.getYear());
-                            event.setiHeure(mDate.getHours());
-                            event.setiMinute(mDate.getMinutes());
-                            event.setStrEvent(mDate.getHours() + ":" + mDate.getMinutes() + "     " + titre_event);
-                            timeInMilliseconds = mDate.getTime();
-
-                            System.out.println("Date in milli :: " + timeInMilliseconds);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                        event.setStrDate(String.valueOf(timeInMilliseconds));
-                        arrayListEvent.add(i,event);
-                    }
-
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
         }
     }
 }
