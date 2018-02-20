@@ -2,6 +2,7 @@ package owlinone.pae.covoiturage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -235,6 +237,17 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
 
+        //Test si première connexion pour afficher bulle information bouton
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean previouslyStarted = prefs.getBoolean(getString(R.string.premiereConnexion), false);
+        if(!previouslyStarted) {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.premiereConnexion), Boolean.TRUE);
+            edit.commit();
+            Toast.makeText(getApplicationContext(),
+                    "Clique sur le bouton en bas si tu veux changer de destination",
+                    Toast.LENGTH_LONG).show();
+        }
 
         session = new Session(getApplicationContext());
         if(session.checkLogin())

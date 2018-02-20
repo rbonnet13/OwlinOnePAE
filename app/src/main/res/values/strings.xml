@@ -81,6 +81,7 @@
     <string name="newMdp2">Nouveau mot de passe</string>
     <string name="rechercheCovoit">Recherche</string>
     <string name="notificationCovoit">Notifications</string>
+    <string name="premiereConnexion">première Connexion</string>
 
     <string name="DestinationNotif">Destination</string>
     <string name="HomeNotif">Vers Domicile</string>
