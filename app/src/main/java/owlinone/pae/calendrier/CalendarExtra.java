@@ -4,7 +4,6 @@ package owlinone.pae.calendrier;
  * Created by AnthonyCOPPIN on 04/01/2017.
  */
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -39,6 +38,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -66,8 +66,11 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
     ArrayAdapter<String> adapter;
     private ListView lvEvent;
     ArrayList<HashMap<String, String>> eventClicked;
+    ArrayList<HashMap<String, String>> eventCurrentDay;
+    Integer erreurMonth = 1;
+    Integer erreurYear = 1900;
     ArrayList<HashMap<String, String>> eventList;
-    HashMap <String, String> testEvent = new HashMap();
+    HashMap<String, String> testEvent = new HashMap();
     long timeInMilliseconds = 0;
     ImageView imgLogo = null;
     Date date = new Date();
@@ -97,7 +100,8 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         eventList = new ArrayList<>();
-
+        imgLogo = (ImageView) findViewById(R.id.imgOwlEvent);
+        lvEvent = (ListView) findViewById(R.id.listEvent);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -136,12 +140,12 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                 e.printStackTrace();
             }
         }
-        imgLogo = (ImageView) findViewById(R.id.imgOwlEvent);
-        lvEvent = (ListView) findViewById(R.id.listEvent);
         TextView dateText = (TextView) findViewById(R.id.date_calendar);
         dateText.setText(dateFormatMonth.format(date));
+
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
+
         // insertion
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
 
@@ -157,8 +161,7 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
 
                 eventClicked = new ArrayList<>();
 
-                Context context = getApplicationContext();
-                Log.e("Prout", "Date cliqué: " + dateClicked.toString());
+                Log.e("Prout", "Date cliqué Year: " + dateClicked.getYear());
                 for (HashMap<String, String> entry : eventList) {
                     if (dateClicked.getDate() == Integer.valueOf(entry.get("DAY_EVENEMENT")) && dateClicked.getMonth() == Integer.valueOf(entry.get("MONTH_EVENEMENT")) &&
                             dateClicked.getYear() == Integer.valueOf(entry.get("YEAR_EVENEMENT"))) {
@@ -166,52 +169,45 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                         lvEvent.setVisibility(View.VISIBLE);
                         HashMap<String, String> mylistEvent = new HashMap<>();
 
-                        mylistEvent.put("DATE",entry.get("ALL_EVENEMENT"));
-                        mylistEvent.put("LOGO_FACEBOOK",entry.get("FACEBOOK_EVENEMENT"));
-                        mylistEvent.put("LIEN_FACEBOOK",entry.get("LIEN_EVENEMENT"));
+                        mylistEvent.put("DATE", entry.get("ALL_EVENEMENT"));
+                        mylistEvent.put("LOGO_FACEBOOK", entry.get("FACEBOOK_EVENEMENT"));
+                        mylistEvent.put("LIEN_FACEBOOK", entry.get("LIEN_EVENEMENT"));
                         System.out.println("Boucle for:");
-                        for (Map.Entry mapentry : mylistEvent.entrySet()) {
-                            System.out.println("clé: "+mapentry.getKey()
-                                    + " | valeur: " + mapentry.getValue());
-                        }
+
                         eventClicked.add(mylistEvent);
                     }
-                    else {
-                        imgLogo.setVisibility(View.VISIBLE);
-                        lvEvent.setVisibility(View.INVISIBLE);
-                    }
                 }
 
-                for (HashMap<String, String> entry : eventClicked) {
-                    Log.e("TEST", "TEST EVENT: " + eventClicked.toString());
+                if (eventClicked.size() != 0) {
+                    ListAdapter adapter = new SimpleAdapter(CalendarExtra.this, eventClicked,
+                            R.layout.event_activity, new String[]{"DATE", "LOGO_FACEBOOK"},
+                            new int[]{R.id.text_event_calendar, R.id.facebook_logo_event});
+                    lvEvent.setAdapter(adapter);
+
+                    lvEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            testEvent = (HashMap) lvEvent.getItemAtPosition(position);
+
+                            String lien_event_click = testEvent.get("LIEN_FACEBOOK");
+                            Log.e("Event", "Lien onclick: " + lien_event_click);
+
+                            if (lien_event_click != "null") {
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                intent.setData(Uri.parse(lien_event_click));
+                                startActivity(intent);
+                            }
+                        }
+                    });
                 }
-
-
-                     if (eventClicked.size() != 0) {
-                         ListAdapter adapter = new SimpleAdapter(CalendarExtra.this,  eventClicked,
-                                 R.layout.event_activity, new String[]{"DATE", "LOGO_FACEBOOK"},
-                                 new int[]{R.id.text_event_calendar, R.id.facebook_logo_event});
-                         lvEvent.setAdapter(adapter);
-
-                         lvEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                             @Override
-                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                 testEvent = (HashMap) lvEvent.getItemAtPosition(position);
-
-                                 String lien_event_click = testEvent.get("LIEN_FACEBOOK");
-                                 Log.e("Event", "Lien onclick: " + lien_event_click);
-
-                                 if (lien_event_click != "null") {
-                                     Intent intent = new Intent();
-                                     intent.setAction(Intent.ACTION_VIEW);
-                                     intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                     intent.setData(Uri.parse(lien_event_click));
-                                     startActivity(intent);
-                                 }
-                             }
-                         });
-                 }
+                else {
+                    imgLogo.setVisibility(View.VISIBLE);
+                    lvEvent.setVisibility(View.INVISIBLE);
+                }
             }
+
             @Override
             public void onMonthScroll(Date fisrtDayOfNewMonth) {
                 //actionBar.setTitle(dateFormatMonth.format(fisrtDayOfNewMonth));
@@ -241,7 +237,7 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.nav_deconnexion){
+        if (id == R.id.nav_deconnexion) {
             session.logoutUser();
             finish();
         } else if (id == R.id.nav_compte) {
@@ -302,27 +298,30 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                 try {
                     JSONArray jsonArray = new JSONArray(jsonStr);
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject a        = jsonArray.getJSONObject(i);
+                        JSONObject a = jsonArray.getJSONObject(i);
                         String date_event = a.getString("DEBUT_EVENEMENT");
-                        String titre_event  = a.getString("NOM_EVENEMENT");
-                        String lien_event  = a.getString("LIEN_EVENEMENT");
+                        String titre_event = a.getString("NOM_EVENEMENT");
+                        String lien_event = a.getString("LIEN_EVENEMENT");
                         HashMap<String, String> evenement = new HashMap<>();
                         Log.e(TAG, "DEBUT_EVENEMENT : " + date_event);
                         Log.e(TAG, "NOM_EVENEMENT : " + titre_event);
                         Log.e(TAG, "LIEN_EVENEMENT : " + lien_event);
 
-                        if(lien_event != "null")
-                        {
+                        if (lien_event != "null") {
                             Log.e(TAG, "FACEBOOK_EVENEMENT : " + String.valueOf(R.drawable.facebook));
                             evenement.put("FACEBOOK_EVENEMENT", String.valueOf(R.drawable.facebook));
+                        } else {
+                            evenement.put("FACEBOOK_EVENEMENT", null);
                         }
-                        else { evenement.put("FACEBOOK_EVENEMENT", null);}
 
                         // adding each child node to HashMap key => value
                         evenement.put("LIEN_EVENEMENT", lien_event);
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             Date mDate = sdf.parse(date_event);
+                            Log.e(TAG, "YEARDATE : " + String.valueOf(mDate.getYear()));
+                            Log.e(TAG, "MONTHDATE : " + String.valueOf(mDate.getMonth())); //TODO changer pour deprecated et 1900 valeur
+                            Log.e(TAG, "DAYDATE : " + String.valueOf(mDate.getDate()));
                             evenement.put("MINUTE_EVENEMENT", String.valueOf(mDate.getMinutes()));
                             evenement.put("HOUR_EVENEMENT", String.valueOf(mDate.getHours()));
                             evenement.put("DAY_EVENEMENT", String.valueOf(mDate.getDate()));
@@ -333,8 +332,8 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                             evenement.put("DATEMILLI_EVENEMENT", String.valueOf(timeInMilliseconds));
 
                         } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                            e.printStackTrace();
+                        }
                         // adding contact to contact list
                         eventList.add(evenement);
                     }
@@ -365,10 +364,9 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             for (HashMap<String, String> entry : eventList) {
                 long date = Long.parseLong(entry.get("DATEMILLI_EVENEMENT"));
                 Log.e(TAG, "Date Event: " + date);
-                Event evl2 = new Event(Color.BLUE,date,"");
+                Event evl2 = new Event(Color.BLUE, date, "");
                 compactCalendar.addEvent(evl2);
             }
-            imgLogo = (ImageView) findViewById(R.id.imgOwlEvent);
 
             TextView dateText = (TextView) findViewById(R.id.date_calendar);
             dateText.setText(dateFormatMonth.format(date));
@@ -376,7 +374,64 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
             compactCalendar.setUseThreeLetterAbbreviation(true);
 
+
+            Calendar cal = Calendar.getInstance();
+            int currentYear = cal.get(Calendar.YEAR);
+            int currentMonth = cal.get(Calendar.MONTH) + 1;
+            int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+            Log.e("Current", "TEST DAY: " + currentYear + " " + currentMonth +" " + currentDay);
+
+            eventCurrentDay = new ArrayList<>();
+
+            for (HashMap<String, String> entry : eventList) {
+                Log.e("Current", "TEST FOR: " + Integer.valueOf(entry.get("YEAR_EVENEMENT")) + " " + Integer.valueOf(entry.get("MONTH_EVENEMENT")) +" " + Integer.valueOf(entry.get("DAY_EVENEMENT")));
+                if (currentDay == Integer.valueOf(entry.get("DAY_EVENEMENT")) && currentMonth == Integer.valueOf(entry.get("MONTH_EVENEMENT")) + erreurMonth &&
+                        currentYear == Integer.valueOf(entry.get("YEAR_EVENEMENT")) + erreurYear) {
+                    imgLogo.setVisibility(View.INVISIBLE);
+                    lvEvent.setVisibility(View.VISIBLE);
+                    HashMap<String, String> mylistEvent = new HashMap<>();
+
+                    mylistEvent.put("DATE", entry.get("ALL_EVENEMENT"));
+                    mylistEvent.put("LOGO_FACEBOOK", entry.get("FACEBOOK_EVENEMENT"));
+                    mylistEvent.put("LIEN_FACEBOOK", entry.get("LIEN_EVENEMENT"));
+                    System.out.println("Boucle for:");
+                    for (Map.Entry mapentry : mylistEvent.entrySet()) {
+                        System.out.println("clé: " + mapentry.getKey()
+                                + " | valeur: " + mapentry.getValue());
+                    }
+                    eventCurrentDay.add(mylistEvent);
+                }
+            }
+
+            if (eventCurrentDay.size() != 0) {
+                Log.e("Current", "EventCurrent: " + eventCurrentDay.toString());
+                ListAdapter adapter = new SimpleAdapter(CalendarExtra.this, eventCurrentDay,
+                        R.layout.event_activity, new String[]{"DATE", "LOGO_FACEBOOK"},
+                        new int[]{R.id.text_event_calendar, R.id.facebook_logo_event});
+                lvEvent.setAdapter(adapter);
+
+                lvEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        testEvent = (HashMap) lvEvent.getItemAtPosition(position);
+
+                        String lien_event_click = testEvent.get("LIEN_FACEBOOK");
+                        Log.e("Event", "Lien onclick: " + lien_event_click);
+
+                        if (lien_event_click != "null") {
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                            intent.setData(Uri.parse(lien_event_click));
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+            else {
+                imgLogo.setVisibility(View.VISIBLE);
+                lvEvent.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }
-

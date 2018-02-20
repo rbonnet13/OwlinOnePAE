@@ -322,7 +322,6 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
                         long time= System.currentTimeMillis();
-
                         //Fonction pour utiliser agoTime
                         String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time,DateUtils.SECOND_IN_MILLIS);
 
