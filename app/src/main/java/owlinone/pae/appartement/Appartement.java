@@ -56,7 +56,6 @@ import static owlinone.pae.configuration.AddressUrl.strPhoto;
 public class Appartement extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Déclaration des variables
-    ArrayList<EventCalendar> arrayListEvent;
     Session session;
 
     private String TAG = Appartement.class.getSimpleName();
@@ -285,7 +284,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_stage) {

@@ -13,20 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import owlinone.pae.*;
-import owlinone.pae.appartement.*;
-import owlinone.pae.calendrier.*;
-import owlinone.pae.covoiturage.*;
-import owlinone.pae.main.*;
-import owlinone.pae.session.*;
-import owlinone.pae.stage.*;
+import owlinone.pae.R;
+import owlinone.pae.appartement.Appartement;
+import owlinone.pae.calendrier.CalendarExtra;
+import owlinone.pae.covoiturage.Covoiturage;
+import owlinone.pae.main.MainActivity;
+import owlinone.pae.session.Compte;
+import owlinone.pae.session.Session;
+import owlinone.pae.stage.Stage;
 
 import static owlinone.pae.configuration.AddressUrl.strPhoto;
 
@@ -38,7 +37,6 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
 
 
     // Déclaration des variables
-    ArrayList<EventCalendar> arrayListEvent;
     Session session;
 
     @Override
@@ -137,7 +135,6 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
             finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_stage) {

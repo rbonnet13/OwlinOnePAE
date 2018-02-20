@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,14 +34,16 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-import owlinone.pae.*;
-import owlinone.pae.appartement.*;
-import owlinone.pae.calendrier.*;
-import owlinone.pae.configuration.*;
-import owlinone.pae.covoiturage.*;
-import owlinone.pae.divers.*;
-import owlinone.pae.main.*;
-import owlinone.pae.stage.*;
+import owlinone.pae.R;
+import owlinone.pae.appartement.Appartement;
+import owlinone.pae.calendrier.CalendarExtra;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.covoiturage.Covoiturage;
+import owlinone.pae.divers.APropos;
+import owlinone.pae.divers.Bug;
+import owlinone.pae.main.MainActivity;
+import owlinone.pae.stage.Stage;
 
 import static owlinone.pae.configuration.AddressUrl.strPhoto;
 
@@ -53,7 +54,6 @@ import static owlinone.pae.configuration.AddressUrl.strPhoto;
 public class Compte extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Déclaration des variables
-    ArrayList<EventCalendar> arrayListEvent;
     Session session;
     private TextView user_username;
     private TextView user_email;
@@ -362,7 +362,6 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_stage) {

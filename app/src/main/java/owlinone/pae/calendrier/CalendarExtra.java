@@ -140,10 +140,8 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
         lvEvent = (ListView) findViewById(R.id.listEvent);
         TextView dateText = (TextView) findViewById(R.id.date_calendar);
         dateText.setText(dateFormatMonth.format(date));
-        eventClicked = new ArrayList<>();
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
-
         // insertion
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
 
@@ -157,7 +155,7 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                 }
                 //lvEvent = (ListView) findViewById(R.id.listEvent);
 
-
+                eventClicked = new ArrayList<>();
 
                 Context context = getApplicationContext();
                 Log.e("Prout", "Date cliqué: " + dateClicked.toString());
