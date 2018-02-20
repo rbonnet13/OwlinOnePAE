@@ -3,8 +3,8 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-library
         android:name="com.google.android.maps" />
     <!-- on crée une permission pour notre application -->
