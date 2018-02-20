@@ -7,6 +7,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="api_debug_key">AIzaSyCyZbnFvalPGR9h1aJZJel8_7VtcDfCmPc</string>
+
     <!--Définition des strings concernant le nom des activités dans le drawer et les toolbars-->
     <string name="app_compte">Compte</string>
     <string name="app_article">Articles</string>
@@ -19,7 +21,6 @@
 
     <!--Définition des strings concernant le header du drawer-->
     <string name="bienvenue">Bienvenue</string>
-
     <string name="action_settings">Settings</string>
 
     <!-- Définition des strings pour l'activité appartement -->
@@ -43,7 +44,6 @@
     <string name="metreCarre">m²</string>
     <string name="adresse_mail">Adresse mail</string>
     <string name="CP_appart_add">Code Postal</string>
-    <string name="api_debug_key">AIzaSyBiuJ-d8UKWYyjpG-wQNreaGp8AIOTN_zE</string>
     <string name="disponible">Disponible</string>
     <string name="nonDisponible">Non disponible</string>
     <string name="vendu">Vendu</string>
@@ -101,7 +101,7 @@
     <string name="prixBold"><i>Prix</i></string>
     <string name="descriptionBold"><i>Description</i></string>
 
-    <string name="a_propos_text">Avec Owl In One, /n rentrez chez vous
+    <string name="a_propos_text">Avec Owl In One, rentrez chez vous
         ou venez à l\'ESAIP en quelques clics !</string>
 
 
