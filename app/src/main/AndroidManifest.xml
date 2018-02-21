@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="owlinone.pae">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="owlinone.pae">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -35,6 +36,7 @@
         <uses-library android:name="com.google.android.maps" />
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="@string/api_debug_key"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
 
         <activity
             android:name="owlinone.pae.main.SplashScreen"
@@ -147,9 +149,9 @@
 
 
             <!--
-                Optionally, register AnalyticsReceiver and AnalyticsService to support background
-                dispatching on non-Google Play devices
-            -->
+         Optionally, register AnalyticsReceiver and AnalyticsService to support background
+         dispatching on non-Google Play devices
+       -->
             <receiver
                 android:name="com.google.android.gms.analytics.AnalyticsReceiver"
                 android:enabled="true">
