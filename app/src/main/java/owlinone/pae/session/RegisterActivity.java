@@ -90,8 +90,8 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (enteredUsername.length() <= 1 || enteredPassword.length() <= 1) {
-                    Toast.makeText(RegisterActivity.this, "Le pseudo et le login doivent dépasser 1 caractère", Toast.LENGTH_LONG).show();
+                if (enteredUsername.length() <= 4 || enteredPassword.length() <= 4) {
+                    Toast.makeText(RegisterActivity.this, "Le pseudo et le login doivent dépasser 4 caractères", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(inputStr);
                 if (!matcher.matches()) {
-                    Toast.makeText(RegisterActivity.this, "Email doit sous la forme @esaip.org", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Votre email doit être sous la forme @esaip.org", Toast.LENGTH_LONG).show();
                     return;
                 }
 

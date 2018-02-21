@@ -314,7 +314,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                     e.printStackTrace();
                 }
                 if ( enteredNom.length() <= 1 || enteredPrenom.length() <= 1 || enteredVille.length() <= 1 || enteredAdress.length() <= 1 || enteredCP.length() != 5 || enteredTel.length() != 10) {
-                    Toast.makeText(Compte.this, "Remplir tout les champs SVP", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Compte.this, "S'il vous plaît, remplissez tous les champs", Toast.LENGTH_LONG).show();
                     return;
                 }
                 new Compte.AsyncDataClass().execute();
@@ -425,13 +425,13 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + response);
             if (response == null) {
-                Toast.makeText(Compte.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                Toast.makeText(Compte.this, "Problème de connexion réseau", Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = sh.returnParsedJsonObject(response);
             if(jsonResult == 0){
-                Toast.makeText(Compte.this, "erreur", Toast.LENGTH_LONG).show();
+                Toast.makeText(Compte.this, "Problème de connexion réseau", Toast.LENGTH_LONG).show();
                 return;
             }
 

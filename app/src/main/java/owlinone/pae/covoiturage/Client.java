@@ -587,7 +587,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     Toast.makeText(getApplicationContext(), "Notification envoyée !", Toast.LENGTH_LONG).show();
                     v.setEnabled(false);
                     v.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(), "Merci d'attendre 15 sec avant d'envoyer une nouvelle notification", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Merci d'attendre 30 secondes avant de pouvoir renvoyer une notification", Toast.LENGTH_LONG).show();
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -596,7 +596,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             v.setVisibility(View.VISIBLE);
                             v.setEnabled(true);
                         }
-                    }, 15000);
+                    }, 30000);
                 }
             });
 
@@ -696,7 +696,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "S'il vous plaît, donnez-nous la permission", Toast.LENGTH_LONG).show();
                 }
                 break;
             }
