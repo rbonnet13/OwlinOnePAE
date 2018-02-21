@@ -65,7 +65,7 @@ public final class AnalyticsTrackers {
             Tracker tracker;
             switch (target) {
                 case APP:
-                    tracker = GoogleAnalytics.getInstance(mContext).newTracker(R.xml.gobal_tracker);
+                    tracker = GoogleAnalytics.getInstance(mContext).newTracker(R.xml.global_tracker_2);
                     break;
                 default:
                     throw new IllegalArgumentException("Unhandled analytics target " + target);
