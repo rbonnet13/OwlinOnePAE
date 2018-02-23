@@ -1,5 +1,9 @@
 package owlinone.pae.covoiturage;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +23,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -62,9 +69,12 @@ import java.util.Map;
 import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.CovoitViewCircle;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Session;
+
+import static android.view.View.VISIBLE;
 
 
 /**
@@ -91,7 +101,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String IdConducteur ="";
     private  String IdConducteurtest ="";
     private  String Usernametest ="";
-
+    Boolean test = false;
+    Toast toast = null;
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
+    private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(2);
+    private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
     HttpHandler sh = new HttpHandler();
     private String TAG = Appartement.class.getSimpleName();
     String url= null;
@@ -232,22 +246,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
 
-        //Test si première connexion pour afficher bulle information bouton
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean previouslyStarted = prefs.getBoolean(getString(R.string.premiereConnexion), false);
-        if(!previouslyStarted) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.premiereConnexion), Boolean.TRUE);
-            edit.commit();
-            Toast.makeText(getApplicationContext(),
-                    "Clique sur le bouton en bas si tu veux changer de destination",
-                    Toast.LENGTH_LONG).show();
-        }
+
 
         session = new Session(getApplicationContext());
         if(session.checkLogin())
@@ -272,6 +277,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         //Récupération de la lontitude et de la latitude de l'addresse finale
         geocoder = new Geocoder(context, Locale.getDefault());
         try {
@@ -330,6 +336,85 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         });
         strDestination ="school";
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
+
+        //Test si première connexion pour afficher bulle information bouton
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean previouslyStarted = prefs.getBoolean(getString(R.string.testClient57), false);
+        if(!previouslyStarted) {
+
+            final CovoitViewCircle fadeBackground = findViewById(R.id.fadeBackground);
+            final ImageView bulle = findViewById(R.id.bulle_toast);
+            bulle.setVisibility(VISIBLE);
+            fadeBackground.bringToFront();
+            fadeBackground.setVisibility(VISIBLE);
+            fadeBackground.animate().alpha(0.5f);
+            bulle.bringToFront();
+            //On change la valeur dans le cache en true
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.testClient57), Boolean.TRUE);
+            edit.commit();
+
+
+            //Animation du Toggle button
+            toggle.setScaleY(0.7f);
+            toggle.setScaleX(0.7f);
+
+                final AnimatorSet animatorSetHeart = new AnimatorSet();
+
+                ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(toggle, "scaleY", 1f, 0.7f);
+                imgScaleUpYAnim.setDuration(300);
+                imgScaleUpYAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+                ObjectAnimator imgScaleUpXAnim = ObjectAnimator.ofFloat(toggle, "scaleX", 1f, 0.7f);
+                imgScaleUpXAnim.setDuration(300);
+                imgScaleUpXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
+
+                ObjectAnimator imgScaleDownYAnim = ObjectAnimator.ofFloat(toggle, "scaleY", 0.7f, 1f);
+                imgScaleDownYAnim.setDuration(300);
+                imgScaleDownYAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+                ObjectAnimator imgScaleDownXAnim = ObjectAnimator.ofFloat(toggle, "scaleX", 0.7f, 1f);
+                imgScaleDownXAnim.setDuration(300);
+                imgScaleDownXAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+
+                ObjectAnimator imgScaleUpYAnim2 = ObjectAnimator.ofFloat(toggle, "scaleY", 1.1f, 0.7f);
+                imgScaleUpYAnim2.setDuration(300);
+                imgScaleUpYAnim2.setInterpolator(DECCELERATE_INTERPOLATOR);
+                ObjectAnimator imgScaleUpXAnim2 = ObjectAnimator.ofFloat(toggle, "scaleX", 1.1f, 0.7f);
+                imgScaleUpXAnim2.setDuration(300);
+                imgScaleUpXAnim2.setInterpolator(DECCELERATE_INTERPOLATOR);
+
+                animatorSetHeart.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);
+                animatorSetHeart.play(imgScaleUpYAnim2).with(imgScaleUpXAnim2);
+                animatorSetHeart.start();
+
+                animatorSetHeart.addListener(new AnimatorListenerAdapter() {
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+
+                        toggle.setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                test = true;
+                            }
+                        });
+                        if(test == false) animatorSetHeart.start();
+                        else {
+                            // After some action
+                            fadeBackground.setVisibility(View.GONE);
+                            bulle.setVisibility(View.GONE);
+                            return;
+                        }
+
+                    }
+
+                });
+
+        }
+
+
         mRequest = (Button) findViewById(R.id.request);
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -534,7 +619,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     public boolean onMarkerClick(final Marker marker) {
 
         if (marker.getTitle().equals("Maison") || marker.getTitle().equals("ESAIP")){
-            mRequest.setVisibility(View.VISIBLE);
+            mRequest.setVisibility(VISIBLE);
             Button notifButton = (Button) findViewById(R.id.btn_notification);
             notifButton.setVisibility(View.INVISIBLE);
         }else {
@@ -577,7 +662,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
             mRequest.setVisibility(View.INVISIBLE);
             Button notifButton = (Button) findViewById(R.id.btn_notification);
-            notifButton.setVisibility(View.VISIBLE);
+            notifButton.setVisibility(VISIBLE);
             notifButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -593,7 +678,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         @Override
                         public void run() {
                             // Do something after 5s = 5000ms
-                            v.setVisibility(View.VISIBLE);
+                            v.setVisibility(VISIBLE);
                             v.setEnabled(true);
                         }
                     }, 15000);
@@ -731,4 +816,5 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
 }

@@ -24,6 +24,27 @@
             />
     </android.support.design.widget.AppBarLayout>
 
+
+    <owlinone.pae.configuration.CovoitViewCircle
+        android:id="@+id/fadeBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layerType="hardware"
+        android:alpha="0"
+        android:visibility="gone"
+        android:background="@android:color/black" />
+
+        <ImageView
+            android:layout_width="300sp"
+            android:layout_height="300sp"
+            android:id="@+id/bulle_toast"
+            android:src="@drawable/toast_bulle"
+            android:layerType="hardware"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:paddingLeft="50dp"
+            android:padding="20sp"/>
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -81,12 +102,12 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <RelativeLayout
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center">
+
             <Button
                 android:background="@drawable/background_login"
                 android:layout_centerHorizontal="true"
