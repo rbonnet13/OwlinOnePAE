@@ -364,7 +364,7 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             for (HashMap<String, String> entry : eventList) {
                 long date = Long.parseLong(entry.get("DATEMILLI_EVENEMENT"));
                 Log.e(TAG, "Date Event: " + date);
-                Event evl2 = new Event(Color.BLUE, date, "");
+                Event evl2 = new Event(Color.RED, date, "");
                 compactCalendar.addEvent(evl2);
             }
 

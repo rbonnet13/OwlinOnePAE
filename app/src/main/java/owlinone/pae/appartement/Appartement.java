@@ -467,7 +467,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                     public void run()
                     {
                         Toast.makeText(getApplicationContext(),
-                                "OUPS!! Essayer plus tard!",
+                                "Problème de connexion au serveur",
                                 Toast.LENGTH_LONG).show();
                     }
                 });
