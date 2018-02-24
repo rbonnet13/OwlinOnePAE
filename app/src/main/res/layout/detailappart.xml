@@ -92,6 +92,8 @@
             android:layout_above="@+id/detail_tel"
             android:layout_alignParentStart="true" />
 
+
+
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"

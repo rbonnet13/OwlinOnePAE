@@ -35,8 +35,8 @@
         android:background="@android:color/black" />
 
         <ImageView
-            android:layout_width="300sp"
-            android:layout_height="300sp"
+            android:layout_width="400sp"
+            android:layout_height="400sp"
             android:id="@+id/bulle_toast"
             android:src="@drawable/toast_bulle"
             android:layerType="hardware"
