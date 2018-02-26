@@ -24,7 +24,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Définition des strings pour l'activité appartement -->
-    <string name="euro">€/mois</string>
+    <string name="euro">€ CC/mois</string>
     <string name="Trierpar">Trier par</string>
     <string name="TrierDispo">Disponibilité</string>
     <string name="TrierPrix">Prix</string>
@@ -99,7 +99,7 @@
     <string name="mdpBold"><i>Mot de passe</i></string>
     <string name="emailBold"><i>Email (@esaip.org)</i></string>
     <string name="email2Bold"><i>Email</i></string>
-    <string name="prixBold"><i>Prix</i></string>
+    <string name="prixBold"><i>Prix (charges comprises)</i></string>
     <string name="descriptionBold"><i>Description</i></string>
 
     <string name="a_propos_text">Avec Owl In One, rentrez chez vous
