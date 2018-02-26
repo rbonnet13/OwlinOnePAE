@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -29,6 +30,7 @@ import owlinone.pae.R;
 
 public class DetailAppart extends AppCompatActivity implements OnMapReadyCallback{
     String strDetail= "";
+    String strDetailAppart = "";
     String strDetailTel= "";
     String strNomPropDetail= "";
     String strLongitude= "";
@@ -56,6 +58,7 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +71,17 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
 
 
         TextView textDetail = (TextView) findViewById(R.id.detail);
-        TextView textTel = (TextView) findViewById(R.id.detail_tel);
+        ImageButton textTel = (ImageButton) findViewById(R.id.detail_tel);
         TextView textNomPropDetail = (TextView) findViewById(R.id.nom_prop_detail);
-        TextView textMail = (TextView) findViewById(R.id.detail_mail);
+        ImageButton textMail = (ImageButton) findViewById(R.id.detail_mail);
+        TextView textDetailAppart = (TextView) findViewById(R.id.detail_appart);
+        TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
+        TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
+        TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
+
+
+
+
 
         //Récupère le string srtDetail pour les détails--------------------------------------------
         if (savedInstanceState == null) {
@@ -191,10 +202,34 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             strDispoContext = (String) savedInstanceState.getSerializable("strDispoContext");
         }
-        textDetail.setText("Adresse: " + "\n" + strAdresse + " à " + strVille + "." + "\n" + "\n" + "Ses caractéristiques sont: " + "\n" + strDetail + "\n" + "\n" + "Le prix est de: " + strPrix + "€/mois."  + "\n" + "\n" + "A la dernière mise à jour l'appartement est: " + strDispoContext + "." );
-        textTel.setText(strDetailTel);
-        textNomPropDetail.setText(" " + strNomPropDetail);
-        textMail.setText(strMail);
+
+        //Récupère le string strDispoContext pour le détail (T2 etc..)----------------------------------
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                strDetailAppart = null;
+            } else {
+                strDetailAppart = extras.getString("strDetailAppart");
+            }
+        } else {
+            strDetailAppart = (String) savedInstanceState.getSerializable("strDetailAppart");
+        }
+
+        // dans la toolbar
+        textDetailAppart.setText(strDetailAppart);
+        // sous le google map
+        textDetailPrix.setText(strPrix + "€ CC/mois");
+        textNomPropDetail.setText(strNomPropDetail);
+        textDetailAdresse.setText(strAdresse + "\n" + strVille + "\n");
+        // description appart
+        textDetail.setText(strDetail + "\n");
+        textDispo.setText(strDispoContext);
+
+
+
+
+
+
 
         //click pour appeler au téléphone
         textTel.setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fond2"
     android:weightSum="1">
 
     <LinearLayout
@@ -18,7 +19,6 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:theme="?attr/actionBarTheme"
-            app:title="@string/detail_appart"
             app:titleTextColor="@color/colorWhite"
             android:minHeight="?attr/actionBarSize"
             android:id="@+id/toolbar3" />
@@ -27,91 +27,137 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/nom_prop_detail"
-            android:maxLines="1"
-            android:ellipsize="none"
+            android:id="@+id/detail_appart"
+            android:singleLine="true"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:textColor="@color/colorWhite"
             android:gravity="center_vertical"
-            tools:textSize="18sp"
-            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="206dp"
-        android:layout_alignBottom="@+id/detail"
-        android:layout_alignParentStart="true">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/detail"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                 />
-        </ScrollView>
+            android:theme="?attr/actionBarTheme"
+            android:textSize="21dp"
+            style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title" />
 
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
 
         <fragment
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_above="@+id/detail_mail"
             class="com.google.android.gms.maps.SupportMapFragment"/>
-
-        <owlinone.pae.configuration.AutoResizeTextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:clickable="true"
-            android:background="?attr/colorPrimary"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_height="160px"
-            android:id="@+id/detail_mail"
-            android:maxLines="1"
-            android:ellipsize="none"
-            android:textColor="@color/colorWhite"
-            android:gravity="left|center_vertical"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textSize="35sp"
-            android:layout_above="@+id/detail_tel"
-            android:layout_alignParentStart="true" />
-
-
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:clickable="true"
-            android:background="?attr/colorBackgroundFloating"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textSize="35sp"
-            android:layout_height="160px"
-            android:id="@+id/detail_tel"
-            android:textColor="@color/colorPrimary"
-            android:gravity="left|center_vertical"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:textAlignment="center"
-            android:textAllCaps="false" />
-
-
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_alignBottom="@+id/detail">
+
+            <TextView
+                android:text="Prix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_prix"
+                android:fontFamily="casual"
+                android:textColor="@color/colorPrimary"
+                android:textSize="26sp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="Proprio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nom_prop_detail"
+                    android:fontFamily="casual"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"/>
+
+                <ImageButton
+                    android:id="@+id/detail_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/background_login"
+                    android:clickable="true"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:src="@drawable/ic_email_bleu"/>
+
+                <ImageButton
+                    android:id="@+id/detail_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:background="@drawable/background_login"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:src="@drawable/ic_tel_bleu"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:text="Adresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_adresse"
+                android:fontFamily="casual"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/descriptionText"
+                android:fontFamily="casual"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24dp"/>
+
+            <TextView
+                    android:text="Detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail"
+                    android:fontFamily="casual"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"/>
+
+            <TextView
+                android:text="Disponibilité"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:text="Dispo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_dispo"
+                android:fontFamily="casual"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
