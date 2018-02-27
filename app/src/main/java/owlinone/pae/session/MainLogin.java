@@ -137,7 +137,7 @@ public class MainLogin extends AppCompatActivity {
                     Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (enteredUsername.length() <= 2 || enteredPassword.length() <= 2) {
+                if (enteredUsername.length() <= 3 || enteredPassword.length() <= 3) {
                     Toast.makeText(MainLogin.this, "Le pseudo et le mot de passe doivent dépasser 3 caractères", Toast.LENGTH_LONG).show();
                     return;
                 }

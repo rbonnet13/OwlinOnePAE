@@ -121,14 +121,6 @@
                 android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait">
             </activity>
-            <activity
-                android:name=".password.PasswordReset"
-                android:screenOrientation="portrait">
-            </activity>
-            <activity
-                android:name=".session.ResetPasswordFragment"
-                android:screenOrientation="portrait">
-            </activity>
 
             <activity
                 android:name=".covoiturage.Client"

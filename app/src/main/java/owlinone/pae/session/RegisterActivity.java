@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (enteredUsername.length() <= 2 || enteredPassword.length() <= 2) {
+                if (enteredUsername.length() <= 3 || enteredPassword.length() <= 3) {
                     Toast.makeText(RegisterActivity.this, "Le pseudo et le login doivent dépasser 3 caractères", Toast.LENGTH_LONG).show();
                     return;
                 }
