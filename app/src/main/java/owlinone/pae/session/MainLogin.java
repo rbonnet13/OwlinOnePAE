@@ -35,11 +35,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.SecretPassword;
+import owlinone.pae.password.PasswordReset;
+
+import static owlinone.pae.configuration.SecretPassword.generateKey;
 
 
 public class MainLogin extends AppCompatActivity {
@@ -49,8 +63,11 @@ public class MainLogin extends AppCompatActivity {
     private EditText password;
     protected String enteredUsername;
     protected String enteredPassword;
+    protected String passwordEncrypted;
     private final String serverUrl = AddressUrl.strTriIndex;
     private Session session;
+    private SecretKey secret = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +110,28 @@ public class MainLogin extends AppCompatActivity {
 
                 enteredUsername = username.getText().toString();
                 enteredPassword = password.getText().toString();
+                try {
+                    secret = generateKey();
+                    passwordEncrypted = SecretPassword.encryptMsg(enteredPassword, secret);
+
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeySpecException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (InvalidParameterSpecException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                }
+
 
                 if (enteredUsername.equals("") || enteredPassword.equals("")) {
                     Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
@@ -104,7 +143,7 @@ public class MainLogin extends AppCompatActivity {
                 }
 // request authentication with remote server4
                 AsyncDataClass asyncRequestObject = new AsyncDataClass();
-                asyncRequestObject.execute(serverUrl, enteredUsername, enteredPassword);
+                asyncRequestObject.execute(serverUrl, enteredUsername, passwordEncrypted);
             }
 
         });
@@ -232,7 +271,7 @@ public class MainLogin extends AppCompatActivity {
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-                session.createUserLoginSession(enteredUsername,jsonresultPrenom,jsonresultNom,jsonresultVille,jsonresultAdresse,jsonresultLatitude,jsonresultLongitude, jsonresultCP,jsonresultEmail,jsonresultTelephone,enteredPassword,jsonresultImg,"true");
+                session.createUserLoginSession(enteredUsername,jsonresultPrenom,jsonresultNom,jsonresultVille,jsonresultAdresse,jsonresultLatitude,jsonresultLongitude, jsonresultCP,jsonresultEmail,jsonresultTelephone,passwordEncrypted,jsonresultImg,"true");
                 startActivity(intent);
                 finish();
             }

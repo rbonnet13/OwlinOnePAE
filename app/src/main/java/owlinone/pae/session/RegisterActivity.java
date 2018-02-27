@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,9 +28,14 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.SecretKey;
+
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.configuration.SecretPassword;
+
+import static owlinone.pae.configuration.SecretPassword.generateKey;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -48,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     private int request_code = 1;
     private final String serverUrl = AddressUrl.strTriIndex;
     HttpHandler sh = new HttpHandler();
+    SecretKey secret = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,9 +185,14 @@ public class RegisterActivity extends AppCompatActivity {
         {
             try
             {
+
+
+                secret = generateKey();
+
+
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("username", enteredUsername);
-                parameters.put("password", enteredPassword);
+                parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));
                 parameters.put("email", enteredEmail);
                 parameters.put("photo", enteredPhoto);
                 response = sh.performPostCall(serverUrl, parameters);

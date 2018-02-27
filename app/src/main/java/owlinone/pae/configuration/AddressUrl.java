@@ -6,12 +6,11 @@ package owlinone.pae.configuration;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.137.1";
-    private static String strPort = "80";
+    private static String strUrl = "192.168.1.68";
+    private static String strPort = "8888";
     private static String strDossierPhp = "test4";
 
-    public static final String strIndexMDP             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexMDP.php";
-    public static final String strChemin               = "http://" + strUrl;
+    public static final String strEmailRecup             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/recup_mail.php";
     public static final String strAddAppart            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/addAppart.php";
     public static final String strModifierDispo        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/modifierDispo.php";
     public static final String strArticle              = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/article.php";

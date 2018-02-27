@@ -69,7 +69,14 @@
                 android:name="owlinone.pae.article.DetailArticle"
                 android:screenOrientation="portrait">
             </activity>
-
+            <activity
+                android:name="owlinone.pae.password.PasswordReset"
+                android:screenOrientation="portrait">
+            </activity>
+            <activity
+                android:name="owlinone.pae.password.PasswordActivity"
+                android:screenOrientation="portrait">
+            </activity>
         <activity
             android:name="owlinone.pae.appartement.DetailAppart"
             android:screenOrientation="portrait">
@@ -115,7 +122,7 @@
                 android:screenOrientation="portrait">
             </activity>
             <activity
-                android:name=".session.PasswordReset"
+                android:name=".password.PasswordReset"
                 android:screenOrientation="portrait">
             </activity>
             <activity
