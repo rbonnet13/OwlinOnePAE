@@ -12,6 +12,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +47,6 @@
             android:src="@drawable/logo_esaip_2"
             android:layout_gravity="center"/>
         </LinearLayout>
-
 
     <TextView
         android:id="@+id/texteCovoiturage2"
@@ -221,5 +224,7 @@
         </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

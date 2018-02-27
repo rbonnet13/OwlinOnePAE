@@ -337,8 +337,8 @@ public class AddApart extends AppCompatActivity {
                 }
 
                 //Si ville appartement est nul------------------------------------------------
-                else if(strvilleAppart.length() == 0) {
-                    ville_appart.setError("Veuillez saisir une ville");
+                else if(strvilleAppart.length() == 0 || strvilleAppart.matches("^[\\w\\.-]")) {
+                    ville_appart.setError("Veuillez vérifier votre num de ville");
                     Toast.makeText(context, text, duration).show();
                 }
 
@@ -351,6 +351,12 @@ public class AddApart extends AppCompatActivity {
                 //Si prix appartement est nul--------------------------------------------------------
                 else if(strPrixAppart.length()==0 || strPrixAppart.length() > 4 ) {
                     prix_appart.setError("Veuillez saisir un prix à 4 chiffres maximum");
+                    Toast.makeText(context, text, duration).show();
+                }
+
+                //Si prix appartement est nul--------------------------------------------------------
+                else if(strDescripAppart.length()==0 || strDescripAppart.length() > 3 ) {
+                    descrip_appart.setError("Merci de vérifier la superficie de votre appartement");
                     Toast.makeText(context, text, duration).show();
                 }
 

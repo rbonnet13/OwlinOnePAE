@@ -48,31 +48,31 @@
                     android:id="@+id/adresse_notif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
                     android:layout_below="@+id/nom_notif"
-                    android:hint="Adresse" />
+                    android:hint="Adresse"
+                    android:textColor="@color/colorWhite" />
 
                 <TextView
                     android:id="@+id/tel_notif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:hint="Téléphone" />
+                    android:hint="Téléphone"
+                    android:textColor="@color/colorWhite" />
 
                 <TextView
                     android:id="@+id/date_notif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:hint="Date" />
+                    android:hint="Date"
+                    android:textColor="@color/colorWhite" />
 
             </LinearLayout>
 
-                <ImageView
+            <ImageView
                 android:id="@+id/destination_notif"
                 android:layout_width="110dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right|center_vertical"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/vers_home" />
         </LinearLayout>
 

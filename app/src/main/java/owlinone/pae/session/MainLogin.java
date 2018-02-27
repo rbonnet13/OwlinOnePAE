@@ -137,7 +137,7 @@ public class MainLogin extends AppCompatActivity {
                     Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (enteredUsername.length() <= 1 || enteredPassword.length() <= 3) {
+                if (enteredUsername.length() <= 2 || enteredPassword.length() <= 2) {
                     Toast.makeText(MainLogin.this, "Le pseudo et le mot de passe doivent dépasser 3 caractères", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -231,7 +231,7 @@ public class MainLogin extends AppCompatActivity {
 
             int jsonResult = returnParsedJsonObject(result);
             if (jsonResult == 0) {
-                Toast.makeText(MainLogin.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainLogin.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 return;
             }
 

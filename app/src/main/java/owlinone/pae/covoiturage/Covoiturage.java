@@ -103,8 +103,16 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
        mDriver.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(Covoiturage.this, Conducteur.class);
-               startActivity(intent);
+               if (adresse == null && ville == null)
+               {
+                   Toast.makeText(getApplicationContext(), "Merci de saisir vos coordonnées", Toast.LENGTH_LONG).show();
+                   Intent intent = new Intent(Covoiturage.this, Compte.class);
+                   startActivity(intent);
+               }
+               else{
+                   Intent intent = new Intent(Covoiturage.this, Conducteur.class);
+                   startActivity(intent);
+               }
                finish();
                return;
            }
