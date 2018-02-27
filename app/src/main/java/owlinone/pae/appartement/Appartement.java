@@ -61,7 +61,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     private String TAG = Appartement.class.getSimpleName();
     private ListView lv;
     String url= null;
-    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "";
+    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "" , strDetailAppart = "";
     String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
     String strNomContext = "", strIdContext = "", disponible = "Disponible", nonDisponible = "Non disponible";
 
@@ -224,6 +224,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 strAdresse       = obj.get("ADRESSE_APPART");
                 strVille         = obj.get("VILLE_APPART");
                 strDispoContext  = obj.get("DISPO_APPART");
+                strDetailAppart  = obj.get("DESCRIP_APPART");
 
                 //On récupère les valeurs et utilisont INTENT pour l'enregistrer pour la prochaine activité
                 Intent intentAppart = new Intent(getApplicationContext(), DetailAppart.class);
@@ -237,6 +238,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 intentAppart.putExtra("strVille",strVille);
                 intentAppart.putExtra("strPrix",strPrix);
                 intentAppart.putExtra("strDispoContext",strDispoContext);
+                intentAppart.putExtra("strDetailAppart",strDetailAppart);
                 startActivity(intentAppart);
             }
         });

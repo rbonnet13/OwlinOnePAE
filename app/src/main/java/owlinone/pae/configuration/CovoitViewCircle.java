@@ -68,7 +68,7 @@ public class CovoitViewCircle extends View
         int cy = (pt + (usableHeight / 2)) +  820;
 
         paint.setColor(circleColor);
-        canvas.drawCircle(cx, cy, 160, paint);
+        canvas.drawCircle(cx, cy, 200, paint);
         Log.e("Draw X:", String.valueOf(cx));
         Log.e("Draw Y:", String.valueOf(cy));
 
