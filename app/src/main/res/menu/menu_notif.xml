@@ -5,8 +5,7 @@
     <item
         android:id="@+id/DestinationNotif"
         android:orderInCategory="100"
-        android:title="@string/DestinationNotif"
-        app:showAsAction="always"/>
+        android:title="@string/DestinationNotif"/>
     <item
         android:id="@+id/HomeNotif"
         android:orderInCategory="100"
