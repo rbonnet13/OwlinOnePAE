@@ -35,8 +35,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="144dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
         app:srcCompat="@drawable/owl_in_one_logo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -57,7 +57,7 @@
         android:textColor="@color/colorWhite"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <EditText
         android:layout_width="250dp"
@@ -75,7 +75,7 @@
         android:hint="@string/mdpBold"
         android:inputType="textPassword|textCapSentences"
         android:imeOptions="actionDone"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="20dp"/>
 
 
 
@@ -93,7 +93,7 @@
         android:clickable="true"
         style="@style/Base.TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/register_button"
