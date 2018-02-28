@@ -6,11 +6,11 @@ package owlinone.pae.configuration;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.137.1";
+    private static String strUrl = "192.168.137.170";
     private static String strPort = "80";
     private static String strDossierPhp = "test4";
 
-    public static final String strEmailRecup             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/recup_mail.php";
+    public static final String strEmailRecup           = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/recup_mail.php";
     public static final String strAddAppart            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/addAppart.php";
     public static final String strModifierDispo        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/modifierDispo.php";
     public static final String strArticle              = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/article.php";
@@ -32,5 +32,6 @@ public class AddressUrl {
     public static final String strGCM                  = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/register_GCM.php";
     public static final String strIndexGCM             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGCM.php";
     public static final String strNbNotif              = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexRecup_nb_notif.php";
+    public static final String strNotifAccepte         = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/repondre_notif_positif.php";
 
 }
