@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -19,6 +21,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -30,6 +33,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -37,6 +41,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -71,6 +76,8 @@ import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.CovoitViewCircle;
 import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.googleMessaging.QuickstartPreferences;
+import owlinone.pae.googleMessaging.RegistrationIntentService;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Session;
 
@@ -101,6 +108,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String IdConducteur ="";
     private  String IdConducteurtest ="";
     private  String Usernametest ="";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private ProgressBar mRegistrationProgressBar;
+    private TextView mInformationTextView;
     Boolean test = false;
     Toast toast = null;
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
@@ -414,7 +426,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         }
 
-
         mRequest = (Button) findViewById(R.id.request);
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -426,6 +437,42 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 mMap.animateCamera(yourLocation);
             }
         });
+        mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    mInformationTextView.setText(getString(R.string.gcm_send_message));
+                } else {
+                    mInformationTextView.setText(getString(R.string.token_error_message));
+                }
+            }
+        };
+        mInformationTextView = (TextView) findViewById(R.id.informationTextView);
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
 
     @Override
@@ -669,6 +716,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
                 public void onClick(final View v) {
                     new Client.sendUsers().execute();
+                    new Client.sendGCM().execute();
+
                     Toast.makeText(getApplicationContext(), "Notification envoyée !", Toast.LENGTH_LONG).show();
                     v.setEnabled(false);
                     v.setVisibility(View.INVISIBLE);
@@ -809,12 +858,45 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
     }
 
+    private class sendGCM extends AsyncTask<Void, Void, Void> {
+        Exception exception;
+        protected Void doInBackground(Void... arg0) {
+            try {
+                HttpHandler sh = new HttpHandler();
+                HashMap<String, String> parametersConducteur = new HashMap<>();
+                String urlNotification = AddressUrl.strIndexGCM;
+                parametersConducteur.put("prenom", prenom);
+                parametersConducteur.put("nom", nom);
+                parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteur);
+                sh.performPostCall(urlNotification, parametersConducteur);
+                return null;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+    }
+
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
 }

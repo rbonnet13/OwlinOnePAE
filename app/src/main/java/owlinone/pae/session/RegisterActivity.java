@@ -185,11 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         {
             try
             {
-
-
                 secret = generateKey();
-
-
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("username", enteredUsername);
                 parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));
@@ -234,6 +230,4 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }

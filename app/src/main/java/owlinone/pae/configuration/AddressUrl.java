@@ -6,8 +6,8 @@ package owlinone.pae.configuration;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.1.68";
-    private static String strPort = "8888";
+    private static String strUrl = "192.168.137.1";
+    private static String strPort = "80";
     private static String strDossierPhp = "test4";
 
     public static final String strEmailRecup             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/recup_mail.php";
@@ -29,4 +29,8 @@ public class AddressUrl {
     public static final String strTriIndexGPS          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGPS.php";
     public static final String strPhoto                = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp + "/";
     public static final String strNotifUser            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexNotification.php";
+    public static final String strGCM                  = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/register_GCM.php";
+    public static final String strIndexGCM             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGCM.php";
+    public static final String strNbNotif              = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexRecup_nb_notif.php";
+
 }
