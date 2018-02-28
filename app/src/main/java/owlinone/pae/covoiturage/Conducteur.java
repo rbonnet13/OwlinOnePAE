@@ -1,5 +1,6 @@
 package owlinone.pae.covoiturage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,15 +13,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -39,6 +44,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import owlinone.pae.R;
+import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.session.Session;
@@ -53,44 +59,40 @@ public class Conducteur extends AppCompatActivity {
     long timeInMilliseconds = 0;
     private String TAG = Conducteur.class.getSimpleName();
     private ListView lv;
-    String url= null;
-    String  strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "";
+    String url = null;
+    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "";
 
 
-
-
-    HashMap <String, String> obj = new HashMap();
+    HashMap<String, String> obj = new HashMap();
     ArrayList<HashMap<String, String>> notifList;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     //Redémarre l'activité
-    private void restartActivity()
-    {
+    private void restartActivity() {
         Intent intent = getIntent();
-        intent.putExtra("url",url);
+        intent.putExtra("url", url);
         finish();
         startActivity(intent);
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_notif, menu);
         return true;
     }
+
     //Item de sélection de l'item pour le tri des appartements---------------------
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
             case R.id.DestinationNotif:
                 return true;
             case R.id.HomeNotif:
-                url = AddressUrl.strNotifHome ;
+                url = AddressUrl.strNotifHome;
                 restartActivity();
                 return true;
             case R.id.SchoolNotif:
@@ -101,6 +103,7 @@ public class Conducteur extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,26 +124,16 @@ public class Conducteur extends AppCompatActivity {
             }
         });
 
-        /*//Affichage de la flèche de retour-----------------------------------
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }*/
-
         //Glisser du doigt pour rafraichir----------------------------------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
-        mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5,199,252));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
+        mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5, 199, 252));
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
+            public void onRefresh() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                ( new Handler()).postDelayed(new Runnable()
-                {
+                (new Handler()).postDelayed(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
                         notifList = new ArrayList<>();
                         lv = (ListView) findViewById(R.id.listNotification);
@@ -153,7 +146,7 @@ public class Conducteur extends AppCompatActivity {
 
         // User Session Manager
         session = new Session(getApplicationContext());
-        if(session.checkLogin())
+        if (session.checkLogin())
             finish();
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
@@ -161,7 +154,7 @@ public class Conducteur extends AppCompatActivity {
         strNameUser = user.get(Session.KEY_NAME);
 
         notifList = new ArrayList<>();
-        lv         = (ListView) findViewById(R.id.listNotification);
+        lv = (ListView) findViewById(R.id.listNotification);
         new GetNotif().execute();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -169,45 +162,44 @@ public class Conducteur extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //  JSONObject sTest = new JSONObject();
                 //  String strTest = String.valueOf(lv.getItemAtPosition(position));
-                obj              = (HashMap)lv.getItemAtPosition(position);
-                strNom        = obj.get("NOM_NOTIF");
-                strPrenom        = obj.get("PRENOM_NOTIF");
+                obj = (HashMap) lv.getItemAtPosition(position);
+                strNom = obj.get("NOM_NOTIF");
+                strPrenom = obj.get("PRENOM_NOTIF");
                 strAdresse = obj.get("ADRESSE_NOTIF");
-                strTel    = obj.get("TELEPHONE_NOTIF");
-                strDate    = obj.get("DATE_NOTIF");
-                strDestination    = obj.get("DESTINATION_NOTIF");
+                strTel = obj.get("TELEPHONE_NOTIF");
+                strDate = obj.get("DATE_NOTIF");
+                strDestination = obj.get("DESTINATION_NOTIF");
 
 
-                //On récupère les valeurs et utilisont INTENT pour l'enregistrer pour la prochaine activité
-                Intent intentNotification = new Intent(getApplicationContext(), DetailNotif.class);
-                intentNotification.putExtra("strNom",strNom);
-                intentNotification.putExtra("strPrenom",strPrenom);
-                intentNotification.putExtra("strAdresse",strAdresse);
-                intentNotification.putExtra("strTel",strTel);
-                intentNotification.putExtra("strDate",strDate);
-                intentNotification.putExtra("strDestination",strDestination);
-                startActivity(intentNotification);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Conducteur.this);
+
+                builder.setTitle("Covoiturage");
+                builder.setIcon(R.drawable.owl_in_one_logo);
+                builder.setMessage("Accepter le covoiturage ?");
+
+                builder.setPositiveButton("NON", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing but close the dialog
+
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("OUI", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
-        });
-
+    });
         //Sert pour l'appuie long (Entregistre le context du menu
         registerForContextMenu(lv);
-    }
-
-    // Convertir image en string
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private String convertirImgString(Bitmap bitmap) {
-        String imagenString;
-        ByteArrayOutputStream array=new ByteArrayOutputStream();
-        if(bitmap!=null){
-            bitmap.compress(Bitmap.CompressFormat.JPEG,30,array);
-            byte[] imagenByte=array.toByteArray();
-            imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
-        }else{
-            imagenString = "sans image"; //se enviara este string en caso de no haber imagen
-        }
-
-        return imagenString;
     }
 
     private class GetNotif extends AsyncTask<Void, Void, Void>
@@ -298,6 +290,19 @@ public class Conducteur extends AppCompatActivity {
             lv.setAdapter(adapter);
         }
     }
+
+
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int index = info.position;
+        obj = (HashMap)lv.getItemAtPosition(index);
+
+        // Bla bla bla ....
+
+        return true;
+    }
+
+
 
     // Fonction appelée quand appuie sur la touche retour
     @Override
