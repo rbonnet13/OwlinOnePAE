@@ -23,7 +23,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
-        app:layout_behavior="owlinone.pae.divers.MyFabBehavior"
         android:id="@+id/buttonAddAppart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
