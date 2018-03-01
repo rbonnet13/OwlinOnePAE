@@ -4,6 +4,7 @@ package owlinone.pae.session;
  * Created by rudy on 22/11/2017.
  */
 
+import android.app.Activity;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -15,6 +16,11 @@ import android.view.Menu;
 
 import android.view.MenuItem;
 
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import owlinone.pae.main.MainActivity;

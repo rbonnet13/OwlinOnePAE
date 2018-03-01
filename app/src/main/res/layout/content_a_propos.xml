@@ -12,6 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +45,6 @@
             android:layout_gravity="center"/>
         </LinearLayout>
 
-
     <TextView
         android:id="@+id/texteCovoiturage2"
         android:layout_width="match_parent"
@@ -57,6 +57,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="18sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -220,6 +221,8 @@
                 android:text="Benjamin Marty"/>
         </LinearLayout>
 
+
     </LinearLayout>
+
 
 </RelativeLayout>

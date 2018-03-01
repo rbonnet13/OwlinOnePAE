@@ -9,6 +9,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:padding="@dimen/activity_horizontal_margin">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <TextView
         android:id="@+id/texteCovoiturage"
         android:layout_width="match_parent"
@@ -17,12 +26,13 @@
         android:text="@string/intro_covoiturage"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="349dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="20dp"
         app:srcCompat="@drawable/covoiturage_photo" />
 
     <Button
@@ -31,7 +41,7 @@
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/background_login"
         android:clickable="true"
         android:focusable="true"
@@ -55,4 +65,6 @@
         android:textColor="@color/colorWhite"
         android:textSize="18sp" />
 
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

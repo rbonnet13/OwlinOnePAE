@@ -41,9 +41,9 @@ import owlinone.pae.main.SplashScreen;
 
 public class AddApart extends AppCompatActivity {
     Button buttonSubmit;
-    EditText nomProp, adresse_appart, ville_appart, descrip_appart, detail_appart, tel_prop, prix_appart, cp_appart, mail_prop;
-    String strAdresseAppart = "", strAdresseGoogle = "", strvilleAppart = "", strDescripAppart = "", strDetailAppart = "", strTelProp = "", strPrixAppart = "", finalDescrip = "";
-    String sTaille = "", sDispo = "", sMonsieur = "", sFinalNom = "", strCPAppart = "", strMail_prop = "", strNomProp = "";
+    EditText nomProp, adresse_appart, ville_appart, descrip_appart, detail_appart, tel_prop, prix_appart, cp_appart,mail_prop;
+    String strAdresseAppart= "", strAdresseGoogle= "",strvilleAppart= "", strDescripAppart= "", strDetailAppart= "", strTelProp= "", strPrixAppart= "", finalDescrip="";
+    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = "", strNomProp= "";
     String country = "France";
     Spinner spinnerAppart;
     Spinner spinnerDispo;
@@ -54,120 +54,97 @@ public class AddApart extends AppCompatActivity {
     Address addressName = new Address(Locale.FRANCE);
     Geocoder geocoder;
 
-
     List<Address> addresses = new List<Address>() {
         @Override
         public int size() {
             return 0;
         }
-
         @Override
         public boolean isEmpty() {
             return false;
         }
-
         @Override
         public boolean contains(Object o) {
             return false;
         }
-
         @NonNull
         @Override
         public Iterator<Address> iterator() {
             return null;
         }
-
         @NonNull
         @Override
         public Object[] toArray() {
             return new Object[0];
         }
-
         @NonNull
         @Override
         public <T> T[] toArray(T[] ts) {
             return null;
         }
-
         @Override
         public boolean add(Address address) {
             return false;
         }
-
         @Override
         public boolean remove(Object o) {
             return false;
         }
-
         @Override
         public boolean containsAll(Collection<?> collection) {
             return false;
         }
-
         @Override
         public boolean addAll(Collection<? extends Address> collection) {
             return false;
         }
-
         @Override
         public boolean addAll(int i, Collection<? extends Address> collection) {
             return false;
         }
-
         @Override
         public boolean removeAll(Collection<?> collection) {
             return false;
         }
-
         @Override
         public boolean retainAll(Collection<?> collection) {
             return false;
         }
-
         @Override
         public void clear() {
         }
-
         @Override
         public Address get(int i) {
             return null;
         }
-
         @Override
         public Address set(int i, Address address) {
             return null;
         }
-
         @Override
         public void add(int i, Address address) {
         }
-
         @Override
         public Address remove(int i) {
             return null;
         }
-
         @Override
         public int indexOf(Object o) {
             return 0;
         }
-
         @Override
         public int lastIndexOf(Object o) {
             return 0;
         }
-
         @Override
         public ListIterator<Address> listIterator() {
             return null;
         }
-
         @NonNull
         @Override
         public ListIterator<Address> listIterator(int i) {
             return null;
         }
-
         @NonNull
         @Override
         public List<Address> subList(int i, int i1) {
@@ -228,7 +205,7 @@ public class AddApart extends AppCompatActivity {
         list.add("T5");
         list.add("T6");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, list);
+                (this, android.R.layout.simple_spinner_item,list);
         dataAdapter.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
         spinnerAppart.setAdapter(dataAdapter);
@@ -239,7 +216,7 @@ public class AddApart extends AppCompatActivity {
         listDispo.add("Disponible");
         listDispo.add("Non disponible");
         ArrayAdapter<String> dataAdapterDispo = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, listDispo);
+                (this, android.R.layout.simple_spinner_item,listDispo);
         dataAdapterDispo.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
         spinnerDispo.setAdapter(dataAdapterDispo);
@@ -251,135 +228,149 @@ public class AddApart extends AppCompatActivity {
         listMonsieur.add("MME");
         listMonsieur.add("MLLE");
         ArrayAdapter<String> dataAdapterMonsieur = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, listMonsieur);
+                (this, android.R.layout.simple_spinner_item,listMonsieur);
         dataAdapterMonsieur.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
         spinnerMonsieur.setAdapter(dataAdapterMonsieur);
 
         //Bouton pour ajouter l'appartement-------------------------------
         buttonSubmit = (Button) findViewById(R.id.buttonAddAppart);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        buttonSubmit.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 //Nom du propriétaire------------------------------------
-                sMonsieur = String.valueOf(spinnerMonsieur.getSelectedItem());
-                strNomProp = nomProp.getText().toString();
-                strNomProp = strNomProp.toUpperCase();
-                sFinalNom = sMonsieur + " " + strNomProp;
-                sFinalNom = sFinalNom.replace("'", "''");
+                sMonsieur        = String.valueOf(spinnerMonsieur.getSelectedItem());
+                strNomProp       = nomProp.getText().toString();
+                strNomProp       = strNomProp.toUpperCase();
+                sFinalNom        = sMonsieur + " " + strNomProp;
+                sFinalNom        = sFinalNom.replace("'","''");
                 //Adresse de l'appartement-------------------------------
                 strAdresseAppart = adresse_appart.getText().toString();
 
-                strAdresseAppart = strAdresseAppart.replace("'", "''");
+                strAdresseAppart = strAdresseAppart.replace("'","''");
                 Log.e("nom Ville:", strAdresseAppart);
                 //Ville de l'appartement---------------------------------
-                strvilleAppart = ville_appart.getText().toString();
+                strvilleAppart   = ville_appart.getText().toString();
                 strAdresseGoogle = strvilleAppart;
-                strvilleAppart = strvilleAppart.replace("'", "''");
-                strvilleAppart = strvilleAppart.toUpperCase();
+                strvilleAppart   = strvilleAppart.replace("'","''");
+                strvilleAppart   = strvilleAppart.toUpperCase();
                 Log.e("nom Ville:", strvilleAppart);
                 //Description de l'appartement---------------------------
-                sTaille = String.valueOf(spinnerAppart.getSelectedItem());
+                sTaille          = String.valueOf(spinnerAppart.getSelectedItem());
                 strDescripAppart = descrip_appart.getText().toString();
-                finalDescrip = sTaille + " " + strDescripAppart + " m²";
-                finalDescrip = finalDescrip.replace("'", "''");
+                finalDescrip     = sTaille + " " + strDescripAppart + " m²";
+                finalDescrip     = finalDescrip.replace("'","''");
                 //Disponibilité------------------------------------------
-                sDispo = String.valueOf(spinnerDispo.getSelectedItem());
+                sDispo           = String.valueOf(spinnerDispo.getSelectedItem());
                 //Détail de l'appartement--------------------------------
-                strDetailAppart = detail_appart.getText().toString();
-                strDetailAppart = strDetailAppart.replace("'", "''");
+                strDetailAppart  = detail_appart.getText().toString();
+                strDetailAppart  =strDetailAppart.replace("'","''");
                 //Téléphone, Prix, CP, Mail----------------------------------------------
-                strTelProp = tel_prop.getText().toString();
-                strPrixAppart = prix_appart.getText().toString();
-                strCPAppart = cp_appart.getText().toString();
-                String strFinalAdresse = strAdresseAppart + "," + strAdresseGoogle + " " + strCPAppart
-                        + ", " + country;
-                strMail_prop = mail_prop.getText().toString().trim();
+                strTelProp       = tel_prop.getText().toString();
+                strPrixAppart    = prix_appart.getText().toString();
+                strCPAppart      = cp_appart.getText().toString();
+                String strFinalAdresse = strAdresseAppart + "," + strAdresseGoogle + " "+ strCPAppart
+                        + ", "+ country;
+                strMail_prop     = mail_prop.getText().toString().trim();
 
                 //Récupération de la longitude et de la latitude de l'addresse finale
                 geocoder = new Geocoder(context, Locale.getDefault());
                 try {
-                    for (int i = 0; i < 10; i++) {
+                    for (int i=0; i<10;i++)
+                    {
                         addresses = geocoder.getFromLocationName(strFinalAdresse, 1);
                         Log.e("adresse:", String.valueOf(addresses));
-                        if (addresses != null && addresses.size() > 0) {
+                        if(addresses != null && addresses.size() > 0){
                             addressName = addresses.get(0);
                         }
 
                         Log.e("adresse:", String.valueOf(addressName.getLongitude()));
 
-                        if (addressName.getLongitude() != 0.0) {
+                        if(addressName.getLongitude() != 0.0)
+                        {
                             longitude = addressName.getLongitude();
                             latitude = addressName.getLatitude();
-                            i = 10;
+                            i=10;
                         }
                         i++;
                     }
 
-                } catch (IOException e) {
+                } catch (IOException e)
+                {
                     e.printStackTrace();
                 }
 
                 //Si Nom propriétaire est nul------------------------------------------------
-                if (strNomProp.length() == 0) {
+                if(strNomProp.length() == 0) {
                     nomProp.setError("Veuillez saisir votre nom");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si email est nul and mail valid-----------------------------------------------------------
-                else if (Email.isEmailValid(strMail_prop) == false) {
+                else if (Email.isEmailValid(strMail_prop) == false)
+                {
                     mail_prop.setError("Veuillez saisir une addresse mail valide");
                     Toast.makeText(context, text, duration).show();
-                } else if (strMail_prop.length() == 0) {
+                }
+                else if(strMail_prop.length() == 0) {
                     mail_prop.setError("Veuillez saisir une adresse mail");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si téléphone propriétaire est nul------------------------------------------------
-                else if (strTelProp.length() != 10) {
+                else if(strTelProp.length()!= 10) {
                     tel_prop.setError("Veuillez saisir un numéro à 10 chiffres");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si adresse appartement est nul------------------------------------------------
-                else if (strAdresseAppart.length() == 0) {
+                else if(strAdresseAppart.length() == 0) {
                     adresse_appart.setError("Veuillez saisir une adresse");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si code postal est nul------------------------------------------------
-                else if (strCPAppart.length() != 5) {
+                else if(strCPAppart.length() != 5) {
                     cp_appart.setError("Veuillez saisir un code postal");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si ville appartement est nul------------------------------------------------
-                else if (strvilleAppart.length() == 0) {
-                    ville_appart.setError("Veuillez saisir une ville");
+                else if(strvilleAppart.length() == 0 || strvilleAppart.matches("^[\\w\\.-]")) {
+                    ville_appart.setError("Veuillez vérifier votre num de ville");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si taille appartement est nul------------------------------------------------
-                else if (strDescripAppart.length() == 0 || sTaille.length() == 0) {
+                else if(strDescripAppart.length() == 0 || sTaille.length() == 0) {
                     descrip_appart.setError("Veuillez saisir la superficie");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si prix appartement est nul--------------------------------------------------------
-                else if (strPrixAppart.length() == 0 || strPrixAppart.length() > 4) {
+                else if(strPrixAppart.length()==0 || strPrixAppart.length() > 4 ) {
                     prix_appart.setError("Veuillez saisir un prix à 4 chiffres maximum");
                     Toast.makeText(context, text, duration).show();
                 }
 
+                //Si prix appartement est nul--------------------------------------------------------
+                else if(strDescripAppart.length()==0 || strDescripAppart.length() > 3 ) {
+                    descrip_appart.setError("Merci de vérifier la superficie de votre appartement");
+                    Toast.makeText(context, text, duration).show();
+                }
+
                 //S'il n'a pas coché l'accord------------------------------------------------
-                else if (!checkAdd.isChecked()) {
+                else if (!checkAdd.isChecked())
+                {
                     checkAdd.setError("Veuillez confirmer vos informations");
                     Toast.makeText(context, text, duration).show();
-                } else {
+                }
+                else{
                     //On execute la requete et on passe à la page SplashScreen
                     new sendAppart().execute();
                     Intent intentAppart = new Intent(context, SplashScreen.class);
-                    intentAppart.putExtra("activity", "first");
+                    intentAppart.putExtra("activity","first");
                     startActivity(intentAppart);
                 }
 
@@ -387,9 +378,9 @@ public class AddApart extends AppCompatActivity {
         });
     }
 
-    private class sendAppart extends AsyncTask<Void, Void, Void> {
+    private class sendAppart extends AsyncTask<Void, Void, Void>
+    {
         ProgressDialog pd;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -401,16 +392,17 @@ public class AddApart extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if (pd != null) {
+            if (pd != null)
+            {
                 pd.dismiss();
             }
         }
-
         Exception exception;
-
         @Override
-        protected Void doInBackground(Void... arg0) {
-            try {
+        protected Void doInBackground(Void... arg0)
+        {
+            try
+            {
                 HttpHandler sh = new HttpHandler();
                 HashMap<String, String> parameters = new HashMap<>();
                 String url = AddressUrl.strAddAppart;
@@ -428,7 +420,8 @@ public class AddApart extends AppCompatActivity {
                 parameters.put("ADRESSE_MAIL", strMail_prop);
                 sh.performPostCall(url, parameters);
                 return null;
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 this.exception = e;
                 return null;
             }

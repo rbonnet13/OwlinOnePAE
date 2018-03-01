@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (enteredUsername.length() <= 4 || enteredPassword.length() <= 3) {
+                if (enteredUsername.length() <= 3 || enteredPassword.length() <= 3) {
                     Toast.makeText(RegisterActivity.this, "Le pseudo et le login doivent dépasser 3 caractères", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -185,11 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         {
             try
             {
-
-
                 secret = generateKey();
-
-
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("username", enteredUsername);
                 parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));
@@ -221,7 +217,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             int jsonResult = sh.returnParsedJsonObject(response);
             if(jsonResult == 0){
-                Toast.makeText(RegisterActivity.this, "Mot de passe ou email incorrect", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 Log.e("Username saisi:", enteredUsername);
                 return;
             }
@@ -234,6 +230,4 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }
