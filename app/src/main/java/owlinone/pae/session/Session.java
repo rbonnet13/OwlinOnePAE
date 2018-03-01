@@ -140,7 +140,7 @@ public class Session {
         user.put(KEY_CP, pref.getString(KEY_CP, null));
 
         // user photo id
-        user.put(KEY_PHOTO, pref.getString(KEY_PHOTO, "sans image"));
+        user.put(KEY_PHOTO, pref.getString(KEY_PHOTO, "no image"));
         user.put(KEY_COVOITURAGE, pref.getString(KEY_COVOITURAGE, "false"));
 
         // return user

@@ -1,21 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/bugScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
+    android:scrollbars="vertical"
+    android:background="@drawable/fond2"
+    android:isScrollContainer="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Ici sera le formulaire de report de bug"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/bugTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/bugTitle"
+            android:fontFamily="casual"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:layout_marginBottom="25dp" />
+
+        <TextView
+            android:id="@+id/bugSpinnerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/bugSpinnerTitle"
+            android:fontFamily="casual"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:layout_marginBottom="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#11000000"
+            android:layout_marginBottom="20dp">
+        <Spinner
+            android:id="@+id/bugSpinnerFeedbackType"
+            android:text="@string/bugSpinnerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:prompt="@string/bugSpinnerTitle"
+            android:entries="@array/bugSpinnerList" >
+        </Spinner>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/bugFeedbackBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bugFeedbackBody"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minLines="5"
+            android:gravity="start"
+            android:textSize="16sp"
+            android:maxLength="6000"
+            android:background="#11000000"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorGrey"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:scrollHorizontally="false" >
+        </EditText>
+
+        <Button
+            android:id="@+id/ButtonSendFeedback"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/background_signup"
+            android:text="@string/bugSubmitButton"
+            android:textColor="@color/colorWhite"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:focusable="true"
+            android:clickable="true"
+            android:onClick="sendFeedback"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" >
+        </Button>
+
+    </LinearLayout>
+</ScrollView>

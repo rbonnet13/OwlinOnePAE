@@ -3,6 +3,8 @@ package owlinone.pae.session;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -14,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,8 +30,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -48,8 +49,6 @@ import owlinone.pae.divers.APropos;
 import owlinone.pae.divers.Bug;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.stage.Stage;
-
-import static owlinone.pae.configuration.AddressUrl.strPhoto;
 
 /**
  * Created by rudyb on 17/01/2018.
@@ -86,7 +85,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private  String ville ="" ;
     private  String cp  ="";
     private  String telephone  ="";
-    private  String photo ="";
+    private  String photoBDD ="";
     private  String covoiturage ="";
 
     private  String response ="";
@@ -236,7 +235,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         ville = user.get(Session.KEY_VILLE);
         adresse = user.get(Session.KEY_ADRESSE);
         cp = user.get(Session.KEY_CP);
-        photo = user.get(Session.KEY_PHOTO);
+        photoBDD = user.get(Session.KEY_PHOTO);
         telephone = user.get(Session.KEY_TEL);
         covoiturage = user.get(Session.KEY_COVOITURAGE);
 
@@ -265,15 +264,15 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         View header = (navigationView).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + username);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
-        ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
+        ImageView photo = header.findViewById(R.id.image_menu);
 
-        // Affiche l'image dans le header du drawer
-        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
-            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
-            url_image = url_image.replace(" ","%20");
+        // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
+        if(!photoBDD.equals("no image")){
             try {
-                Log.i("RESPUESTA IMAGE: ",""+url_image);
-                Glide.with(this).load(url_image).into(photo);
+                String base64 = photoBDD.substring(photoBDD.indexOf(","));
+                byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+                Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
+                photo.setImageBitmap(image);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -471,7 +470,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             }
 
             if (jsonResult == 1) {
-                session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photo,covoiturage);
+                session.createUserLoginSession(username,enteredPrenom,enteredNom,enteredVille,enteredAdress,String.valueOf(latitude) ,String.valueOf(longitude),enteredCP,email,enteredTel,password,photoBDD,covoiturage);
                 Intent intent = new Intent(Compte.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

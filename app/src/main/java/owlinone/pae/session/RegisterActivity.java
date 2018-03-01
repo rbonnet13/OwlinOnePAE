@@ -25,7 +25,6 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +32,6 @@ import javax.crypto.SecretKey;
 
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.GMailSender;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.configuration.SecretPassword;
 
@@ -52,24 +50,15 @@ public class RegisterActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private ImageView imagePhoto;
     private int request_code = 1;
-    private EditText codeActivation;
-    private String enteredCode;
-    private String enteredMail;
-    private Button validationCode;
-
-    private int min = 1000;
-    private int max = 9998;
-    private int randomNum;
-
     private final String serverUrl = AddressUrl.strTriIndex;
     HttpHandler sh = new HttpHandler();
     SecretKey secret = null;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
@@ -83,22 +72,18 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         // Déclarations ID
         username = (EditText) findViewById(R.id.username_field);
         password = (EditText) findViewById(R.id.password_field);
         email = (EditText) findViewById(R.id.email_field);
         Button signUpButton = (Button) findViewById(R.id.sign_up);
-        codeActivation = (EditText) findViewById(R.id.code_activation);
-        validationCode = (Button) findViewById(R.id.btn_activation);
         imagePhoto = (ImageView) findViewById(R.id.photo_user);
-        randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
 
-        codeActivation.setVisibility(View.INVISIBLE);
-        validationCode.setVisibility(View.INVISIBLE);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
 
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
 
             public void onClick(View v) {
@@ -106,7 +91,6 @@ public class RegisterActivity extends AppCompatActivity {
                 enteredPassword = password.getText().toString();
                 enteredEmail = email.getText().toString();
                 enteredPhoto = convertirImgString(bitmap);
-                randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
 
                 if (enteredUsername.equals("") || enteredPassword.equals("") || enteredEmail.equals("")) {
                     Toast.makeText(RegisterActivity.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
@@ -127,33 +111,9 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Envoi mail par gmail
-                new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-                            GMailSender sender = new GMailSender("owlinone.esaip@gmail.com",
-                                    "AIzaSyCyZbnFvalPGR9h1aJZJel8_7VtcDfCmPc");
-                            sender.sendMail("Mot de passe oublié OwlIneOne", " Salut "+enteredUsername+", \n Ton code pour changer ton mot de passe c'est: " + randomNum + ". \n Retourne sur l'application pour pouvoir choisir un nouveau mot de passe. \n L'équipe OwlInOne,",
-                                    "owlinone.esaip@gmail.com", enteredEmail);
-                        } catch (Exception e) {
-                            Log.e("SendMail", e.getMessage(), e);
-                        }
-                    }
-
-                }).start();
-                Toast.makeText(RegisterActivity.this, "Vous avez reçu un nouveau code par mail", Toast.LENGTH_LONG).show();
-
-                codeActivation.setVisibility(View.VISIBLE);
-                validationCode.setVisibility(View.VISIBLE);
-                username.setKeyListener(null);
-                password.setKeyListener(null);
-                email.setKeyListener(null);
-                imagePhoto.setEnabled(false);
+                // request authentication with remote server4
+                new RegisterActivity.AsyncDataClass().execute();
             }
-
-
         });
         imagePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,24 +133,6 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivityForResult(i, request_code);
             }
         });
-
-        validationCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enteredCode = codeActivation.getText().toString();
-                Log.e("enteredCode", "enteredCode: " + enteredCode);
-                Log.e("randomNum", "randomNum: " + String.valueOf(randomNum));
-
-
-                if (!enteredCode.equals(String.valueOf(randomNum))) {
-                    Toast.makeText(RegisterActivity.this, "Code faux", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                else{
-                    new AsyncDataClass().execute();
-                }
-            }
-        });
     }
 
     // Convertir image en string
@@ -203,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
             byte[] imagenByte=array.toByteArray();
             imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
         }else{
-            imagenString = "sans image"; //se enviara este string en caso de no haber imagen
+            imagenString = "no image"; //se enviara este string en caso de no haber imagen
         }
 
         return imagenString;
@@ -225,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-        @Override
+        /*@Override
         public boolean onOptionsItemSelected(MenuItem item) {
     // Handle action bar item clicks here. The action bar will
     // automatically handle clicks on the Home/Up button, so long
@@ -236,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
-        }
+        }*/
 
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
         Exception exception;
@@ -246,6 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
             try
             {
                 secret = generateKey();
+
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("username", enteredUsername);
                 parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));
@@ -283,10 +226,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if(jsonResult == 1){
-                Intent intent = new Intent(RegisterActivity.this, MainLogin.class);
-
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                intent.putExtra("USERNAME", enteredUsername);
+                intent.putExtra("MESSAGE", "Inscription réussie");
                 startActivity(intent);
             }
         }
     }
+
 }
