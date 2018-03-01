@@ -110,6 +110,7 @@
     <string name="email2Bold"><i>Email</i></string>
     <string name="prixBold"><i>Prix (charges comprises)</i></string>
     <string name="descriptionBold"><i>Description</i></string>
+    <string name="codeBold"><i>Code reçu par email</i></string>
 
     <string name="a_propos_text">Avec Owl In One, rentrez chez vous
         ou venez à l\'ESAIP en quelques clics !</string>
