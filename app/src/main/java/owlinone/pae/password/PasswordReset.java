@@ -17,27 +17,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.configuration.SecretPassword;
-
-import static owlinone.pae.configuration.SecretPassword.generateKey;
+import owlinone.pae.session.MainLogin;
 
 /**
  * Created by Julian on 15/01/2018.
@@ -46,11 +33,10 @@ import static owlinone.pae.configuration.SecretPassword.generateKey;
 public class PasswordReset extends AppCompatActivity {
     private EditText email;
     private String url = AddressUrl.strEmailRecup;
-    private String password= null;
-    private String passwordFinal= null;
+    private String username= null;
     private String enteredEmail= null;
-    private SecretKey secret = null;
-    byte[] passByte =null;
+    private Boolean mauvaisMail= false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +54,21 @@ public class PasswordReset extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                mauvaisMail = false;
+            } else {
+                mauvaisMail = extras.getBoolean("mauvaisMail");
+            }
+        } else {
+            mauvaisMail = (Boolean) savedInstanceState.getSerializable("mauvaisMail");
+        }
+        //Si la personne à mis un mail qui n'existe pas
+        if(mauvaisMail == true){
+            Toast.makeText(PasswordReset.this, "Cet email est inconnu", Toast.LENGTH_LONG).show();
+        }
         // Déclarations ID
         email = (EditText) findViewById(R.id.emailReset);
         Button validation = (Button) findViewById(R.id.btn_reset);
@@ -117,7 +118,6 @@ public class PasswordReset extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... arg0) {
             try {
-                secret = generateKey();
 
                 HashMap<String, String> parameters = new HashMap<>();
                 HttpHandler sh = new HttpHandler();
@@ -130,32 +130,11 @@ public class PasswordReset extends AppCompatActivity {
 
                 JSONArray jsonArray = new JSONArray(responseRequete);
                 JSONObject a = jsonArray.getJSONObject(0);
-                 password = a.getString("password");
-
-
-                passwordFinal = SecretPassword.decryptMsg(password, secret);
-
+                 username = a.getString("username");
+                Log.e("username", "username: " + username);
 
                 return null;
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InvalidKeySpecException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (BadPaddingException e) {
-                e.printStackTrace();
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
-            } catch (InvalidAlgorithmParameterException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            } catch (InvalidParameterSpecException e) {
-                e.printStackTrace();
-            } catch (IllegalBlockSizeException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
             return null;
@@ -166,14 +145,26 @@ public class PasswordReset extends AppCompatActivity {
         {
             super.onPostExecute(result);
             final Context context = getApplicationContext();
+            if(username != null) {
+                Intent intent = new Intent(context, PasswordActivity.class);
+                Log.e("enteredEmail", "enteredEmail: " + enteredEmail);
+                intent.putExtra("email", enteredEmail);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = getIntent();
+                intent.putExtra("mauvaisMail", true);
+                startActivity(intent);
 
-            Intent intent = new Intent(context, PasswordActivity.class);
-            Log.e("enteredEmail", "enteredEmail: " + enteredEmail);
-            Log.e("password", "password: " + passwordFinal);
-            intent.putExtra("email",enteredEmail );
-            intent.putExtra("password", passwordFinal );
-            startActivity(intent);
+            }
         }
+
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+        startActivity(intent);
     }
 
 }

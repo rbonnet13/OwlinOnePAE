@@ -1,20 +1,76 @@
 package owlinone.pae.password;
 
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.crypto.SecretKey;
+
 import owlinone.pae.R;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.GMailSender;
+import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.configuration.SecretPassword;
+import owlinone.pae.session.MainLogin;
+
+import static owlinone.pae.configuration.SecretPassword.generateKey;
 
 public class PasswordActivity extends AppCompatActivity {
-    String mailRecup     = null;
-    String passwordRecup = null ;
 
+    String mailRecup     = null;
+    String username = null ;
+    EditText editReNewPassword     = null;
+    EditText editNewPassword = null ;
+    EditText editCode = null ;
+    String newPassword = null ;
+    String reNewPassword = null ;
+    String codePassword = null ;
+    Button buttonValidate = null ;
+    private String url = AddressUrl.strChangerMDP;
+    int min = 1000;
+    int max = 9998;
+    int randomNum;
+    SecretKey secret = null;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        // Déclarations ID
+        editNewPassword = (EditText) findViewById(R.id.new_password_field);
+        editReNewPassword = (EditText) findViewById(R.id.renew_password_field);
+        editCode = (EditText) findViewById(R.id.code_field);
+        buttonValidate = (Button) findViewById(R.id.sign_up_new_password);
+
+
+        //Récupération des valeurs de la page précèdente
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -25,21 +81,120 @@ public class PasswordActivity extends AppCompatActivity {
         } else {
             mailRecup = (String) savedInstanceState.getSerializable("email");
         }
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                passwordRecup = null;
-            } else {
-                passwordRecup = extras.getString("password");
+
+         if (savedInstanceState == null) {
+             Bundle extras = getIntent().getExtras();
+             if (extras == null) {
+                 username = null;
+             } else {
+                 username = extras.getString("username");
+             }
+         } else {
+             username = (String) savedInstanceState.getSerializable("username");
+         }
+
+         //Création d'un nombre aléatoire à 4 chiffres
+         randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+         Log.e("randomNum", "randomNum: "+ String.valueOf(randomNum));
+
+        //Envoi mail par gmail
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    GMailSender sender = new GMailSender("owlinone.esaip@gmail.com",
+                            "AIzaSyCyZbnFvalPGR9h1aJZJel8_7VtcDfCmPc");
+                    sender.sendMail("Mot de passe oublié OwlIneOne", " Salut "+username+", \n Ton code pour changer ton mot de passe c'est: " + randomNum + ". \n Retourne sur l'application pour pouvoir choisir un nouveau mot de passe. \n L'équipe OwlInOne,",
+                            "owlinone.esaip@gmail.com", mailRecup);
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
             }
-        } else {
-            passwordRecup = (String) savedInstanceState.getSerializable("password");
+                                            
+        }).start();
+
+        buttonValidate.setOnClickListener(new View.OnClickListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+
+            public void onClick(View v) {
+                newPassword = editNewPassword.getText().toString();
+                reNewPassword = editReNewPassword.getText().toString();
+                codePassword = editCode.getText().toString();
+                Log.e("randomNum", "randomNum: " + String.valueOf(randomNum));
+                Log.e("codePassword", "codePassword: " + codePassword);
+
+                if (newPassword.length() <= 3) {
+                    Toast.makeText(PasswordActivity.this, "Mot de passe trop court", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (!newPassword.equals(reNewPassword)) {
+                    Toast.makeText(PasswordActivity.this, "Les mots de passes sont différents", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (newPassword.equals("") || reNewPassword.equals("") || codePassword.equals("")) {
+                    Toast.makeText(PasswordActivity.this, "Veuillez remplir tout les champs", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (!codePassword.equals(String.valueOf(randomNum))) {
+                    Toast.makeText(PasswordActivity.this, "Le code est faux", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                new ChangeMDP().execute();
+            }
+        });
+        //Test Log
+        Log.e("mailRecup", "mailRecup: " + mailRecup);
+        Log.e("username", "username: " + username);
+    }
+
+       private class ChangeMDP extends AsyncTask<Void, Void, Void>
+    {
+        String responseRequete= "";
+        Exception exception;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            try
+            {
+                secret = generateKey();
+                HashMap<String, String> parameters = new HashMap<>();
+                HttpHandler sh = new HttpHandler();
+                parameters.put("NEW_PASSWORD", SecretPassword.encryptMsg(newPassword, secret));
+                parameters.put("MAIL", mailRecup);
+
+                responseRequete = sh.performPostCall(url, parameters);
+                return null;
+            } catch (Exception e)
+            {
+                this.exception = e;
+                return null;
+            }
         }
 
-        Log.e("mailRecup", "mailRecup: " + mailRecup);
-        Log.e("passwordRecup", "passwordRecup: " + passwordRecup);
+        @Override
+        protected void onPostExecute(Void result)
+        {
+            Toast.makeText(PasswordActivity.this, "Mot de passe changé", Toast.LENGTH_LONG).show();
 
-        Toast.makeText(PasswordActivity.this, "mail :"+ mailRecup, Toast.LENGTH_SHORT).show();
-        Toast.makeText(PasswordActivity.this, "password :"+ passwordRecup, Toast.LENGTH_SHORT).show();
+            super.onPostExecute(result);
+            Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+            startActivity(intent);
+        }
+
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), PasswordReset.class);
+        startActivity(intent);
     }
 }

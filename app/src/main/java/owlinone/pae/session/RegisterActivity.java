@@ -227,9 +227,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if(jsonResult == 1){
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, CodeActivationRegister.class);
                 intent.putExtra("USERNAME", enteredUsername);
-                intent.putExtra("MESSAGE", "Inscription réussie");
+                intent.putExtra("MAIL", enteredEmail);
                 startActivity(intent);
             }
         }

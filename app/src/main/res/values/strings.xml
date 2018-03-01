@@ -57,6 +57,9 @@
 
     <string name="username">Pseudo</string>
     <string name="password">Mot de passe</string>
+    <string name="newPassword">Nouveau mot de passe</string>
+    <string name="reNewPassword">Réécrire le mot de passe</string>
+    <string name="codePassword">Code</string>
     <string name="email">Adresse Email (@esaip.org)</string>
     <string name="login">Se connecter</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -67,6 +70,11 @@
     <string name="is_login">Connexion réussie </string>
     <string name="sign_up">S\'inscrire</string>
     <string name="sign_up2">Valider l\'inscription</string>
+    <string name="sign_up_password">Valider le mot de passe</string>
+    <string name="valider_activation">Valider le code</string>
+
+
+
     <item name="actionsettings" type="id">Settings</item>
     <string name="connexion">Connexion</string>
     <string name="inscription">Inscription</string>
