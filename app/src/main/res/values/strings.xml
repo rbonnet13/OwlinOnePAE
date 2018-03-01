@@ -58,6 +58,9 @@
     <string name="username">Pseudo</string>
     <string name="password">Mot de passe</string>
     <string name="email">Adresse Email (@esaip.org)</string>
+    <string name="newPassword">Nouveau mot de passe</string>
+    <string name="reNewPassword">Réécrire le mot de passe</string>
+    <string name="codePassword">Code</string>
     <string name="login">Se connecter</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="registration_instruction">Vous n\'êtes pas encore inscrits? Inscrivez-vous dès maintenant</string>
@@ -67,6 +70,8 @@
     <string name="is_login">Connexion réussie </string>
     <string name="sign_up">S\'inscrire</string>
     <string name="sign_up2">Valider l\'inscription</string>
+    <string name="sign_up_password">Valider le mot de passe</string>
+    <string name="valider_activation">Valider le code</string>
     <item name="actionsettings" type="id">Settings</item>
     <string name="connexion">Connexion</string>
     <string name="inscription">Inscription</string>
@@ -76,6 +81,10 @@
     <!-- Définition des strings pour le covoiturage -->
     <string name="intro_covoiturage">Avec Owl In One, rentrez chez vous ou venez à l\'ESAIP en quelques clics !</string>
     <string name="conducteur">Voir vos notifications</string>
+    <string name="gcm_send_message">Token généré et envoyé au serveur, vous pouvez maintenant envoyer des messages
+    à cette application</string>
+    <string name="registering_message">Génération du token...</string>
+    <string name="token_error_message">Une erreur s\'est produite, veuillez réessayer !</string>
     <string name="client">Rechercher un trajet</string>
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>
