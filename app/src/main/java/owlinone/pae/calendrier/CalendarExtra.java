@@ -30,7 +30,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
@@ -72,6 +71,8 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
     ArrayList<HashMap<String, String>> eventList;
     HashMap<String, String> testEvent = new HashMap();
     long timeInMilliseconds = 0;
+    String strHourFinal;
+    String strMinuteFinal;
     ImageView imgLogo = null;
     Date date = new Date();
     //ArrayList<EventCalendar> arrayListEvent;
@@ -162,7 +163,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
 
                 eventClicked = new ArrayList<>();
 
-                Log.e("Prout", "Date cliqué Year: " + dateClicked.getYear());
                 for (HashMap<String, String> entry : eventList) {
                     if (dateClicked.getDate() == Integer.valueOf(entry.get("DAY_EVENEMENT")) && dateClicked.getMonth() == Integer.valueOf(entry.get("MONTH_EVENEMENT")) &&
                             dateClicked.getYear() == Integer.valueOf(entry.get("YEAR_EVENEMENT"))) {
@@ -321,14 +321,24 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                         try {
                             Date mDate = sdf.parse(date_event);
                             Log.e(TAG, "YEARDATE : " + String.valueOf(mDate.getYear()));
-                            Log.e(TAG, "MONTHDATE : " + String.valueOf(mDate.getMonth())); //TODO changer pour deprecated et 1900 valeur
+                            Log.e(TAG, "MONTHDATE : " + String.valueOf(mDate.getMonth()));
                             Log.e(TAG, "DAYDATE : " + String.valueOf(mDate.getDate()));
                             evenement.put("MINUTE_EVENEMENT", String.valueOf(mDate.getMinutes()));
                             evenement.put("HOUR_EVENEMENT", String.valueOf(mDate.getHours()));
                             evenement.put("DAY_EVENEMENT", String.valueOf(mDate.getDate()));
                             evenement.put("MONTH_EVENEMENT", String.valueOf(mDate.getMonth()));
                             evenement.put("YEAR_EVENEMENT", String.valueOf(mDate.getYear()));
-                            evenement.put("ALL_EVENEMENT", mDate.getHours() + ":" + mDate.getMinutes() + "     " + titre_event);
+                            if((String.valueOf(mDate.getHours()).length() == 1)) {
+                                strHourFinal = "0" + mDate.getHours();
+                            } else {
+                                strHourFinal = String.valueOf(mDate.getHours());
+                            }
+                            if((String.valueOf(mDate.getMinutes()).length() == 1)) {
+                                strMinuteFinal = mDate.getMinutes() + "0";
+                            } else {
+                                strMinuteFinal = String.valueOf(mDate.getMinutes());
+                            }
+                            evenement.put("ALL_EVENEMENT", strHourFinal + ":" + strMinuteFinal + "     " + titre_event);
                             timeInMilliseconds = mDate.getTime();
                             evenement.put("DATEMILLI_EVENEMENT", String.valueOf(timeInMilliseconds));
 

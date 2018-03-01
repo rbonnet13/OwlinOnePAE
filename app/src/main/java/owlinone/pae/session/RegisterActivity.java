@@ -215,6 +215,10 @@ public class RegisterActivity extends AppCompatActivity {
                 parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));
                 parameters.put("email", enteredEmail);
                 parameters.put("photo", enteredPhoto);
+                Log.e("username", "username: " + enteredUsername);
+                Log.e("password", "password: " + SecretPassword.encryptMsg(enteredPassword, secret));
+                Log.e("email", "email: " + enteredEmail);
+
                 response = sh.performPostCall(serverUrl, parameters);
 
                 return null;
