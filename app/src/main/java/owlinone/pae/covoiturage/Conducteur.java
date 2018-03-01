@@ -212,6 +212,22 @@ public class Conducteur extends AppCompatActivity {
         });
     }
 
+    // Convertir image en string
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private String convertirImgString(Bitmap bitmap) {
+        String imagenString;
+        ByteArrayOutputStream array=new ByteArrayOutputStream();
+        if(bitmap!=null){
+            bitmap.compress(Bitmap.CompressFormat.JPEG,30,array);
+            byte[] imagenByte=array.toByteArray();
+            imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
+        }else{
+            imagenString = "sans image"; //se enviara este string en caso de no haber imagen
+        }
+
+        return imagenString;
+    }
+
     private class GetNotif extends AsyncTask<Void, Void, Void>
     {
         Intent intent = getIntent();

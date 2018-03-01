@@ -14,7 +14,6 @@
     <!-- on ajoute notre permission à la liste de permissions requises par l'API -->
     <uses-permission android:name="owlinone.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="owlinone.pae.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -138,6 +137,7 @@
         <activity
             android:name="owlinone.pae.divers.Bug"
             android:label="@string/app_bug"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" >
         </activity>
 

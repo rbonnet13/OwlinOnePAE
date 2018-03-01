@@ -2,6 +2,8 @@ package owlinone.pae.main;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -16,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -54,24 +57,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import owlinone.pae.R;
-import owlinone.pae.appartement.Appartement;
-import owlinone.pae.article.Article;
-import owlinone.pae.article.ArticleAdapter;
-import owlinone.pae.article.DetailArticle;
-import owlinone.pae.calendrier.CalendarExtra;
-import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.covoiturage.Covoiturage;
-import owlinone.pae.divers.APropos;
-import owlinone.pae.divers.Bug;
-import owlinone.pae.session.Compte;
-import owlinone.pae.session.Session;
-import owlinone.pae.stage.Stage;
+import owlinone.pae.*;
+import owlinone.pae.appartement.*;
+import owlinone.pae.article.*;
+import owlinone.pae.calendrier.*;
+import owlinone.pae.configuration.*;
+import owlinone.pae.covoiturage.*;
+import owlinone.pae.divers.*;
+import owlinone.pae.session.*;
+import owlinone.pae.stage.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private String TAG = MainActivity.class.getSimpleName();
     private ListView lv;
@@ -81,9 +78,8 @@ public class MainActivity extends AppCompatActivity
     int index;
     int top;
     Session session;
-    private final String strPhoto = AddressUrl.strPhoto;
     private  String name ="";
-    private  String photoT ="";
+    private  String photoBDD ="";
     private  String email ="";
     TextView notifcovoit;
     protected String response;
@@ -135,7 +131,7 @@ public class MainActivity extends AppCompatActivity
          name = user.get(Session.KEY_NAME);
         // get email
          email = user.get(Session.KEY_EMAIL);
-         photoT = user.get(Session.KEY_PHOTO);
+         photoBDD = user.get(Session.KEY_PHOTO);
 
         notifcovoit =(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.nav_covoiturage));
@@ -145,14 +141,15 @@ public class MainActivity extends AppCompatActivity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
-        ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
-        //image
-        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
-            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
-            url_image = url_image.replace(" ","%20");
+        ImageView photo = header.findViewById(R.id.image_menu);
+
+        // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
+        if(!photoBDD.equals("no image")){
             try {
-                Log.i("RESPUESTA IMAGE: ",""+url_image);
-                Glide.with(this).load(url_image).into(photo);
+                String base64 = photoBDD.substring(photoBDD.indexOf(","));
+                byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+                Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
+                photo.setImageBitmap(image);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -242,7 +239,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
 
     // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
     @Override

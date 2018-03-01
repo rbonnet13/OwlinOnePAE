@@ -70,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
@@ -83,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         // Déclarations ID
         username = (EditText) findViewById(R.id.username_field);
         password = (EditText) findViewById(R.id.password_field);
@@ -203,7 +205,7 @@ public class RegisterActivity extends AppCompatActivity {
             byte[] imagenByte=array.toByteArray();
             imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
         }else{
-            imagenString = "sans image"; //se enviara este string en caso de no haber imagen
+            imagenString = "no image"; //se enviara este string en caso de no haber imagen
         }
 
         return imagenString;
@@ -225,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-        @Override
+        /*@Override
         public boolean onOptionsItemSelected(MenuItem item) {
     // Handle action bar item clicks here. The action bar will
     // automatically handle clicks on the Home/Up button, so long
@@ -236,7 +238,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
-        }
+        }*/
 
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
         Exception exception;
@@ -246,6 +248,7 @@ public class RegisterActivity extends AppCompatActivity {
             try
             {
                 secret = generateKey();
+
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("username", enteredUsername);
                 parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));

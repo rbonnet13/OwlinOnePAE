@@ -14,4 +14,11 @@
     <item name="nonDisponibleItem" type="id">nonDisponibleItem</item>
     <item name="venduItem" type="id">venduItem</item>
     <item name="signalerItem" type="id">signalerItem</item>
+
+    <!-- Définition des strings pour le spinner dans le rapport de bug -->
+    <string-array name="bugSpinnerList">
+        <item>@string/bugSpinner1</item>
+        <item>@string/bugSpinner2</item>
+    </string-array>
+
 </resources>
