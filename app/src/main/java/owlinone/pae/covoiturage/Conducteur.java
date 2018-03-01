@@ -203,6 +203,14 @@ public class Conducteur extends AppCompatActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+                obj = (HashMap) lv.getItemAtPosition(pos);
+                strNom = obj.get("NOM_NOTIF");
+                strPrenom = obj.get("PRENOM_NOTIF");
+                strAdresse = obj.get("ADRESSE_NOTIF");
+                strTel = obj.get("TELEPHONE_NOTIF");
+                strDate = obj.get("DATE_NOTIF");
+                strDestination = obj.get("DESTINATION_NOTIF");
+
                 // on ouvre la fenêtre pour envoyer un sms
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                 sendIntent.setData(Uri.parse("sms:" + strTel));

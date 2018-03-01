@@ -547,8 +547,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     String CP               = a.getString("CP");
                     Double latitudeAppart   = a.getDouble("LATITUDE");
                     Double longitudeAppart  = a.getDouble("LONGITUDE");
-                    String Photo            = a.getString("photo");
-
                     double result_covoiturage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
 
                     // Affiche les appartements que s'il est disponible ou non disponible
@@ -570,7 +568,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             covoit.put("CP", CP);
                             covoit.put("LATITUDE", String.valueOf(latitudeAppart));
                             covoit.put("LONGITUDE", String.valueOf(longitudeAppart));
-                            covoit.put("photo", Photo);
                             // adding contact to contact list
                             covoitList.add(covoit);
                         }
@@ -635,9 +632,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     }
                     if (key == "TELEPHONE") {
                         getTelephone = value;
-                    }
-                    if (key == "photo") {
-                        getPhoto = value;
                     }
                 }
                 Marker marker = mMap.addMarker(new MarkerOptions()
