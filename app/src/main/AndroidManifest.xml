@@ -71,19 +71,11 @@
         </activity>
 
             <activity
-                android:name="owlinone.pae.article.DetailArticle"
-                android:screenOrientation="portrait">
-            </activity>
-            <activity
                 android:name="owlinone.pae.password.PasswordReset"
                 android:screenOrientation="portrait">
             </activity>
             <activity
                 android:name="owlinone.pae.password.PasswordActivity"
-                android:screenOrientation="portrait">
-            </activity>
-            <activity
-                android:name="owlinone.pae.session.CodeActivationRegister"
                 android:screenOrientation="portrait">
             </activity>
         <activity

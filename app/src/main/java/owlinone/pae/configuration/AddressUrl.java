@@ -6,9 +6,9 @@ package owlinone.pae.configuration;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.1.68";
-    private static String strPort = "8888";
-    private static String strDossierPhp = "test4";
+    private static String strUrl = "appmobilepae.esaip.org";
+    private static String strPort = "";
+    private static String strDossierPhp = "";
 
     public static final String strEmailRecup           = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/recup_mail.php";
     public static final String strChangerMDP            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/modif_mdp.php";

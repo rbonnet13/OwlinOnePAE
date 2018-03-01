@@ -54,7 +54,6 @@ public class PasswordReset extends AppCompatActivity {
                 finish();
             }
         });
-
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
