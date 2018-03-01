@@ -6,9 +6,9 @@ package owlinone.pae.configuration;
 
 public class AddressUrl {
 
-    private static String strUrl = "192.168.137.36";
-    private static String strPort = "80";
-    private static String strDossierPhp = "test4";
+    private static String strUrl = "appmobilepae.esaip.org";
+    private static String strPort = "";
+    private static String strDossierPhp = "";
 
     public static final String strEmailRecup           = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/recup_mail.php";
     public static final String strChangerMDP            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/modif_mdp.php";
@@ -28,7 +28,7 @@ public class AddressUrl {
     public static final String strNotifSchool          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationSchool.php";
     public static final String strTriIndexCompte       = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexCompte.php";
     public static final String strTriIndexGPS          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGPS.php";
-    public static final String strIndexBug               = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexBug.php";
+    public static final String strPhoto                = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp + "/";
     public static final String strNotifUser            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexNotification.php";
     public static final String strGCM                  = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/register_GCM.php";
     public static final String strIndexGCM             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGCM.php";

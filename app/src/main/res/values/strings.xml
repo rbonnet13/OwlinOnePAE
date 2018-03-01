@@ -25,7 +25,7 @@
 
     <!-- Définition des strings pour l'activité appartement -->
     <string name="euro">€ CC/mois</string>
-    <string name="Trierpar">Trier par</string>
+    <string name="Trierpar">Trier par:</string>
     <string name="TrierDispo">Disponibilité</string>
     <string name="TrierPrix">Prix</string>
     <string name="TrierDeux">Les deux</string>
@@ -57,10 +57,10 @@
 
     <string name="username">Pseudo</string>
     <string name="password">Mot de passe</string>
-    <string name="email">Adresse Email (@esaip.org)</string>
     <string name="newPassword">Nouveau mot de passe</string>
     <string name="reNewPassword">Réécrire le mot de passe</string>
     <string name="codePassword">Code</string>
+    <string name="email">Adresse Email (@esaip.org)</string>
     <string name="login">Se connecter</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="registration_instruction">Vous n\'êtes pas encore inscrits? Inscrivez-vous dès maintenant</string>
@@ -92,7 +92,7 @@
     <string name="notificationCovoit">Notifications</string>
     <string name="testClient57">testClient57</string>
 
-    <string name="DestinationNotif">Destination</string>
+    <string name="DestinationNotif">Destination:</string>
     <string name="HomeNotif">Vers Domicile</string>
     <string name="SchoolNotif">Vers Esaip</string>
 

@@ -236,7 +236,7 @@ public class MainLogin extends AppCompatActivity {
 
             int jsonResult = returnParsedJsonObject(result);
             if (jsonResult == 0) {
-                Toast.makeText(MainLogin.this, "Pseudo ou Mot de passe incorrect", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainLogin.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -272,10 +272,10 @@ public class MainLogin extends AppCompatActivity {
                     jsonresultTelephone = null;
                 }
 
+
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
-
                 session.createUserLoginSession(enteredUsername,jsonresultPrenom,jsonresultNom,jsonresultVille,jsonresultAdresse,jsonresultLatitude,jsonresultLongitude, jsonresultCP,jsonresultEmail,jsonresultTelephone,passwordEncrypted,jsonresultImg,"true");
                 startActivity(intent);
                 finish();
@@ -312,14 +312,9 @@ public class MainLogin extends AppCompatActivity {
     private String returnParsedJsonObjectImg (String result){
         JSONObject resultObject = null;
         String returnedResultImg = "";
-        String returnedResultImg2 = "";
         try {
             resultObject = new JSONObject(result);
-            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("IMAGE_USER");
-
-            // A OPTIMISER: Le JSONObject place des \ et des \n dans le code Base64. On les supprime
-            returnedResultImg2 = returnedResultImg.replaceAll("\\\\","");
-            returnedResultImg = returnedResultImg2.replaceAll("\\n","");
+            returnedResultImg = resultObject.getJSONArray("user").getJSONObject(0).getString("photo");
         } catch (JSONException e) {
             e.printStackTrace();
         }

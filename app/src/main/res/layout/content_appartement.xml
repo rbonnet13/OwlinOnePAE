@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:hint="Description appartement"
         android:background="#11000000"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:textSize="23dp"/>
 

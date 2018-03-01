@@ -2,22 +2,22 @@ package owlinone.pae.main;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,28 +28,50 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
-import owlinone.pae.*;
-import owlinone.pae.appartement.*;
-import owlinone.pae.article.*;
-import owlinone.pae.calendrier.*;
-import owlinone.pae.configuration.*;
-import owlinone.pae.covoiturage.*;
-import owlinone.pae.divers.*;
-import owlinone.pae.session.*;
-import owlinone.pae.stage.*;
+import owlinone.pae.R;
+import owlinone.pae.appartement.Appartement;
+import owlinone.pae.article.Article;
+import owlinone.pae.article.ArticleAdapter;
+import owlinone.pae.article.DetailArticle;
+import owlinone.pae.calendrier.CalendarExtra;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.covoiturage.Covoiturage;
+import owlinone.pae.divers.APropos;
+import owlinone.pae.divers.Bug;
+import owlinone.pae.session.Compte;
+import owlinone.pae.session.Session;
+import owlinone.pae.stage.Stage;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     private String TAG = MainActivity.class.getSimpleName();
     private ListView lv;
@@ -59,7 +81,14 @@ public class MainActivity extends AppCompatActivity
     int index;
     int top;
     Session session;
-    // private final String strPhoto = AddressUrl.strPhoto;
+    private final String strPhoto = AddressUrl.strPhoto;
+    private  String name ="";
+    private  String photoT ="";
+    private  String email ="";
+    TextView notifcovoit;
+    protected String response;
+    private final String serverUrl = AddressUrl.strNbNotif;
+    private  String nbNotif = "";
 
     @Override
     public void onRestart() {
@@ -103,24 +132,27 @@ public class MainActivity extends AppCompatActivity
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // get name
-        String name = user.get(Session.KEY_NAME);
+         name = user.get(Session.KEY_NAME);
         // get email
-        String email = user.get(Session.KEY_EMAIL);
-        String photoT = user.get(Session.KEY_PHOTO);
+         email = user.get(Session.KEY_EMAIL);
+         photoT = user.get(Session.KEY_PHOTO);
 
+        notifcovoit =(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.nav_covoiturage));
+        MainActivity.AsyncDataClass asyncRequestObject = new MainActivity.AsyncDataClass();
+        asyncRequestObject.execute(serverUrl, name);
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
         ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
-
-        // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
-        if(!user.get(Session.KEY_PHOTO).equals("no image")){
+        //image
+        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
+            url_image = url_image.replace(" ","%20");
             try {
-                String base64 = user.get(Session.KEY_PHOTO).substring(user.get(Session.KEY_PHOTO).indexOf(","));
-                byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
-                Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
-                photo.setImageBitmap(image);
+                Log.i("RESPUESTA IMAGE: ",""+url_image);
+                Glide.with(this).load(url_image).into(photo);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -210,6 +242,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
 
     // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
     @Override
@@ -367,4 +400,92 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+    private class AsyncDataClass extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+
+            HttpParams httpParameters = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+            HttpClient httpClient = new DefaultHttpClient(httpParameters);
+            HttpPost httpPost = new HttpPost(params[0]);
+            String jsonResult = "";
+
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("name", params[1]));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpClient.execute(httpPost);
+                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+
+            } catch (ClientProtocolException e) {
+
+                e.printStackTrace();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+            return jsonResult;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            System.out.println("Resulted Value: " + result);
+            if (result.equals("") || result == null) {
+                Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            int jsonResult = returnParsedJsonObject(result);
+            if (jsonResult == 0) {
+                Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
+                return;
+            }
+            nbNotif = Integer.toString(jsonResult);
+
+                notifcovoit.setGravity(Gravity.CENTER_VERTICAL);
+                notifcovoit.setTypeface(null,Typeface.BOLD);
+                notifcovoit.setTextColor(getResources().getColor(R.color.colorRed));
+                notifcovoit.setText(nbNotif);
+
+        }
+        private StringBuilder inputStreamToString(InputStream is) {
+            String rLine = "";
+            StringBuilder answer = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            try {
+                while ((rLine = br.readLine()) != null) {
+                    answer.append(rLine);
+                }
+            } catch (IOException e) {
+            // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return answer;
+        }
+    }
+    private int returnParsedJsonObject(String result){
+        JSONObject resultObject = null;
+        int returnedResult = 0;
+        try {
+            resultObject = new JSONObject(result);
+            returnedResult = resultObject.getInt("success");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResult;
+    }
+
 }

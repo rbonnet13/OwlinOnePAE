@@ -1,8 +1,6 @@
 package owlinone.pae.divers;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +28,8 @@ import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
 import owlinone.pae.stage.Stage;
+
+import static owlinone.pae.configuration.AddressUrl.strPhoto;
 
 /**
  * Created by emile on 13/02/2018.
@@ -84,13 +83,13 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
         ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
-        // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
-        if(!user.get(Session.KEY_PHOTO).equals("no image")){
+        //image
+        if(!user.get(Session.KEY_PHOTO).equals("sans image")){
+            String url_image = strPhoto + user.get(Session.KEY_PHOTO);
+            url_image = url_image.replace(" ","%20");
             try {
-                String base64 = user.get(Session.KEY_PHOTO).substring(user.get(Session.KEY_PHOTO).indexOf(","));
-                byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
-                Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
-                photo.setImageBitmap(image);
+                Log.i("RESPUESTA IMAGE: ",""+url_image);
+                Glide.with(this).load(url_image).into(photo);
             } catch (Exception e) {
                 e.printStackTrace();
             }
