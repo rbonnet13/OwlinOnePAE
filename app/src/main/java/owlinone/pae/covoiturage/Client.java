@@ -335,7 +335,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 startActivity(intent);
             }
         });
-        strDestination ="school";
+        strDestination ="home";
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
 
         //Test si première connexion pour afficher bulle information bouton
