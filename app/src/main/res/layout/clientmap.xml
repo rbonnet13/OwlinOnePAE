@@ -144,9 +144,9 @@
                 android:id="@+id/toggleDestination"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
-                android:background="@drawable/check"
                 android:textOn=""
                 android:textOff=""
+                android:background="@drawable/check"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:layout_centerVertical="true"/>
