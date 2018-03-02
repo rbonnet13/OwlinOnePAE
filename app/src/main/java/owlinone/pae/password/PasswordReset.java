@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.session.MainLogin;
 
@@ -41,6 +42,8 @@ public class PasswordReset extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_reset);
+        HideKeyboard hideKeyboard = new HideKeyboard(this);
+        hideKeyboard.setupUI(findViewById(R.id.layout_reset));
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar15);
         setSupportActionBar(toolbar);

@@ -26,17 +26,13 @@ import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.calendrier.CalendarExtra;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.configuration.SecretPassword;
 import owlinone.pae.covoiturage.Covoiturage;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Compte;
-import owlinone.pae.session.LoginActivity;
-import owlinone.pae.session.RegisterActivity;
 import owlinone.pae.session.Session;
 import owlinone.pae.stage.Stage;
-
-import static owlinone.pae.configuration.SecretPassword.generateKey;
 
 /**
  * Created by emile on 13/02/2018.
@@ -58,6 +54,8 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
 
         // Affiche le contenu de l'activté sélectionnée
         setContentView(R.layout.activity_bug);
+        HideKeyboard hideKeyboard = new HideKeyboard(this);
+        hideKeyboard.setupUI(findViewById(R.id.layout_bug));
 
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

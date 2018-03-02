@@ -21,6 +21,7 @@ import javax.crypto.SecretKey;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.GMailSender;
+import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.configuration.SecretPassword;
 import owlinone.pae.session.MainLogin;
@@ -49,7 +50,8 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
-
+        HideKeyboard hideKeyboard = new HideKeyboard(this);
+        hideKeyboard.setupUI(findViewById(R.id.layout_password));
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
@@ -103,8 +105,8 @@ public class PasswordActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    GMailSender sender = new GMailSender("owlinone.esaip@gmail.com",
-                            "AIzaSyCyZbnFvalPGR9h1aJZJel8_7VtcDfCmPc");
+                    GMailSender sender = new GMailSender(GMailSender.mailOwlInOne,
+                            GMailSender.mdpOwlInOne);
                     sender.sendMail("Mot de passe oublié OwlIneOne", " Salut "+username+", \n Ton code pour changer ton mot de passe c'est: " + randomNum + ". \n Retourne sur l'application pour pouvoir choisir un nouveau mot de passe. \n L'équipe OwlInOne,",
                             "owlinone.esaip@gmail.com", mailRecup);
                 } catch (Exception e) {

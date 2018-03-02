@@ -31,6 +31,7 @@ import java.util.Locale;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.Email;
+import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.main.SplashScreen;
 
@@ -156,6 +157,8 @@ public class AddApart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_add_appart);
+        HideKeyboard hideKeyboard = new HideKeyboard(this);
+        hideKeyboard.setupUI(findViewById(R.id.layout_add_appart));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);

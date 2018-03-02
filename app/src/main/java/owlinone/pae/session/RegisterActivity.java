@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -36,6 +35,7 @@ import javax.crypto.SecretKey;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.GMailSender;
+import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.configuration.SecretPassword;
 
@@ -79,7 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        HideKeyboard hideKeyboard = new HideKeyboard(this);
+        hideKeyboard.setupUI(findViewById(R.id.layout_register));
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
@@ -314,8 +315,8 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
-                        GMailSender sender = new GMailSender("owlinone.esaip@gmail.com",
-                                "AIzaSyCyZbnFvalPGR9h1aJZJel8_7VtcDfCmPc");
+                        GMailSender sender = new GMailSender(GMailSender.mailOwlInOne,
+                                GMailSender.mdpOwlInOne);
                         sender.sendMail("Activation du compte OwlIneOne", " Salut "+enteredUsername+", \n Ton code pour activer ton compte c'est: " + randomNum + ". \n Retourne sur l'application pour pouvoir choisir l'activer. \n L'équipe OwlInOne,",
                                 "owlinone.esaip@gmail.com", enteredEmail);
                     } catch (Exception e) {
