@@ -19,11 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.crypto.SecretKey;
 
 import owlinone.pae.R;
-import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.GMailSender;
-import owlinone.pae.configuration.HideKeyboard;
-import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.configuration.SecretPassword;
+import owlinone.pae.configuration.*;
 import owlinone.pae.session.MainLogin;
 
 import static owlinone.pae.configuration.SecretPassword.generateKey;
@@ -49,9 +45,12 @@ public class PasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Affiche le contenu de l'activté sélectionnée
         setContentView(R.layout.activity_password);
         HideKeyboard hideKeyboard = new HideKeyboard(this);
         hideKeyboard.setupUI(findViewById(R.id.layout_password));
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
@@ -65,6 +64,7 @@ public class PasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         // Déclarations ID
         editNewPassword = (EditText) findViewById(R.id.new_password_field);
         editReNewPassword = (EditText) findViewById(R.id.renew_password_field);
@@ -95,11 +95,11 @@ public class PasswordActivity extends AppCompatActivity {
              username = (String) savedInstanceState.getSerializable("username");
          }
 
-         //Création d'un nombre aléatoire à 4 chiffres
+         // Création d'un nombre aléatoire à 4 chiffres
          randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
          Log.e("randomNum", "randomNum: "+ String.valueOf(randomNum));
 
-        //Envoi mail par gmail
+        // Envoie du code à 4 chiffres par Gmail
         new Thread(new Runnable() {
 
             @Override

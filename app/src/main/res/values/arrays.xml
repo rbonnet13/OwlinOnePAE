@@ -19,6 +19,7 @@
     <string-array name="bugSpinnerList">
         <item>@string/bugSpinner1</item>
         <item>@string/bugSpinner2</item>
+        <item>@string/bugSpinner3</item>
     </string-array>
 
 </resources>

@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     private String capitalizeFirstCharacter(String textInput){

@@ -4,7 +4,6 @@ package owlinone.pae.appartement;
  * Created by Julian on 09/12/2016.
  */
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -25,8 +24,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import owlinone.pae.R;
-
-
 
 public class DetailAppart extends AppCompatActivity implements OnMapReadyCallback{
     String strDetail= "";
@@ -78,9 +75,6 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
         TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
         TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
-
-
-
 
 
         //Récupère le string srtDetail pour les détails--------------------------------------------
@@ -226,11 +220,6 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         textDispo.setText(strDispoContext);
 
 
-
-
-
-
-
         //click pour appeler au téléphone
         textTel.setOnClickListener(new View.OnClickListener() {
 
@@ -279,4 +268,3 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(intent);
     }
 }
-

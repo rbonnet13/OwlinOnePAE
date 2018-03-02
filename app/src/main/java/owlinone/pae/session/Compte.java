@@ -38,14 +38,10 @@ import java.util.Locale;
 import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.calendrier.CalendarExtra;
-import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.HideKeyboard;
-import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.configuration.*;
 import owlinone.pae.covoiturage.Covoiturage;
-import owlinone.pae.divers.APropos;
-import owlinone.pae.divers.Bug;
+import owlinone.pae.divers.*;
 import owlinone.pae.main.MainActivity;
-import owlinone.pae.stage.Stage;
 
 /**
  * Created by rudyb on 17/01/2018.
@@ -366,10 +362,6 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            startActivity(searchIntent);
-            finish();
-        } else if (id == R.id.nav_stage) {
-            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_bug) {
