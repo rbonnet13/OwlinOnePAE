@@ -398,12 +398,12 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             public void onClick(View v)
                             {
                                 test = true;
-                                strDestination ="esaip";
                             }
                         });
                         if(test == false) animatorSetHeart.start();
                         else {
                             // After some action
+                            strDestination = "home";
                             fadeBackground.setVisibility(View.GONE);
                             bulle.setVisibility(View.GONE);
                             return;
