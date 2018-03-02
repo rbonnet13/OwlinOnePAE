@@ -45,9 +45,13 @@ import static owlinone.pae.configuration.SecretPassword.generateKey;
 public class RegisterActivity extends AppCompatActivity {
     protected EditText username;
     private EditText password;
+    private EditText rePassword;
+
     private EditText email;
     protected String enteredUsername;
     protected String enteredPassword;
+    protected String enteredRePassword;
+
     protected String enteredEmail;
     protected String enteredPhoto;
     protected String response;
@@ -98,6 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
         // Déclarations ID
         username = (EditText) findViewById(R.id.username_field);
         password = (EditText) findViewById(R.id.password_field);
+        rePassword = (EditText) findViewById(R.id.re_password_field);
+
         email = (EditText) findViewById(R.id.email_field);
 
         codeActivation = (EditText) findViewById(R.id.code_activation);
@@ -116,6 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 enteredUsername = username.getText().toString();
                 enteredPassword = password.getText().toString();
+                enteredRePassword = rePassword.getText().toString();
                 enteredEmail = email.getText().toString();
                 enteredPhoto = convertirImgString(bitmap);
                 randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
@@ -269,12 +276,6 @@ public class RegisterActivity extends AppCompatActivity {
                 parameters.put("MAIL", enteredEmail);
                 responseValidUserMail = sh.performPostCall(urlActivationUserMail, parameters);
 
-                Log.e("REPONSE: ", "Response from url: " + responseValidUserMail);
-                Log.e("REPONSE: ", "Response from url: " + String.valueOf(responseValidUserMail.isEmpty()));
-                Log.e("REPONSE: ", "Response from url: " + String.valueOf(responseValidUserMail.startsWith("{")));
-                Log.e("REPONSE: ", "Response from url: " + String.valueOf(responseValidUserMail.contains("username")));
-
-
                 return null;
             } catch (Exception e)
             {
@@ -288,6 +289,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (responseValidUserMail.contains("username")) {
                 Toast.makeText(RegisterActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Log.e("test", "test password: " + enteredPassword + " " + enteredRePassword);
+
+            if (!enteredPassword.equals(enteredRePassword)) {
+                Toast.makeText(RegisterActivity.this, "Mots de passes différents", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -333,6 +340,7 @@ public class RegisterActivity extends AppCompatActivity {
             password.setVisibility(View.INVISIBLE);
             username.setVisibility(View.INVISIBLE);
             password.setVisibility(View.INVISIBLE);
+            rePassword.setVisibility(View.INVISIBLE);
             email.setVisibility(View.INVISIBLE);
             signUpButton.setVisibility(View.INVISIBLE);
             imagePhoto.setEnabled(false);
