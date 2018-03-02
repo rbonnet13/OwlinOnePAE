@@ -398,6 +398,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             public void onClick(View v)
                             {
                                 test = true;
+                                strDestination ="home";
                             }
                         });
                         if(test == false) animatorSetHeart.start();
