@@ -99,7 +99,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String adresse ="" ;
     private  String ville ="" ;
     private  String cp  ="";
-    private  String photo ="";
     private  String latit ="";
     private  String longit ="";
     private  String telephone ="";
@@ -280,7 +279,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         ville = user.get(Session.KEY_VILLE);
         adresse = user.get(Session.KEY_ADRESSE);
         cp = user.get(Session.KEY_CP);
-        photo = user.get(Session.KEY_PHOTO);
         latit = user.get(Session.KEY_LATITUDE);
         longit = user.get(Session.KEY_LONGITUDE);
         telephone = user.get(Session.KEY_TEL);
@@ -547,6 +545,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     String CP               = a.getString("CP");
                     Double latitudeAppart   = a.getDouble("LATITUDE");
                     Double longitudeAppart  = a.getDouble("LONGITUDE");
+
                     double result_covoiturage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
 
                     // Affiche les appartements que s'il est disponible ou non disponible
@@ -601,7 +600,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             String getEmail="" ;
             String getAdresse ="" ;
             String getTelephone ="" ;
-            String getPhoto ="" ;
 
             super.onPostExecute(result);
             List<Marker> markers = new ArrayList<Marker>();
@@ -641,7 +639,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
                         )));
                 InfoWindowData info = new InfoWindowData();
-                info.setImage(getPhoto);
                 info.setHotel(getEmail);
                 info.setFood(getTelephone);
                 info.setTransport(getAdresse);
