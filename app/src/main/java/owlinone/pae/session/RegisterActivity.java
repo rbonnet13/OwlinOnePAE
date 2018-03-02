@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText codeActivation;
     private String enteredCode;
     private String enteredMail;
+    private Button signUpButton;
     private Button validationCode;
 
     private int min = 1000;
@@ -96,13 +97,15 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username_field);
         password = (EditText) findViewById(R.id.password_field);
         email = (EditText) findViewById(R.id.email_field);
-        Button signUpButton = (Button) findViewById(R.id.sign_up);
+
         codeActivation = (EditText) findViewById(R.id.code_activation);
+        signUpButton = (Button) findViewById(R.id.sign_up);
         validationCode = (Button) findViewById(R.id.btn_activation);
         imagePhoto = (ImageView) findViewById(R.id.photo_user);
 
         codeActivation.setVisibility(View.INVISIBLE);
         validationCode.setVisibility(View.INVISIBLE);
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -324,9 +327,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             codeActivation.setVisibility(View.VISIBLE);
             validationCode.setVisibility(View.VISIBLE);
-            username.setKeyListener(null);
-            password.setKeyListener(null);
-            email.setKeyListener(null);
+            password.setVisibility(View.INVISIBLE);
+            username.setVisibility(View.INVISIBLE);
+            password.setVisibility(View.INVISIBLE);
+            email.setVisibility(View.INVISIBLE);
+            signUpButton.setVisibility(View.INVISIBLE);
+
             imagePhoto.setEnabled(false);
         }
     }

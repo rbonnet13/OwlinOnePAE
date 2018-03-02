@@ -43,6 +43,7 @@ import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.calendrier.CalendarExtra;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.covoiturage.Covoiturage;
 import owlinone.pae.divers.APropos;
@@ -87,8 +88,8 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private  String telephone  ="";
     private  String photoBDD ="";
     private  String covoiturage ="";
-
     private  String response ="";
+    HideKeyboard hide;
 
     HttpHandler sh = new HttpHandler();
     Geocoder geocoder;
