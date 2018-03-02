@@ -16,6 +16,9 @@ public class GMailSender extends javax.mail.Authenticator {
     private String user;
     private String password;
     private Session session;
+    public static String mailOwlInOne = "owlinone.esaip@gmail.com";
+    public static String mdpOwlInOne = "AIzaSyCyZbnFvalPGR9h1aJZJel8_7VtcDfCmPc";
+
 
     static {
         Security.addProvider(new JSSEProvider());

@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bugScrollView"
+    android:id="@+id/layout_bug"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="vertical"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:background="@drawable/fond2"
-    android:isScrollContainer="true"
+    android:padding="@dimen/activity_horizontal_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/bugScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin" >
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
         <TextView
             android:id="@+id/bugTitle"
@@ -34,6 +36,7 @@
             android:layout_height="match_parent"
             android:text="@string/bugSpinnerTitle"
             android:fontFamily="casual"
+            android:layout_below="@+id/bugTitle"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
             android:layout_marginBottom="1dp" />
@@ -42,6 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#11000000"
+            android:id="@+id/layoutSpinnerBug"
+            android:layout_below="@+id/bugSpinnerTitle"
             android:layout_marginBottom="20dp">
         <Spinner
             android:id="@+id/bugSpinnerFeedbackType"
@@ -57,6 +62,7 @@
             android:id="@+id/bugFeedbackBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutSpinnerBug"
             android:hint="@string/bugFeedbackBody"
             android:inputType="textCapSentences|textMultiLine"
             android:minLines="5"
@@ -75,8 +81,9 @@
             android:id="@+id/ButtonSendFeedback"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:layout_gravity="center"
             android:background="@drawable/background_signup"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/bugFeedbackBody"
             android:text="@string/bugSubmitButton"
             android:textColor="@color/colorWhite"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -89,5 +96,7 @@
             android:layout_marginBottom="20dp" >
         </Button>
 
-    </LinearLayout>
-</ScrollView>
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>
