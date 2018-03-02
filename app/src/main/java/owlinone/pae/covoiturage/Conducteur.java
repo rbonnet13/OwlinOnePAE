@@ -2,20 +2,16 @@ package owlinone.pae.covoiturage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +26,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,9 +49,7 @@ public class Conducteur extends AppCompatActivity {
     private String TAG = Conducteur.class.getSimpleName();
     private ListView lv;
     String url = null;
-    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="";
-
-
+    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="", strIdNotif ="";
     HashMap<String, String> obj = new HashMap();
     ArrayList<HashMap<String, String>> notifList;
 
@@ -159,6 +152,7 @@ public class Conducteur extends AppCompatActivity {
                 //  JSONObject sTest = new JSONObject();
                 //  String strTest = String.valueOf(lv.getItemAtPosition(position));
                 obj = (HashMap) lv.getItemAtPosition(position);
+                strIdNotif = obj.get("ID_NOTIF");
                 strPseudo = obj.get("PSEUDO_CONDUCTEUR_NOTIF");
                 strNom = obj.get("NOM_NOTIF");
                 strPrenom = obj.get("PRENOM_NOTIF");
@@ -186,6 +180,7 @@ public class Conducteur extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
                         Toast.makeText(getApplicationContext(), "Refusé", Toast.LENGTH_LONG).show();
+                        new Conducteur.sendGCMRefus().execute();
                         dialog.dismiss();
                     }
                 });
@@ -200,6 +195,7 @@ public class Conducteur extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 obj = (HashMap) lv.getItemAtPosition(pos);
+                strIdNotif = obj.get("ID_NOTIF");
                 strPseudo = obj.get("PSEUDO_CONDUCTEUR_NOTIF");
                 strNom = obj.get("NOM_NOTIF");
                 strPrenom = obj.get("PRENOM_NOTIF");
@@ -215,22 +211,6 @@ public class Conducteur extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    // Convertir image en string
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private String convertirImgString(Bitmap bitmap) {
-        String imagenString;
-        ByteArrayOutputStream array=new ByteArrayOutputStream();
-        if(bitmap!=null){
-            bitmap.compress(Bitmap.CompressFormat.JPEG,30,array);
-            byte[] imagenByte=array.toByteArray();
-            imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
-        }else{
-            imagenString = "sans image"; //se enviara este string en caso de no haber imagen
-        }
-
-        return imagenString;
     }
 
     private class GetNotif extends AsyncTask<Void, Void, Void>
@@ -273,6 +253,7 @@ public class Conducteur extends AppCompatActivity {
                 // looping through All Notification
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject a = jsonArray.getJSONObject(i);
+                    int id_notif = a.getInt("ID_NOTIF");
                     String pseudo_notif = a.getString("PSEUDO_CONDUCTEUR_NOTIF");
                     String nom_notif = a.getString("NOM_NOTIF");
                     String prenom_notif = a.getString("PRENOM_NOTIF");
@@ -297,6 +278,7 @@ public class Conducteur extends AppCompatActivity {
                     String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time, DateUtils.SECOND_IN_MILLIS);
                     HashMap<String, String> notification = new HashMap<>();
                     // adding each child node to HashMap key => value
+                    notification.put("ID_NOTIF",String.valueOf(id_notif));
                     notification.put("PSEUDO_CONDUCTEUR_NOTIF",pseudo_notif);
                     notification.put("NOM_NOTIF", nom_notif);
                     notification.put("PRENOM_NOTIF", prenom_notif);
@@ -344,6 +326,28 @@ public class Conducteur extends AppCompatActivity {
                 parametersConducteur.put("nom", strNomUser);
                 parametersConducteur.put("PRENOM_NOTIF",strPrenom);
                 parametersConducteur.put("NOM_NOTIF",strNom);
+                parametersConducteur.put("DESTINATION_NOTIF",strDestination);
+                sh.performPostCall(urlNotification, parametersConducteur);
+                return null;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+    }
+    private class sendGCMRefus extends AsyncTask<Void, Void, Void> {
+        Exception exception;
+        protected Void doInBackground(Void... arg0) {
+            try {
+                HttpHandler sh = new HttpHandler();
+                HashMap<String, String> parametersConducteur = new HashMap<>();
+                String urlNotification = AddressUrl.strNotifRefuse;
+                parametersConducteur.put("ID_NOTIF", strIdNotif);
+                parametersConducteur.put("prenom", strPrenomUser);
+                parametersConducteur.put("nom", strNomUser);
+                parametersConducteur.put("PRENOM_NOTIF",strPrenom);
+                parametersConducteur.put("NOM_NOTIF",strNom);
+                parametersConducteur.put("DESTINATION_NOTIF",strDestination);
                 sh.performPostCall(urlNotification, parametersConducteur);
                 return null;
             } catch (Exception e) {
