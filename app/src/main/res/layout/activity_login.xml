@@ -41,4 +41,15 @@
         android:layout_marginTop="44dp"
         android:layout_below="@+id/login_user"
         android:layout_centerHorizontal="true" />
+    <TextView android:text="@string/registering_message" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/informationTextView"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/message"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/informationTextView"
+        android:id="@+id/registrationProgressBar" />
 </RelativeLayout>

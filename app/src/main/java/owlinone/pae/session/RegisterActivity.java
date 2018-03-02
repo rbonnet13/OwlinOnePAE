@@ -53,7 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected String responseValidUserMail;
     private  int jsonResultValidUserMail;
     private JSONObject myJsonObject;
-
     private Bitmap bitmap;
     private ImageView imagePhoto;
     private int request_code = 1;
@@ -72,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     HttpHandler sh = new HttpHandler();
     SecretKey secret = null;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -157,6 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     // Convertir image en string

@@ -3,10 +3,7 @@ package owlinone.pae.covoiturage;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,13 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -45,7 +39,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 import owlinone.pae.R;
-import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.session.Session;
@@ -61,7 +54,7 @@ public class Conducteur extends AppCompatActivity {
     private String TAG = Conducteur.class.getSimpleName();
     private ListView lv;
     String url = null;
-    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "";
+    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="";
 
 
     HashMap<String, String> obj = new HashMap();
@@ -153,7 +146,9 @@ public class Conducteur extends AppCompatActivity {
         HashMap<String, String> user = session.getUserDetails();
         // get name
         strNameUser = user.get(Session.KEY_NAME);
-
+        // get name
+        strPrenomUser = user.get(Session.KEY_PRENOM);
+        strNomUser = user.get(Session.KEY_NOM);
         notifList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.listNotification);
         new GetNotif().execute();
@@ -164,6 +159,7 @@ public class Conducteur extends AppCompatActivity {
                 //  JSONObject sTest = new JSONObject();
                 //  String strTest = String.valueOf(lv.getItemAtPosition(position));
                 obj = (HashMap) lv.getItemAtPosition(position);
+                strPseudo = obj.get("PSEUDO_CONDUCTEUR_NOTIF");
                 strNom = obj.get("NOM_NOTIF");
                 strPrenom = obj.get("PRENOM_NOTIF");
                 strAdresse = obj.get("ADRESSE_NOTIF");
@@ -180,7 +176,7 @@ public class Conducteur extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(), "Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l'item", Toast.LENGTH_LONG).show();
-
+                        new Conducteur.sendGCMRetour().execute();
                         dialog.dismiss();
                     }
                 });
@@ -204,6 +200,7 @@ public class Conducteur extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 obj = (HashMap) lv.getItemAtPosition(pos);
+                strPseudo = obj.get("PSEUDO_CONDUCTEUR_NOTIF");
                 strNom = obj.get("NOM_NOTIF");
                 strPrenom = obj.get("PRENOM_NOTIF");
                 strAdresse = obj.get("ADRESSE_NOTIF");
@@ -276,6 +273,7 @@ public class Conducteur extends AppCompatActivity {
                 // looping through All Notification
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject a = jsonArray.getJSONObject(i);
+                    String pseudo_notif = a.getString("PSEUDO_CONDUCTEUR_NOTIF");
                     String nom_notif = a.getString("NOM_NOTIF");
                     String prenom_notif = a.getString("PRENOM_NOTIF");
                     String adresse_notif = a.getString("ADRESSE_NOTIF");
@@ -299,6 +297,7 @@ public class Conducteur extends AppCompatActivity {
                     String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time, DateUtils.SECOND_IN_MILLIS);
                     HashMap<String, String> notification = new HashMap<>();
                     // adding each child node to HashMap key => value
+                    notification.put("PSEUDO_CONDUCTEUR_NOTIF",pseudo_notif);
                     notification.put("NOM_NOTIF", nom_notif);
                     notification.put("PRENOM_NOTIF", prenom_notif);
                     notification.put("ADRESSE_NOTIF", adresse_notif);
@@ -333,5 +332,24 @@ public class Conducteur extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+    private class sendGCMRetour extends AsyncTask<Void, Void, Void> {
+        Exception exception;
+        protected Void doInBackground(Void... arg0) {
+            try {
+                HttpHandler sh = new HttpHandler();
+                HashMap<String, String> parametersConducteur = new HashMap<>();
+                String urlNotification = AddressUrl.strNotifAccepte;
+                parametersConducteur.put("prenom", strPrenomUser);
+                parametersConducteur.put("nom", strNomUser);
+                parametersConducteur.put("PRENOM_NOTIF",strPrenom);
+                parametersConducteur.put("NOM_NOTIF",strNom);
+                sh.performPostCall(urlNotification, parametersConducteur);
+                return null;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
     }
 }

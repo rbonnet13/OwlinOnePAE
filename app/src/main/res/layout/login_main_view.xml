@@ -125,6 +125,5 @@
         android:textAlignment="center"
         android:focusable="true"
         android:clickable="true"/>
-
 </RelativeLayout>
 </LinearLayout>

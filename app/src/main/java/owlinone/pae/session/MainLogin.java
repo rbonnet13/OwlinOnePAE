@@ -72,8 +72,6 @@ public class MainLogin extends AppCompatActivity {
     private final String serverUrl = AddressUrl.strTriIndex;
     private Session session;
     private SecretKey secret = null;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,19 +172,8 @@ public class MainLogin extends AppCompatActivity {
             }
 
         });
-    }
 
-    // On kill l'application pour économiser la batterie
-    @Override
-    public void onBackPressed(){
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-        System.exit(0);
     }
-
     private class AsyncDataClass extends AsyncTask<String, Void, String> {
 
         @Override
