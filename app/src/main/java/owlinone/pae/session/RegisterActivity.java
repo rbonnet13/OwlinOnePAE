@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -43,27 +44,29 @@ import static owlinone.pae.configuration.SecretPassword.generateKey;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    protected EditText username;
-    private EditText password;
-    private EditText rePassword;
+    protected TextInputLayout username;
+    private TextInputLayout password;
+    private TextInputLayout rePassword;
+    private TextInputLayout codeActivation;
+    private TextInputLayout email;
 
-    private EditText email;
     protected String enteredUsername;
     protected String enteredPassword;
     protected String enteredRePassword;
-
     protected String enteredEmail;
     protected String enteredPhoto;
+    private String enteredCode;
+    private String enteredMail;
     protected String response;
     protected String responseValidUserMail;
+
     private  int jsonResultValidUserMail;
     private JSONObject myJsonObject;
     private Bitmap bitmap;
     private ImageView imagePhoto;
     private int request_code = 1;
-    private EditText codeActivation;
-    private String enteredCode;
-    private String enteredMail;
+
+
     private Button signUpButton;
     private Button validationCode;
 
@@ -100,13 +103,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // Déclarations ID
-        username = (EditText) findViewById(R.id.username_field);
-        password = (EditText) findViewById(R.id.password_field);
-        rePassword = (EditText) findViewById(R.id.re_password_field);
+        username = (TextInputLayout) findViewById(R.id.username_field_textInput);
+        password = (TextInputLayout) findViewById(R.id.til_password_login_activity);
+        rePassword = (TextInputLayout) findViewById(R.id.til_password_login_activity2);
+        email = (TextInputLayout) findViewById(R.id.email_field_textInput);
+        codeActivation = (TextInputLayout) findViewById(R.id.code_field_textInput);
 
-        email = (EditText) findViewById(R.id.email_field);
-
-        codeActivation = (EditText) findViewById(R.id.code_activation);
         signUpButton = (Button) findViewById(R.id.sign_up);
         validationCode = (Button) findViewById(R.id.btn_activation);
         imagePhoto = (ImageView) findViewById(R.id.photo_user);
@@ -120,10 +122,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                enteredUsername = username.getText().toString();
-                enteredPassword = password.getText().toString();
-                enteredRePassword = rePassword.getText().toString();
-                enteredEmail = email.getText().toString();
+                enteredUsername = username.getEditText().getText().toString();
+                enteredPassword = password.getEditText().getText().toString();
+                enteredRePassword = rePassword.getEditText().getText().toString();
+                enteredEmail = email.getEditText().getText().toString();
                 enteredPhoto = convertirImgString(bitmap);
                 randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
 
@@ -152,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
         validationCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enteredCode = codeActivation.getText().toString();
+                enteredCode = codeActivation.getEditText().getText().toString();
                 Log.e("enteredCode", "enteredCode: " + enteredCode);
                 Log.e("randomNum", "randomNum: " + String.valueOf(randomNum));
 
@@ -337,6 +339,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             codeActivation.setVisibility(View.VISIBLE);
             validationCode.setVisibility(View.VISIBLE);
+
             password.setVisibility(View.INVISIBLE);
             username.setVisibility(View.INVISIBLE);
             password.setVisibility(View.INVISIBLE);
