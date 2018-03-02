@@ -106,6 +106,8 @@
 
     <string name="pseudoBold"><i>Pseudo</i></string>
     <string name="mdpBold"><i>Mot de passe</i></string>
+    <string name="remdpBold"><i>Retaper Mot de passe</i></string>
+
     <string name="emailBold"><i>Email (@esaip.org)</i></string>
     <string name="email2Bold"><i>Email</i></string>
     <string name="prixBold"><i>Prix (charges comprises)</i></string>
