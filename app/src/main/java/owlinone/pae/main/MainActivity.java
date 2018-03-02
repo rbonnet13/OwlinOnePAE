@@ -430,13 +430,13 @@ public class MainActivity extends AppCompatActivity
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
-                Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = returnParsedJsonObject(result);
             if (jsonResult == 0) {
-                Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 return;
             }
             nbNotif = Integer.toString(jsonResult);

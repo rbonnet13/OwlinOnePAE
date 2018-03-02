@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         Bundle intentBundle = intent.getExtras();
         String loggedUser = intentBundle.getString("USERNAME");
         loggedUser = capitalizeFirstCharacter(loggedUser);
-        String message = intentBundle.getString("MESSAGE");
+        final String message = intentBundle.getString("MESSAGE");
 
         TextView loginUsername = (TextView)findViewById(R.id.login_user);
         TextView successMessage = (TextView)findViewById(R.id.message);

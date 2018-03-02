@@ -41,15 +41,23 @@
         android:layout_marginTop="44dp"
         android:layout_below="@+id/login_user"
         android:layout_centerHorizontal="true" />
-    <TextView android:text="@string/registering_message" android:layout_width="wrap_content"
+
+    <TextView
+        android:text="@string/registering_message"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/informationTextView"
         android:textColor="@color/colorWhite"
+        android:layout_marginTop="30dp"
+        android:textSize="14dp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/message"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/informationTextView"
         android:id="@+id/registrationProgressBar" />
 </RelativeLayout>
