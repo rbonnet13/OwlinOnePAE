@@ -15,7 +15,6 @@
     <string name="app_calendrier">Événements</string>
     <string name="app_covoiturage">Covoiturage</string>
     <string name="app_appartement">Appartements</string>
-    <string name="app_stage">Stages</string>
     <string name="app_bug">Signaler un bug</string>
     <string name="app_a_propos">À propos</string>
 
@@ -55,6 +54,7 @@
     <string name="about">About</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- Définition des strings pour l'activité Session, Login et Inscription -->
     <string name="username">Pseudo</string>
     <string name="password">Mot de passe</string>
     <string name="newPassword">Nouveau mot de passe</string>
@@ -121,6 +121,7 @@
     <string name="bugSpinnerTitle">Choisissez une catégorie:</string>
     <string name="bugSpinner1">Bug</string>
     <string name="bugSpinner2">Suggestion</string>
+    <string name="bugSpinner3">Autres</string>
     <string name="bugFeedbackBody">Décrivez votre remarque...</string>
     <string name="bugSubmitButton">Envoyez votre remarque</string>
 

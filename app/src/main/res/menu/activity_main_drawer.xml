@@ -35,10 +35,6 @@
                     android:id="@+id/nav_calendrier"
                     android:icon="@drawable/ic_calendrier"
                     android:title="@string/app_calendrier" />
-                <item
-                    android:id="@+id/nav_stage"
-                    android:icon="@drawable/ic_stage"
-                    android:title="@string/app_stage" />
             </group>
         </menu>
     </item>

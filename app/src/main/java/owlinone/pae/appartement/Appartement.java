@@ -18,14 +18,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,8 +33,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +48,6 @@ import owlinone.pae.covoiturage.*;
 import owlinone.pae.divers.*;
 import owlinone.pae.main.*;
 import owlinone.pae.session.*;
-import owlinone.pae.stage.*;
 
 
 
@@ -64,6 +59,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     private String TAG = Appartement.class.getSimpleName();
     private ListView lv;
     String url= null;
+    String email, name, photoBDD;
     String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "" , strDetailAppart = "";
     String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
     String strNomContext = "", strIdContext = "", disponible = "Disponible", nonDisponible = "Non disponible";
@@ -150,21 +146,22 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // get name
-        String name = user.get(Session.KEY_NAME);
+        name = user.get(Session.KEY_NAME);
         // get email
-        String email = user.get(Session.KEY_EMAIL);
-        String photoT = user.get(Session.KEY_PHOTO);
+        email = user.get(Session.KEY_EMAIL);
+        // get base 64 photo code from BDD
+        photoBDD = user.get(Session.KEY_PHOTO);
 
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
-        ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
+        ImageView photo = header.findViewById(R.id.image_menu);
 
         // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
-        if(!user.get(Session.KEY_PHOTO).equals("no image")){
+        if(!photoBDD.equals("no image")){
             try {
-                String base64 = user.get(Session.KEY_PHOTO).substring(user.get(Session.KEY_PHOTO).indexOf(","));
+                String base64 = photoBDD.substring(photoBDD.indexOf(","));
                 byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
                 Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
                 photo.setImageBitmap(image);
@@ -173,7 +170,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             }
         }
 
-        //Glisser du doigt pour rafraichir----------------------------------------------------------
+        // Glisser le doigt pour rafraichir----------------------------------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.appartement_activity_swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5,199,252));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
@@ -197,7 +194,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
-        //Bouton pour ajouter un appartement--------------------------------------------------------
+        // Bouton pour ajouter un appartement--------------------------------------------------------
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.buttonAddAppart);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -229,7 +226,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 strDispoContext  = obj.get("DISPO_APPART");
                 strDetailAppart  = obj.get("DESCRIP_APPART");
 
-                //On récupère les valeurs et utilisont INTENT pour l'enregistrer pour la prochaine activité
+                // On récupère les valeurs et utilisont INTENT pour l'enregistrer pour la prochaine activité
                 Intent intentAppart = new Intent(getApplicationContext(), DetailAppart.class);
                 intentAppart.putExtra("strDetail",strDetail);
                 intentAppart.putExtra("strDetailTel",strDetailTel);
@@ -246,7 +243,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
-        //Sert pour l'appuie long (Entregistre le context du menu
+        // Sert pour l'appuie long (Entregistre le context du menu)
         registerForContextMenu(lv);
     }
 
@@ -291,10 +288,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
             startActivity(searchIntent);
             finish();
-        } else if (id == R.id.nav_stage) {
-            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
-            startActivity(searchIntent);
-            finish();
         } else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
@@ -319,7 +312,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             int index = info.position;
-            //On récupère l'objet de l'appartement à l'aide de la position de l'item appuyé
+            // On récupère l'objet de l'appartement à l'aide de la position de l'item appuyé
             objDispo  = (HashMap)lv.getItemAtPosition(index);
             //Récupération des données par HASHMAP
             strDispoContext = objDispo.get("DISPO_APPART");
@@ -327,13 +320,13 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             strIdContext    = objDispo.get("ID_APPART");
             menu.setHeaderTitle(strNomContext);
 
-            if(disponible.equals(strDispoContext)) //Si l'appart il est disponible on affiche ceci
+            if(disponible.equals(strDispoContext)) // Si l'appart est disponible on affiche ceci
             {
                 menu.add(0, v.getId(), 0, "Non disponible");
                 menu.add(0, v.getId(), 0, "Vendu");
                 menu.add(0, v.getId(), 0, "Signaler");
             }
-            else if (nonDisponible.equals(strDispoContext)) //Si l'appart il est indisponible on affiche ceci
+            else if (nonDisponible.equals(strDispoContext)) // Si l'appart est indisponible on affiche ceci
             {
                 menu.add(0, v.getId(), 0, "Disponible");
                 menu.add(0, v.getId(), 0, "Vendu");
@@ -386,8 +379,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             new sendDispo(this, strCommentaire).execute();
             restartActivity();
         }
-
-
 
         return true;
     }

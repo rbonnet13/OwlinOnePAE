@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -32,7 +33,6 @@ import owlinone.pae.covoiturage.Covoiturage;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
-import owlinone.pae.stage.Stage;
 
 /**
  * Created by emile on 13/02/2018.
@@ -43,7 +43,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
 
     // Déclaration des variables
     Session session;
-    String feedbackType, feedback, email;
+    String feedbackType, feedback, email, name, photoBDD;
     protected String response;
     private final String serverUrl = AddressUrl.strIndexBug;
     HttpHandler sh = new HttpHandler();
@@ -83,11 +83,11 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // get name
-        String name = user.get(Session.KEY_NAME);
+        name = user.get(Session.KEY_NAME);
         // get email
         email = user.get(Session.KEY_EMAIL);
         // get base 64 photo code from BDD
-        String photoBDD = user.get(Session.KEY_PHOTO);
+        photoBDD = user.get(Session.KEY_PHOTO);
 
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
@@ -136,6 +136,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -166,10 +167,6 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
             startActivity(searchIntent);
             finish();
-        } else if (id == R.id.nav_stage) {
-            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
-            startActivity(searchIntent);
-            finish();
         /*} else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
@@ -195,15 +192,12 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
             response = "";
             try
             {
-                // HttpHandler sh = new HttpHandler();
-                // String url = AddressUrl.strAddBug;
                 HashMap<String, String> parameters = new HashMap<>();
 
                 parameters.put("CATEGORIE_BUG", feedbackType);
                 parameters.put("DESCRIPTION_BUG", feedback);
                 parameters.put("EMAIL_USER", email);
                 response = sh.performPostCall(serverUrl, parameters);
-                // sh.performPostCall(url, parameters);
                 return null;
             } catch (Exception e)
             {

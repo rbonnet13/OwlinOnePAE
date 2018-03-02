@@ -41,9 +41,12 @@ public class PasswordReset extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Affiche le contenu de l'activté sélectionnée
         setContentView(R.layout.password_reset);
         HideKeyboard hideKeyboard = new HideKeyboard(this);
         hideKeyboard.setupUI(findViewById(R.id.layout_reset));
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar15);
         setSupportActionBar(toolbar);
@@ -51,12 +54,14 @@ public class PasswordReset extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -67,7 +72,7 @@ public class PasswordReset extends AppCompatActivity {
         } else {
             mauvaisMail = (Boolean) savedInstanceState.getSerializable("mauvaisMail");
         }
-        //Si la personne à mis un mail qui n'existe pas
+        // Si la personne a mis un mail qui n'existe pas
         if(mauvaisMail == true){
             Toast.makeText(PasswordReset.this, "Cet email est inconnu", Toast.LENGTH_LONG).show();
         }
@@ -166,6 +171,7 @@ public class PasswordReset extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

@@ -51,12 +51,9 @@ import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.covoiturage.Covoiturage;
-import owlinone.pae.divers.APropos;
-import owlinone.pae.divers.Bug;
 import owlinone.pae.main.MainActivity;
-import owlinone.pae.session.Compte;
-import owlinone.pae.session.Session;
-import owlinone.pae.stage.Stage;
+import owlinone.pae.divers.*;
+import owlinone.pae.session.*;
 
 public class CalendarExtra extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -73,9 +70,9 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
     long timeInMilliseconds = 0;
     String strHourFinal;
     String strMinuteFinal;
+    String email, name, photoBDD;
     ImageView imgLogo = null;
     Date date = new Date();
-    //ArrayList<EventCalendar> arrayListEvent;
     Session session;
 
 
@@ -84,13 +81,14 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Affiche le contenu de l'activté sélectionnée
         setContentView(R.layout.activity_calendrier);
 
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Calendrier");
-
 
         // Active le drawer dans l'activité affichée
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,24 +114,25 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // get name
-        String name = user.get(Session.KEY_NAME);
+        name = user.get(Session.KEY_NAME);
         // get email
-        String email = user.get(Session.KEY_EMAIL);
-        String photoT = user.get(Session.KEY_PHOTO);
+        email = user.get(Session.KEY_EMAIL);
+        // get base 64 photo code from BDD
+        photoBDD = user.get(Session.KEY_PHOTO);
 
         // Show user data on activity
         View header = ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
-        ImageView photo = (ImageView) header.findViewById(R.id.image_menu);
+        ImageView photo = header.findViewById(R.id.image_menu);
 
         //arrayListEvent = new ArrayList<EventCalendar>();
         new ReadJsonEvent().execute();
 
         // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
-        if(!user.get(Session.KEY_PHOTO).equals("no image")){
+        if(!photoBDD.equals("no image")){
             try {
-                String base64 = user.get(Session.KEY_PHOTO).substring(user.get(Session.KEY_PHOTO).indexOf(","));
+                String base64 = photoBDD.substring(photoBDD.indexOf(","));
                 byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
                 Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
                 photo.setImageBitmap(image);
@@ -159,7 +158,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //lvEvent = (ListView) findViewById(R.id.listEvent);
 
                 eventClicked = new ArrayList<>();
 
@@ -262,10 +260,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             searchIntent.putExtra("mylist", arrayListEvent);
             startActivity(searchIntent);
             finish();*/
-        } else if (id == R.id.nav_stage) {
-            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
-            startActivity(searchIntent);
-            finish();
         } else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);

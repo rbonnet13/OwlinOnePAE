@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,19 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import java.util.HashMap;
 
 import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
-import owlinone.pae.calendrier.CalendarExtra;
-import owlinone.pae.divers.APropos;
-import owlinone.pae.divers.Bug;
+import owlinone.pae.calendrier.*;
+import owlinone.pae.divers.*;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
-import owlinone.pae.stage.Stage;
 
 public class Covoiturage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +34,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
     Session session;
     private  String adresse ="" ;
     private  String ville ="" ;
+    String email, name, photoBDD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +69,11 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // get name
-        String name = user.get(Session.KEY_NAME);
+        name = user.get(Session.KEY_NAME);
         // get email
-        String email = user.get(Session.KEY_EMAIL);
-        ville = user.get(Session.KEY_VILLE);
-        adresse = user.get(Session.KEY_ADRESSE);
+        email = user.get(Session.KEY_EMAIL);
+        // get base 64 photo code from BDD
+        photoBDD = user.get(Session.KEY_PHOTO);
 
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
@@ -86,9 +82,9 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         ImageView photo = (ImageView)header.findViewById(R.id.image_menu);
 
         // Récupère et décode les images en Base64 depuis la BDD pour le header du drawer
-        if(!user.get(Session.KEY_PHOTO).equals("no image")){
+        if(!photoBDD.equals("no image")){
             try {
-                String base64 = user.get(Session.KEY_PHOTO).substring(user.get(Session.KEY_PHOTO).indexOf(","));
+                String base64 = photoBDD.substring(photoBDD.indexOf(","));
                 byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
                 Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
                 photo.setImageBitmap(image);
@@ -177,10 +173,6 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
             finish();*/
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            startActivity(searchIntent);
-            finish();
-        } else if (id == R.id.nav_stage) {
-            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_bug) {

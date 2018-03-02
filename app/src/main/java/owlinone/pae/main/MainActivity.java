@@ -29,8 +29,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -65,7 +63,6 @@ import owlinone.pae.configuration.*;
 import owlinone.pae.covoiturage.*;
 import owlinone.pae.divers.*;
 import owlinone.pae.session.*;
-import owlinone.pae.stage.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -78,13 +75,11 @@ public class MainActivity extends AppCompatActivity
     int index;
     int top;
     Session session;
-    private  String name ="";
-    private  String photoBDD ="";
-    private  String email ="";
     TextView notifcovoit;
     protected String response;
     private final String serverUrl = AddressUrl.strNbNotif;
     private  String nbNotif = "";
+    private String email, name, photoBDD = "";
 
     @Override
     public void onRestart() {
@@ -128,10 +123,11 @@ public class MainActivity extends AppCompatActivity
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
         // get name
-         name = user.get(Session.KEY_NAME);
+        name = user.get(Session.KEY_NAME);
         // get email
-         email = user.get(Session.KEY_EMAIL);
-         photoBDD = user.get(Session.KEY_PHOTO);
+        email = user.get(Session.KEY_EMAIL);
+        // get base 64 photo code from BDD
+        photoBDD = user.get(Session.KEY_PHOTO);
 
         notifcovoit =(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.nav_covoiturage));
@@ -158,9 +154,7 @@ public class MainActivity extends AppCompatActivity
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
 
-
-
-        //Glisser du doigt pour rafraichir la page donc l'activité----------------------------------
+        //Glisser le doigt pour rafraichir la page donc l'activité----------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_article);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5,199,252)); // Couleur colorPrimary
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -229,7 +223,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 new sendView().execute();
-                //Récupérer les string pour l'INTENT. Utilisation dans la classe DetailArticle------
+                // Récupérer les string pour l'INTENT. Utilisation dans la classe DetailArticle-----
                 intent.putExtra("strImage"    , articleSelected.getStrImg());
                 intent.putExtra("strCategorie", articleSelected.getStrCategorie());
                 intent.putExtra("strCorps"    , articleSelected.getStrCorps());
@@ -281,10 +275,6 @@ public class MainActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.nav_calendrier) {
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            startActivity(searchIntent);
-            finish();
-        } else if (id == R.id.nav_stage) {
-            Intent searchIntent = new Intent(getApplicationContext(), Stage.class);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_bug) {
@@ -344,7 +334,7 @@ public class MainActivity extends AppCompatActivity
                         art.setIntVueArticle(nb_view);
                         art.setIntLike(nb_like);
 
-                        //AgoTime: récupération de la date de publication et actuelle
+                        // AgoTime: récupération de la date de publication et actuelle
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             Date mDate = sdf.parse(date_article);
@@ -354,7 +344,7 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
                         long time= System.currentTimeMillis();
-                        //Fonction pour utiliser agoTime
+                        // Fonction pour utiliser agoTime
                         String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time,DateUtils.SECOND_IN_MILLIS);
 
                         art.setStrDate(agoTime);
