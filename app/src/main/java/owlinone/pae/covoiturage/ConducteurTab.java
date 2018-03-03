@@ -12,7 +12,6 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +26,6 @@ import java.util.HashMap;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.main.MainActivity;
-import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
 
 /**
@@ -171,6 +168,9 @@ public class ConducteurTab extends AppCompatActivity{
                     notification.put("PRENOM_NOTIF", prenom_notif);
                     notification.put("ADRESSE_NOTIF", adresse_notif);
                     notification.put("TELEPHONE_NOTIF", tel_notif);
+                    notification.put("DESTINATION_NOTIF", destination_notif);
+                    notification.put("USER_PRENOM", strPrenomUser);
+                    notification.put("USER_NAME", strNomUser);
 
                     notification.put("DATE_NOTIF", agoTime);
                     if (new String("home").equals(destination_notif)) {
@@ -178,7 +178,8 @@ public class ConducteurTab extends AppCompatActivity{
                         Log.e(TAG, "Notification: " + notification.toString());
 
                         notifHomeList.add(notification);
-                    } else {
+                    }
+                    if (new String("school").equals(destination_notif)) {
                         notification.put("LOGO", String.valueOf(R.drawable.logo_esaip));
                         Log.e(TAG, "Notification: " + notification.toString());
 

@@ -31,7 +31,7 @@ import owlinone.pae.configuration.HttpHandler;
 
 public class ConducteurHome extends Fragment {
     private ListView lvHome;
-    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="", strIdNotif ="";
+    String strPrenom = "",  strLogo = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="", strIdNotif ="";
     HashMap<String, String> obj = new HashMap();
     private ArrayList<HashMap<String, String>> notifHomeList;
     NotificationHome notifHome;
@@ -75,6 +75,10 @@ public class ConducteurHome extends Fragment {
                 strTel = obj.get("TELEPHONE_NOTIF");
                 strDate = obj.get("DATE_NOTIF");
                 strDestination = obj.get("DESTINATION_NOTIF");
+                strLogo = obj.get("LOGO");
+                strNameUser = obj.get("USER_NAME");
+                strPrenomUser = obj.get("USER_PRENOM");
+
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Covoiturage");
@@ -118,6 +122,9 @@ public class ConducteurHome extends Fragment {
                 strTel = obj.get("TELEPHONE_NOTIF");
                 strDate = obj.get("DATE_NOTIF");
                 strDestination = obj.get("DESTINATION_NOTIF");
+                strLogo = obj.get("LOGO");
+                strNameUser = obj.get("USER_NAME");
+                strPrenomUser = obj.get("USER_PRENOM");
 
                 // on ouvre la fenêtre pour envoyer un sms
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
@@ -145,6 +152,8 @@ public class ConducteurHome extends Fragment {
                 parametersConducteur.put("PRENOM_NOTIF",strPrenom);
                 parametersConducteur.put("NOM_NOTIF",strNom);
                 parametersConducteur.put("DESTINATION_NOTIF",strDestination);
+                Log.e("parametersConducteur", "parametersConducteur: " + parametersConducteur.toString());
+
                 sh.performPostCall(urlNotification, parametersConducteur);
                 return null;
             } catch (Exception e) {
@@ -166,6 +175,8 @@ public class ConducteurHome extends Fragment {
                 parametersConducteur.put("PRENOM_NOTIF",strPrenom);
                 parametersConducteur.put("NOM_NOTIF",strNom);
                 parametersConducteur.put("DESTINATION_NOTIF",strDestination);
+                Log.e("parametersConducteur", "parametersConducteur: " + parametersConducteur.toString());
+
                 sh.performPostCall(urlNotification, parametersConducteur);
                 return null;
             } catch (Exception e) {
