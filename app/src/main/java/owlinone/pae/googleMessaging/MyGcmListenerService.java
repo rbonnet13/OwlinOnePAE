@@ -20,6 +20,7 @@ import java.util.Random;
 
 import owlinone.pae.R;
 import owlinone.pae.covoiturage.Conducteur;
+import owlinone.pae.covoiturage.ConducteurTab;
 
 public class MyGcmListenerService extends GcmListenerService {
     private static final String TAG = "MyGcmListenerService";
@@ -60,7 +61,7 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message, String title) {
-        Intent intent = new Intent(this, Conducteur.class);
+        Intent intent = new Intent(this, ConducteurTab.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

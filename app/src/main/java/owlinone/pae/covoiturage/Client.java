@@ -336,6 +336,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         });
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
+        strDestination="school";
 
         //Test si première connexion pour afficher bulle information bouton
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -400,7 +401,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                                 test = true;
                             }
                         });
-                        if(test == false) animatorSetHeart.start();
+                        if(test == false) {
+                            animatorSetHeart.start();
+                        }
                         else {
                             // After some action
                             strDestination = "home";
