@@ -71,26 +71,7 @@ public class ConducteurTab extends AppCompatActivity{
         myTabs.addTab(myTabs.newTab().setText("Vers la maison"));
         myTabs.setTabGravity(TabLayout.GRAVITY_FILL);
         myPage = (ViewPager) findViewById(R.id.pager);
-        //Glisser du doigt pour rafraichir----------------------------------------------------------
-     /*   mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
-        mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5, 199, 252));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        notifHomeList = new ArrayList<>();
-                        notifEsaipList = new ArrayList<>();
 
-                        new GetNotif().execute();
-
-                    }
-                }, 3000);
-            }
-        });*/
 
         notifHomeList = new ArrayList<>();
         notifEsaipList = new ArrayList<>();
@@ -109,7 +90,6 @@ public class ConducteurTab extends AppCompatActivity{
         strNomUser = user.get(Session.KEY_NOM);
 
         new GetNotif().execute();
-
 
     }
 
@@ -195,25 +175,8 @@ public class ConducteurTab extends AppCompatActivity{
             super.onPostExecute(result);
             //Creating our pager adapter
 
-            if (!notifEsaipList.isEmpty()) {
-                Log.e(TAG, "Notification Esaip: " + notifEsaip.getNotif().toString());
-
-           /*     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.pager, fragment);
-                ft.commit();*/
-            }
-            if (!notifHomeList.isEmpty()) {
-                Log.e(TAG, "Notification Home: " + notifHome.getNotif().toString());
-
-             /*   FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-
-                ft.replace(R.id.pager, fragment);
-                ft.commit();*/
-            }
             Pager adapter = new Pager(getSupportFragmentManager(), myTabs.getTabCount(),notifEsaip, notifHome);
-
-             myPage.setAdapter(adapter);
+            myPage.setAdapter(adapter);
             myTabs.setOnTabSelectedListener(this);
 
         }
