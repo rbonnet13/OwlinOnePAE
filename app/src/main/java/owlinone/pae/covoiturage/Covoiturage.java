@@ -107,7 +107,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
                    startActivity(intent);
                }
                else{
-                   Intent intent = new Intent(Covoiturage.this, Conducteur.class);
+                   Intent intent = new Intent(Covoiturage.this, ConducteurTab.class);
                    startActivity(intent);
                }
                finish();

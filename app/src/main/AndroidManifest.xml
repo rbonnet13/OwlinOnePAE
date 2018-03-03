@@ -60,11 +60,15 @@
             android:screenOrientation="portrait"
             android:label="@string/app_appartement">
         </activity>
+
         <activity
             android:name="owlinone.pae.article.DetailArticle"
             android:screenOrientation="portrait">
         </activity>
-
+        <activity
+            android:name="owlinone.pae.covoiturage.ConducteurTab"
+            android:screenOrientation="portrait">
+        </activity>
             <activity
                 android:name="owlinone.pae.password.PasswordReset"
                 android:screenOrientation="portrait">
