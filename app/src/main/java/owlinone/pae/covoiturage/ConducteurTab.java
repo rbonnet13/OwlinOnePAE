@@ -1,13 +1,9 @@
 package owlinone.pae.covoiturage;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -76,7 +72,7 @@ public class ConducteurTab extends AppCompatActivity{
         myTabs.setTabGravity(TabLayout.GRAVITY_FILL);
         myPage = (ViewPager) findViewById(R.id.pager);
         //Glisser du doigt pour rafraichir----------------------------------------------------------
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
+     /*   mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(5, 199, 252));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -94,7 +90,7 @@ public class ConducteurTab extends AppCompatActivity{
                     }
                 }, 3000);
             }
-        });
+        });*/
 
         notifHomeList = new ArrayList<>();
         notifEsaipList = new ArrayList<>();
@@ -202,23 +198,22 @@ public class ConducteurTab extends AppCompatActivity{
             if (!notifEsaipList.isEmpty()) {
                 Log.e(TAG, "Notification Esaip: " + notifEsaip.getNotif().toString());
 
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment fragment = ConducteurEsaip.newInstance(notifEsaip);
+           /*     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.pager, fragment);
-                ft.commit();
+                ft.commit();*/
             }
             if (!notifHomeList.isEmpty()) {
                 Log.e(TAG, "Notification Home: " + notifHome.getNotif().toString());
 
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment fragment = ConducteurHome.newInstance(notifHome);
+             /*   FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+
                 ft.replace(R.id.pager, fragment);
-                ft.commit();
+                ft.commit();*/
             }
-            Pager adapter = new Pager(getSupportFragmentManager(), myTabs.getTabCount());
-            //Adding adapter to pager
-            myPage.setAdapter(adapter);
-            //Adding onTabSelectedListener to swipe views
+            Pager adapter = new Pager(getSupportFragmentManager(), myTabs.getTabCount(),notifEsaip, notifHome);
+
+             myPage.setAdapter(adapter);
             myTabs.setOnTabSelectedListener(this);
 
         }

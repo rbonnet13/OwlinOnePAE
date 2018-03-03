@@ -46,6 +46,7 @@ public class ConducteurHome extends Fragment {
         notifHomeList = new ArrayList<>();
         notifHomeList = notifHome.getNotif();
 
+        Log.e("Test", "notifHomeList: " + notifHomeList.toString());
 
         lvHome = (ListView) PageHome.findViewById(R.id.listNotificationHome);
         ListAdapter adapterHome = new SimpleAdapter(getContext(), notifHomeList,

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/caldroid_white"
+    android:background="@color/caldroid_holo_blue_light"
     android:layout_height="match_parent">
 
-
-                <ListView
+                 <ListView
                    android:id="@+id/listNotificationEsaip"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"

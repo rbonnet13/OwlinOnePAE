@@ -26,14 +26,6 @@ public class ConducteurEsaip extends Fragment {
     private ArrayList<HashMap<String, String>> notifEsaipList;
     NotificationEsaip notifEsaip;
 
-    public static ConducteurEsaip newInstance(NotificationEsaip notifEsaip) {
-        ConducteurEsaip fragment = new ConducteurEsaip();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("esaip", notifEsaip);
-        fragment.setArguments(bundle);
-
-        return fragment;
-    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,6 +40,7 @@ public class ConducteurEsaip extends Fragment {
 
         notifEsaipList = new ArrayList<>();
         notifEsaipList = notifEsaip.getNotif();
+        Log.e("Test", "notifEsaipList: " + notifEsaipList.toString());
 
 
         lvEsaip = (ListView) PageEsaip.findViewById(R.id.listNotificationEsaip);
