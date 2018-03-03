@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -39,12 +38,11 @@ public class ConducteurTab extends AppCompatActivity{
     HashMap<String, String> notification;
     Session session;
     long timeInMilliseconds = 0;
-    private String TAG = Conducteur.class.getSimpleName();
 
     NotificationEsaip notifEsaip;
     NotificationHome notifHome;
     String url = AddressUrl.strNotifGeneral;
-    String strPrenom = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "", strPseudo = "", strPrenomUser = "", strNomUser = "";
+    String strPrenom = "",nbNotif="", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "", strPseudo = "", strPrenomUser = "", strNomUser = "";
 
 
     HashMap<String, String> obj = new HashMap();
@@ -67,6 +65,17 @@ public class ConducteurTab extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conducteur_tab);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                nbNotif = null;
+            } else {
+                nbNotif = extras.getString("nbNotif");
+            }
+        } else {
+            nbNotif = (String) savedInstanceState.getSerializable("nbNotif");
+        }
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar9);
         setSupportActionBar(toolbar);
@@ -78,6 +87,7 @@ public class ConducteurTab extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+                intent.putExtra("nbNotif", nbNotif);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -134,7 +144,6 @@ public class ConducteurTab extends AppCompatActivity{
                 responseRequete = sh.performPostCall(url, parameters);
 
                 System.out.println("User :: " + strNameUser);
-                Log.e(TAG, "Response: " + responseRequete);
 
                 JSONArray jsonArray = new JSONArray(responseRequete);
                 // looping through All Notification
@@ -176,13 +185,11 @@ public class ConducteurTab extends AppCompatActivity{
                     notification.put("DATE_NOTIF", agoTime);
                     if (new String("home").equals(destination_notif)) {
                         notification.put("LOGO", String.valueOf(R.drawable.logo_maison));
-                        Log.e(TAG, "Notification: " + notification.toString());
 
                         notifHomeList.add(notification);
                     }
                     if (new String("school").equals(destination_notif)) {
                         notification.put("LOGO", String.valueOf(R.drawable.logo_esaip));
-                        Log.e(TAG, "Notification: " + notification.toString());
 
                         notifEsaipList.add(notification);
                     }
@@ -200,7 +207,7 @@ public class ConducteurTab extends AppCompatActivity{
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             //Creating our pager adapter
-
+           // if(notifEsaip && notifEsaip)
             Pager adapter = new Pager(getSupportFragmentManager(), myTabs.getTabCount(),notifEsaip, notifHome);
             myPage.setAdapter(adapter);
             myTabs.setOnTabSelectedListener(this);
@@ -228,6 +235,7 @@ public class ConducteurTab extends AppCompatActivity{
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("nbNotif", nbNotif);
         startActivity(intent);
         finish();
     }

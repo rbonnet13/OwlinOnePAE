@@ -8,17 +8,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,16 +36,32 @@ import android.widget.Toast;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -77,6 +96,8 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
 
 
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
+    private TextView notifcovoit;
+    private String nbNotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +141,12 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
         // get base 64 photo code from BDD
         photoBDD = user.get(Session.KEY_PHOTO);
 
+
+        notifcovoit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.nav_covoiturage));
+        CalendarExtra.DataNotifConducteur asyncRequestObject = new CalendarExtra.DataNotifConducteur();
+        asyncRequestObject.execute(AddressUrl.strNbNotif, name);
+        
         // Show user data on activity
         View header = ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0);
         ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
@@ -440,4 +467,82 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             }
         }
     }
+
+    private class DataNotifConducteur extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+
+            HttpParams httpParameters = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+            HttpClient httpClient = new DefaultHttpClient(httpParameters);
+            HttpPost httpPost = new HttpPost(params[0]);
+            String jsonResult = "";
+
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("name", params[1]));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpClient.execute(httpPost);
+                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+
+            } catch (ClientProtocolException e) {
+
+                e.printStackTrace();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+            return jsonResult;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            System.out.println("Resulted Value: " + result);
+            if (result.equals("") || result == null) {
+                //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            int jsonResult = MainActivity.returnParsedJsonObject(result);
+            if (jsonResult == 0) {
+                //Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
+                return;
+            }
+            nbNotif = Integer.toString(jsonResult);
+
+            notifcovoit.setGravity(Gravity.CENTER_VERTICAL);
+            notifcovoit.setTypeface(null, Typeface.BOLD);
+            notifcovoit.setTextColor(getResources().getColor(R.color.colorRed));
+            notifcovoit.setText(nbNotif);
+
+        }
+        private StringBuilder inputStreamToString(InputStream is) {
+            String rLine = "";
+            StringBuilder answer = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            try {
+                while ((rLine = br.readLine()) != null) {
+                    answer.append(rLine);
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return answer;
+        }
+    }
+    
 }

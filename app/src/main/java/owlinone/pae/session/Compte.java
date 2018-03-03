@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -11,12 +12,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +30,23 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,9 +57,12 @@ import java.util.Locale;
 import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.calendrier.CalendarExtra;
-import owlinone.pae.configuration.*;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HideKeyboard;
+import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.covoiturage.Covoiturage;
-import owlinone.pae.divers.*;
+import owlinone.pae.divers.APropos;
+import owlinone.pae.divers.Bug;
 import owlinone.pae.main.MainActivity;
 
 /**
@@ -68,6 +90,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private String enteredTel;
     private String enteredCP ;
     private String enteredCovoiturage ;
+    private TextView notifcovoit;
 
     private  String username ="";
     private  String password ="";
@@ -81,6 +104,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private  String photoBDD ="";
     private  String covoiturage ="";
     private  String response ="";
+    private  String nbNotif ="";
     HideKeyboard hide;
 
     HttpHandler sh = new HttpHandler();
@@ -89,6 +113,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     double latitude = 0.0;
     double longitude = 0.0;
     private final String serverUrl = AddressUrl.strTriIndexCompte;
+
 
     private RatingBar mRatingBar;List<Address> addresses = new List<Address>() {
         @Override
@@ -254,6 +279,11 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_cp.setText(cp);
         user_tel.setText(telephone);
         user_covoiturage.setChecked(Boolean.valueOf(covoiturage));
+
+        notifcovoit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.nav_covoiturage));
+        Compte.DataNotifConducteur asyncRequestObject = new Compte.DataNotifConducteur();
+        asyncRequestObject.execute(AddressUrl.strNbNotif, username);
 
         // Affiche les données utilisateur dans le header du drawer
         View header = (navigationView).getHeaderView(0);
@@ -438,6 +468,83 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
+        }
+    }
+
+    private class DataNotifConducteur extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+
+            HttpParams httpParameters = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+            HttpClient httpClient = new DefaultHttpClient(httpParameters);
+            HttpPost httpPost = new HttpPost(params[0]);
+            String jsonResult = "";
+
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("name", params[1]));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpClient.execute(httpPost);
+                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+
+            } catch (ClientProtocolException e) {
+
+                e.printStackTrace();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+            return jsonResult;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            System.out.println("Resulted Value: " + result);
+            if (result.equals("") || result == null) {
+                //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            int jsonResult = MainActivity.returnParsedJsonObject(result);
+            if (jsonResult == 0) {
+                //Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
+                return;
+            }
+            nbNotif = Integer.toString(jsonResult);
+
+            notifcovoit.setGravity(Gravity.CENTER_VERTICAL);
+            notifcovoit.setTypeface(null, Typeface.BOLD);
+            notifcovoit.setTextColor(getResources().getColor(R.color.colorRed));
+            notifcovoit.setText(nbNotif);
+
+        }
+        private StringBuilder inputStreamToString(InputStream is) {
+            String rLine = "";
+            StringBuilder answer = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            try {
+                while ((rLine = br.readLine()) != null) {
+                    answer.append(rLine);
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return answer;
         }
     }
 }

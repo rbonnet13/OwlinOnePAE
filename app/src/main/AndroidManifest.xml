@@ -122,10 +122,6 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".covoiturage.Conducteur"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name="owlinone.pae.divers.APropos"
             android:label="@string/app_a_propos"
             android:screenOrientation="portrait">

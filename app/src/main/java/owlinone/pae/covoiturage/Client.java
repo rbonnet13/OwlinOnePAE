@@ -111,11 +111,10 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     HttpHandler sh = new HttpHandler();
     private String TAG = Appartement.class.getSimpleName();
     String url= null;
-    String strUsernameConducteur = "", strNom = "", strPrenom = "", strAdresse = "", strTelephone = "", strDestination = "";
+    String strUsernameConducteur = "",nbNotif="", strNom = "", strPrenom = "", strAdresse = "", strTelephone = "", strDestination = "";
     HashMap <String, String> obj = new HashMap();
     HashMap <String, String> objDispo = new HashMap();
     ArrayList<LinkedHashMap<String, String>> covoitList;
-
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -125,7 +124,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     double latitude = 0.0;
     double longitude = 0.0;
     private final String serverUrl = AddressUrl.strTriIndexGPS;
-
     SupportMapFragment supportMapFragment = new SupportMapFragment();
     private Button  mRequest;
     private ToggleButton toggle;
@@ -320,6 +318,17 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }else{
             mapFragment.getMapAsync(this);
         }
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                nbNotif = null;
+            } else {
+                nbNotif = extras.getString("nbNotif");
+            }
+        } else {
+            nbNotif = (String) savedInstanceState.getSerializable("nbNotif");
+        }
+
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar16);
         setSupportActionBar(toolbar);
@@ -331,6 +340,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+                intent.putExtra("nbNotif", nbNotif);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -598,6 +608,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         .position(new LatLng( Double.valueOf(geolat),Double.valueOf(geolong)
                         )));
                 InfoWindowData info = new InfoWindowData();
+
                 info.setHotel(getEmail);
                 info.setFood(getTelephone);
                 info.setTransport(getAdresse);
@@ -620,6 +631,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             Button notifButton = (Button) findViewById(R.id.btn_notification);
             notifButton.setVisibility(View.INVISIBLE);
         }else {
+
             // Check if a click count was set, then display the click count.
             for (LinkedHashMap<String, String> map : covoitList) {
                 for (Map.Entry<String, String> mapEntry : map.entrySet()) {
@@ -636,6 +648,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
                     }else{
                         if (marker.getTitle().equals(IdConducteurtest)){
+
                             strUsernameConducteur = Usernametest;
                             strNom = nom;
                             strPrenom = prenom;
@@ -832,6 +845,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("nbNotif", nbNotif);
         startActivity(intent);
         finish();
     }

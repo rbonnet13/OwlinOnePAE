@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.nav_covoiturage) {
             Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
+            searchIntent.putExtra("nbNotif", nbNotif);
             startActivity(searchIntent);
             finish();
         } else if (id == R.id.nav_calendrier) {
@@ -468,7 +469,7 @@ public class MainActivity extends AppCompatActivity
             return answer;
         }
     }
-    private int returnParsedJsonObject(String result){
+    public static int returnParsedJsonObject(String result){
         JSONObject resultObject = null;
         int returnedResult = 0;
         try {

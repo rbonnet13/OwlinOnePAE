@@ -19,7 +19,6 @@ import com.google.android.gms.gcm.GcmListenerService;
 import java.util.Random;
 
 import owlinone.pae.R;
-import owlinone.pae.covoiturage.Conducteur;
 import owlinone.pae.covoiturage.ConducteurTab;
 
 public class MyGcmListenerService extends GcmListenerService {
