@@ -462,4 +462,10 @@ public class MainLogin extends AppCompatActivity {
                     }
                 }).create().show();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Runtime.getRuntime().gc();
+    }
 }

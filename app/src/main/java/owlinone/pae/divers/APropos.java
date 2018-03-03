@@ -190,12 +190,6 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Runtime.getRuntime().gc();
-    }
-
     // Ouverture d'une activité en cas de clic dans le drawer
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
