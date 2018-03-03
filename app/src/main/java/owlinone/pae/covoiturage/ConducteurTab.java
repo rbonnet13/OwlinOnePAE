@@ -12,6 +12,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ import owlinone.pae.session.Session;
 public class ConducteurTab extends AppCompatActivity{
     TabLayout myTabs;
     ViewPager myPage;
+
     HashMap<String, String> notification;
     Session session;
     long timeInMilliseconds = 0;
@@ -92,6 +94,7 @@ public class ConducteurTab extends AppCompatActivity{
         myTabs.setTabGravity(TabLayout.GRAVITY_FILL);
         myPage = (ViewPager) findViewById(R.id.pager);
 
+        myPage.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myTabs));
 
         notifHomeList = new ArrayList<>();
         notifEsaipList = new ArrayList<>();
@@ -116,6 +119,7 @@ public class ConducteurTab extends AppCompatActivity{
     private class GetNotif extends AsyncTask<Void, Void, Void> implements TabLayout.OnTabSelectedListener {
         Intent intent = getIntent();
         String responseRequete = "";
+
 
         @Override
         protected void onPreExecute() {
