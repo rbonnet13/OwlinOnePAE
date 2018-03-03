@@ -5,21 +5,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/fond2"
     android:layout_height="match_parent"
-    tools:context=".covoiturage.ConducteurTab">
-    <!--  <android.support.v4.widget.SwipeRefreshLayout
-         android:id="@+id/notification_activity_swipe_layout"
-         android:layout_width="match_parent"
-         android:layout_height="100dp">-->
+    tools:context="owlinone.pae.covoiturage.Conducteur">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:textAlignment="center">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar9"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="Conducteur"
+            android:layout_gravity="center"/>
+    </android.support.design.widget.AppBarLayout>
 
      <!-- our tablayout to display tabs  -->
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabIndicatorColor="@color/colorWhite"
+        app:tabTextColor="@color/colorWhite"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"/>
 
     <!-- View pager to swipe views -->
     <android.support.v4.view.ViewPager
@@ -27,6 +43,5 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"/>
 
-    <!--  </android.support.v4.widget.SwipeRefreshLayout>-->
 
   </LinearLayout>

@@ -7,9 +7,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +26,8 @@ import java.util.HashMap;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.main.MainActivity;
+import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
 
 /**
@@ -64,11 +68,27 @@ public class ConducteurTab extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conducteur_tab);
 
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar9);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
         myTabs = (TabLayout) findViewById(R.id.tabLayout);
 
         //Adding the tabs using addTab() method
-        myTabs.addTab(myTabs.newTab().setText("Vers ESAIP"));
-        myTabs.addTab(myTabs.newTab().setText("Vers la maison"));
+        myTabs.addTab(myTabs.newTab().setText("VERS ESAIP"));
+        myTabs.addTab(myTabs.newTab().setText("VERS DOMICILE"));
         myTabs.setTabGravity(TabLayout.GRAVITY_FILL);
         myPage = (ViewPager) findViewById(R.id.pager);
 
@@ -197,11 +217,19 @@ public class ConducteurTab extends AppCompatActivity{
         }
     }
 
+    // Fonction appelée quand appuie sur la touche retour
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 }

@@ -96,7 +96,7 @@ public class Conducteur extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conducteurmap);
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar9);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar9);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,7 +109,7 @@ public class Conducteur extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
-        });
+        });*/
 
         //Glisser du doigt pour rafraichir----------------------------------------------------------
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notification_activity_swipe_layout);
