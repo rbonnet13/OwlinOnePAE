@@ -149,6 +149,7 @@ public class ConducteurTab extends AppCompatActivity{
                 // looping through All Notification
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject a = jsonArray.getJSONObject(i);
+                    String id_notif = a.getString("ID_NOTIF");
                     String pseudo_notif = a.getString("PSEUDO_CONDUCTEUR_NOTIF");
                     String nom_notif = a.getString("NOM_NOTIF");
                     String prenom_notif = a.getString("PRENOM_NOTIF");
@@ -156,6 +157,8 @@ public class ConducteurTab extends AppCompatActivity{
                     String tel_notif = a.getString("TELEPHONE_NOTIF");
                     String date_notif = a.getString("DATE_NOTIF");
                     String destination_notif = a.getString("DESTINATION_NOTIF");
+                    String clicked_notif = a.getString("CLICKED_NOTIF");
+
 
                     //AgoTime: récupération de la date de publication et actuelle
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -173,6 +176,7 @@ public class ConducteurTab extends AppCompatActivity{
 
                     notification = new HashMap<>();
                     // adding each child node to HashMap key => value
+                    notification.put("ID_NOTIF", id_notif);
                     notification.put("PSEUDO_CONDUCTEUR_NOTIF", pseudo_notif);
                     notification.put("NOM_NOTIF", nom_notif);
                     notification.put("PRENOM_NOTIF", prenom_notif);
@@ -181,6 +185,8 @@ public class ConducteurTab extends AppCompatActivity{
                     notification.put("DESTINATION_NOTIF", destination_notif);
                     notification.put("USER_PRENOM", strPrenomUser);
                     notification.put("USER_NAME", strNomUser);
+                    notification.put("CLICKED_NOTIF", clicked_notif);
+
 
                     notification.put("DATE_NOTIF", agoTime);
                     if (new String("home").equals(destination_notif)) {

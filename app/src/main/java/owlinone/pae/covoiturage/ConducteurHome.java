@@ -31,7 +31,7 @@ import owlinone.pae.configuration.HttpHandler;
 
 public class ConducteurHome extends Fragment {
     private ListView lvHome;
-    String strPrenom = "",  strLogo = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="", strIdNotif ="";
+    String strPrenom = "",  strLogo = "", strClicked = "", strNameUser = "", strNom = "", strAdresse = "", strDate = "", strTel = "", strDestination = "" ,strPseudo="",strPrenomUser="",strNomUser="", strIdNotif ="";
     HashMap<String, String> obj = new HashMap();
     private ArrayList<HashMap<String, String>> notifHomeList;
     NotificationHome notifHome;
@@ -78,34 +78,40 @@ public class ConducteurHome extends Fragment {
                 strLogo = obj.get("LOGO");
                 strNameUser = obj.get("USER_NAME");
                 strPrenomUser = obj.get("USER_PRENOM");
+                strClicked = obj.get("CLICKED_NOTIF");
 
+                Log.e("strClicked", "strClicked: " + strClicked );
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Covoiturage");
-                builder.setIcon(R.drawable.owl_in_one_logo);
-                builder.setMessage("Accepter le covoiturage ?");
+                if("FALSE".equals(strClicked)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Covoiturage");
+                    builder.setIcon(R.drawable.owl_in_one_logo);
+                    builder.setMessage("Accepter le covoiturage ?");
 
-                builder.setNegativeButton("OUI", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l'item", Toast.LENGTH_LONG).show();
-                        new sendGCMRetour().execute();
-                        dialog.dismiss();
-                    }
-                });
+                    builder.setNegativeButton("OUI", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), "Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l'item", Toast.LENGTH_LONG).show();
+                            new sendGCMRetour().execute();
+                            dialog.dismiss();
+                        }
+                    });
 
-                builder.setPositiveButton("NON", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("NON", new DialogInterface.OnClickListener() {
 
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                        Toast.makeText(getContext(), "Refusé", Toast.LENGTH_LONG).show();
-                        new sendGCMRefus().execute();
-                        dialog.dismiss();
-                    }
-                });
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing but close the dialog
+                            Toast.makeText(getContext(), "Refusé", Toast.LENGTH_LONG).show();
+                            new sendGCMRefus().execute();
+                            dialog.dismiss();
+                        }
+                    });
 
-                AlertDialog alert = builder.create();
-                alert.show();
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }else {
+                    Toast.makeText(getContext(), "Vous avez déjà envoyé une notification", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -125,6 +131,8 @@ public class ConducteurHome extends Fragment {
                 strLogo = obj.get("LOGO");
                 strNameUser = obj.get("USER_NAME");
                 strPrenomUser = obj.get("USER_PRENOM");
+                strClicked = obj.get("CLICKED_NOTIF");
+
 
                 // on ouvre la fenêtre pour envoyer un sms
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
@@ -161,6 +169,12 @@ public class ConducteurHome extends Fragment {
                 return null;
             }
         }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            new sendClickedRetour().execute();
+
+        }
     }
     private class sendGCMRefus extends AsyncTask<Void, Void, Void> {
         Exception exception;
@@ -183,6 +197,42 @@ public class ConducteurHome extends Fragment {
                 this.exception = e;
                 return null;
             }
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            new sendClickedRetour().execute();
+
+        }
+    }
+
+    private class sendClickedRetour extends AsyncTask<Void, Void, Void> {
+        Exception exception;
+        protected Void doInBackground(Void... arg0) {
+            try {
+                strClicked = "TRUE";
+                HttpHandler sh = new HttpHandler();
+                HashMap<String, String> parametersConducteur = new HashMap<>();
+                String urlNotification = AddressUrl.strNotifClicked;
+                parametersConducteur.put("ID_NOTIF",strIdNotif);
+                parametersConducteur.put("CLICKED_NOTIF",strClicked);
+
+                Log.e("strClicked", "strClicked: " + strClicked);
+                Log.e("strIdNotif", "strIdNotif: " + strIdNotif);
+
+
+                sh.performPostCall(urlNotification, parametersConducteur);
+                return null;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            Intent intent = new Intent(getContext(), ConducteurTab.class);
+            startActivity(intent);
         }
     }
 }

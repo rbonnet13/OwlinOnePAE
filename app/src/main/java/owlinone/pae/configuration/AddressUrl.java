@@ -37,5 +37,7 @@ public class AddressUrl {
     public static final String strNbNotif              = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexRecup_nb_notif.php";
     public static final String strNotifAccepte         = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/repondre_notif_positif.php";
     public static final String strNotifRefuse          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/repondre_notif_negatif.php";
+    public static final String strNotifClicked          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notification_clicked.php";
+
 
 }
