@@ -48,8 +48,8 @@
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
-            android:hint="@string/pseudoBold"
-            android:textColorHint="@color/colorWhite">
+            android:layout_marginTop="5dp"
+            android:hint="@string/pseudoBold">
 
             <EditText
                 android:layout_width="250dp"
@@ -69,7 +69,6 @@
             android:layout_below="@+id/pseudo_textInput"
             android:layout_centerHorizontal="true"
             android:hint="@string/mdpBold"
-            android:textColorHint="@color/colorWhite"
             app:passwordToggleEnabled="true"
             android:layout_marginBottom="20dp"
             app:passwordToggleDrawable="@drawable/toggle_pass"

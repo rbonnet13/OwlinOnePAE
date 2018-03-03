@@ -258,6 +258,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         }
     }
 

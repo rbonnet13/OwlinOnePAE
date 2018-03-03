@@ -198,5 +198,6 @@ public class PasswordActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), PasswordReset.class);
         startActivity(intent);
+        finish();
     }
 }

@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
-        System.exit(0);
+        //System.exit(0);
     }
 
     @Override

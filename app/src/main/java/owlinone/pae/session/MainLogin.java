@@ -5,9 +5,11 @@ package owlinone.pae.session;
  */
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -443,5 +445,21 @@ public class MainLogin extends AppCompatActivity {
                 setupUI(innerView);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Connexion obligatoire")
+                .setIcon(R.drawable.owl_in_one_logo)
+                .setMessage("Êtes-vous sûr de vouloir quitter?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        finish();
+                        System.exit(0);
+                    }
+                }).create().show();
     }
 }

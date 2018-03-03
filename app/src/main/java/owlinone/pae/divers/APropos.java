@@ -185,7 +185,15 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
+            //System.exit(0);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Runtime.getRuntime().gc();
     }
 
     // Ouverture d'une activité en cas de clic dans le drawer

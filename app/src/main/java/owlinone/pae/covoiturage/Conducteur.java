@@ -314,6 +314,7 @@ public class Conducteur extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
     private class sendGCMRetour extends AsyncTask<Void, Void, Void> {
         Exception exception;
