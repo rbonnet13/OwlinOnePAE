@@ -333,6 +333,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
