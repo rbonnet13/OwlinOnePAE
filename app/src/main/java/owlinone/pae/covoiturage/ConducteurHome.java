@@ -156,7 +156,7 @@ public class ConducteurHome extends Fragment {
                 HashMap<String, String> parametersConducteur = new HashMap<>();
                 String urlNotification = AddressUrl.strNotifAccepte;
                 parametersConducteur.put("prenom", strPrenomUser);
-                parametersConducteur.put("nom", strNomUser);
+                parametersConducteur.put("nom", strNameUser);
                 parametersConducteur.put("PRENOM_NOTIF",strPrenom);
                 parametersConducteur.put("NOM_NOTIF",strNom);
                 parametersConducteur.put("DESTINATION_NOTIF",strDestination);
@@ -185,7 +185,7 @@ public class ConducteurHome extends Fragment {
                 String urlNotification = AddressUrl.strNotifRefuse;
                 parametersConducteur.put("ID_NOTIF", strIdNotif);
                 parametersConducteur.put("prenom", strPrenomUser);
-                parametersConducteur.put("nom", strNomUser);
+                parametersConducteur.put("nom", strNameUser);
                 parametersConducteur.put("PRENOM_NOTIF",strPrenom);
                 parametersConducteur.put("NOM_NOTIF",strNom);
                 parametersConducteur.put("DESTINATION_NOTIF",strDestination);
