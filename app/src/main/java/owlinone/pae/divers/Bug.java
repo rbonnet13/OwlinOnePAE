@@ -138,6 +138,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
     public void sendFeedback(View button) {
         EditText feedbackField = (EditText) findViewById(R.id.bugFeedbackBody);
         feedback = feedbackField.getText().toString();
+        feedback = feedback.replace("'","''");
 
         Spinner feedbackSpinner = (Spinner) findViewById(R.id.bugSpinnerFeedbackType);
         feedbackType = feedbackSpinner.getSelectedItem().toString();

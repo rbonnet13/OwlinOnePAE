@@ -251,9 +251,13 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         password = user.get(Session.KEY_PASSWORD);
         email = user.get(Session.KEY_EMAIL);
         prenom = user.get(Session.KEY_PRENOM);
+        prenom = prenom.replace("''","'");
         nom = user.get(Session.KEY_NOM);
+        nom = nom.replace("''","'");
         ville = user.get(Session.KEY_VILLE);
+        ville = ville.replace("''","'");
         adresse = user.get(Session.KEY_ADRESSE);
+        adresse = adresse.replace("''","'");
         cp = user.get(Session.KEY_CP);
         photoBDD = user.get(Session.KEY_PHOTO);
         telephone = user.get(Session.KEY_TEL);
@@ -310,9 +314,13 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             public void onClick(View v) {
                 String country = "FRANCE";
                 enteredNom = user_nom.getText().toString();
+                enteredNom = enteredNom.replace("'","''");
                 enteredPrenom = user_prenom.getText().toString();
+                enteredPrenom = enteredPrenom.replace("'","''");
                 enteredVille = user_ville.getText().toString();
+                enteredVille = enteredVille.replace("'","''");
                 enteredAdress = user_adresse.getText().toString();
+                enteredAdress = enteredAdress.replace("'","''");
                 enteredCP = user_cp.getText().toString();
                 enteredTel = user_tel.getText().toString();
                 if (user_covoiturage.isChecked()) {
