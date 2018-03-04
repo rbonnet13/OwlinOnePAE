@@ -213,7 +213,7 @@ public class ConducteurTab extends AppCompatActivity{
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             //Creating our pager adapter
-            if(!notifEsaipList.isEmpty() && !notifHomeList.isEmpty()){
+            if(!notifEsaipList.isEmpty() || !notifHomeList.isEmpty()){
                 Pager adapter = new Pager(getSupportFragmentManager(), myTabs.getTabCount(),notifEsaip, notifHome);
                 myPage.setAdapter(adapter);
                 myTabs.setOnTabSelectedListener(this);

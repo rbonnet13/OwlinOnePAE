@@ -1,6 +1,7 @@
 package owlinone.pae.covoiturage;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -36,6 +37,7 @@ public class ConducteurEsaip extends Fragment {
     HashMap<String, String> obj = new HashMap();
     private ArrayList<HashMap<String, String>> notifEsaipList;
     NotificationEsaip notifEsaip;
+    private ProgressDialog dialogChargement;
 
 
     @Nullable
@@ -59,6 +61,7 @@ public class ConducteurEsaip extends Fragment {
         lvEsaip.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 //  JSONObject sTest = new JSONObject();
                 //  String strTest = String.valueOf(lv.getItemAtPosition(position));
                 obj = (HashMap) lvEsaip.getItemAtPosition(position);
@@ -89,6 +92,8 @@ public class ConducteurEsaip extends Fragment {
                             Toast.makeText(getContext(), "Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l'item", Toast.LENGTH_LONG).show();
                             new sendGCMRetour().execute();
                             dialog.dismiss();
+                            dialogChargement = ProgressDialog.show(getContext(), "",
+                                    "Chargement...", true);
                         }
                     });
 
@@ -99,6 +104,8 @@ public class ConducteurEsaip extends Fragment {
                             Toast.makeText(getContext(), "Refusé", Toast.LENGTH_LONG).show();
                             new sendGCMRefus().execute();
                             dialog.dismiss();
+                            dialogChargement = ProgressDialog.show(getContext(), "",
+                                    "Chargement...", true);
                         }
                     });
 
@@ -226,6 +233,7 @@ public class ConducteurEsaip extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            dialogChargement.dismiss();
             Intent intent = new Intent(getContext(), ConducteurTab.class);
             startActivity(intent);
         }

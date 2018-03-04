@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
     private final String serverUrl = AddressUrl.strNbNotif;
     private  String nbNotif = "";
     private String email, name, photoBDD = "";
-
+    private ProgressDialog dialog;
     @Override
     public void onRestart() {
         super.onRestart();
@@ -115,7 +115,8 @@ public class MainActivity extends AppCompatActivity
 
         // Met en surbrillance dans le drawer l'activité affichée
         navigationView.setCheckedItem(R.id.nav_article);
-
+        dialog = ProgressDialog.show(MainActivity.this, "",
+                "Chargement...", true);
         // User Session Manager
         session = new Session(getApplicationContext());
         if(session.checkLogin())
@@ -390,6 +391,7 @@ public class MainActivity extends AppCompatActivity
                 lv.setAdapter(adapter);
                 lv.setSelectionFromTop(index, top);
             }
+            dialog.dismiss();
 
         }
     }

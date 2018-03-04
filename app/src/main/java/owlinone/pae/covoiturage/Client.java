@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -122,6 +123,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     Address addressName = new Address(Locale.FRANCE);
     double latitude = 0.0;
     double longitude = 0.0;
+    private ProgressDialog dialog;
     private final String serverUrl = AddressUrl.strTriIndexGPS;
     SupportMapFragment supportMapFragment = new SupportMapFragment();
     private Button  mRequest;
@@ -252,6 +254,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         setContentView(R.layout.clientmap);
 
 
+        dialog = ProgressDialog.show(Client.this, "",
+                "Chargement...", true);
 
         session = new Session(getApplicationContext());
         if(session.checkLogin())
@@ -614,6 +618,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 marker.setTag(info);
                 markers.add(marker);
             }
+            dialog.dismiss();
+
             markers.size();
 
             if(mMap != null) {
@@ -622,6 +628,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 }
             }
         }
+
     }
     public boolean onMarkerClick(final Marker marker) {
 
@@ -738,6 +745,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         mMap.setOnInfoWindowLongClickListener(this);
 
 
+        dialog.dismiss();
 
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);

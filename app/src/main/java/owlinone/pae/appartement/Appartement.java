@@ -1,5 +1,6 @@
 package owlinone.pae.appartement;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -90,6 +91,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView notifcovoit;
     private String nbNotif;
+    private ProgressDialog dialogChargement;
 
     //Redémarre l'activité
     private void restartActivity()
@@ -140,7 +142,8 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
 
         // Affiche le contenu de l'activté sélectionnée
         setContentView(R.layout.activity_appartement);
-
+        dialogChargement = ProgressDialog.show(Appartement.this, "",
+                "Chargement...", true);
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -501,6 +504,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         protected void onPostExecute(Void result)
         {
             super.onPostExecute(result);
+            dialogChargement.dismiss();
             ListAdapter adapter = new SimpleAdapter(Appartement.this, appartList,
                     R.layout.content_appartement, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
                     new int[]{R.id.descrip_appart,R.id.prix_appart, R.id.adresse_apart,R.id.cp_appart,R.id.ville_apart,R.id.dispo_appart,R.id.nom_prop});

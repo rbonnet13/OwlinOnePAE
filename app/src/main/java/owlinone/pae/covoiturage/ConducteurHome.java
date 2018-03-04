@@ -1,5 +1,6 @@
 package owlinone.pae.covoiturage;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -35,6 +36,7 @@ public class ConducteurHome extends Fragment {
     HashMap<String, String> obj = new HashMap();
     private ArrayList<HashMap<String, String>> notifHomeList;
     NotificationHome notifHome;
+    private ProgressDialog dialogChargement;
 
     public static ConducteurHome newInstance(NotificationHome notifHome) {
         ConducteurHome fragment = new ConducteurHome();
@@ -94,6 +96,9 @@ public class ConducteurHome extends Fragment {
                             Toast.makeText(getContext(), "Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l'item", Toast.LENGTH_LONG).show();
                             new sendGCMRetour().execute();
                             dialog.dismiss();
+                            dialogChargement = ProgressDialog.show(getContext(), "",
+                                    "Chargement...", true);
+
                         }
                     });
 
@@ -104,6 +109,8 @@ public class ConducteurHome extends Fragment {
                             Toast.makeText(getContext(), "Refusé", Toast.LENGTH_LONG).show();
                             new sendGCMRefus().execute();
                             dialog.dismiss();
+                            dialogChargement = ProgressDialog.show(getContext(), "",
+                                    "Chargement...", true);
                         }
                     });
 
@@ -231,6 +238,7 @@ public class ConducteurHome extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            dialogChargement.dismiss();
             Intent intent = new Intent(getContext(), ConducteurTab.class);
             startActivity(intent);
         }

@@ -209,12 +209,21 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
+                Log.e("nbNotif", "nbNotif: " + nbNotif);
+
+
+
+                    mDriver.setVisibility(View.INVISIBLE);
+
                 //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = MainActivity.returnParsedJsonObject(result);
             if (jsonResult == 0) {
+
+                    mDriver.setVisibility(View.INVISIBLE);
+
                 //Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -224,15 +233,6 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
             notifcovoit.setTypeface(null, Typeface.BOLD);
             notifcovoit.setTextColor(getResources().getColor(R.color.colorRed));
             notifcovoit.setText(nbNotif);
-            Log.e("nbNotif", "nbNotif: " + nbNotif);
-
-            if(nbNotif == "" || nbNotif.length() == 0){
-                Log.e("nbNotif", "nbNotif: " + nbNotif);
-
-                mDriver.setVisibility(View.INVISIBLE);
-            }
-            else mDriver.setVisibility(View.VISIBLE);
-
 
         }
         private StringBuilder inputStreamToString(InputStream is) {
