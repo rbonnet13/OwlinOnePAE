@@ -830,6 +830,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 String urlNotification = AddressUrl.strIndexGCM;
                 parametersConducteur.put("prenom", prenom);
                 parametersConducteur.put("nom", nom);
+                parametersConducteur.put("DESTINATION_NOTIF", strDestination);
                 parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteur);
                 sh.performPostCall(urlNotification, parametersConducteur);
                 return null;

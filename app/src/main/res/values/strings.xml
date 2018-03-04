@@ -83,7 +83,7 @@
     <string name="conducteur">Voir vos notifications</string>
     <string name="gcm_send_message">Vous pouvez recevoir des notifications push !</string>
     <string name="registering_message">Génération du token...</string>
-    <string name="token_error_message">Une erreur s\'est produite, veuillez réessayer !</string>
+    <string name="token_error_message">Vous ne pouvez pas encore recevoir de notifications push</string>
     <string name="client">Rechercher un trajet</string>
     <string name="newMdp">Mot de passe oublié</string>
     <string name="newMdp2">Nouveau mot de passe</string>

@@ -449,6 +449,7 @@ public class MainLogin extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        // Ouverture d'un Alert Dialog pour montrer que la connexion est obligatoire
         new AlertDialog.Builder(this)
                 .setTitle("Connexion obligatoire")
                 .setIcon(R.drawable.owl_in_one_logo)
@@ -459,10 +460,13 @@ public class MainLogin extends AppCompatActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
                         finish();
                         System.exit(0);
+                        //int pid = android.os.Process.myPid();
+                        //android.os.Process.killProcess(pid);
                     }
                 }).create().show();
     }
 
+    // Garbage collector
     @Override
     public void onDestroy() {
         super.onDestroy();
