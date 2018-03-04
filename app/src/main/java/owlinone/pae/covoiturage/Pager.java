@@ -31,6 +31,8 @@ public class Pager extends FragmentStatePagerAdapter {
 
     }
 
+
+
     //Overriding method getItem
     @Override
     public Fragment getItem(int position) {
