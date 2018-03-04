@@ -76,7 +76,6 @@ import owlinone.pae.session.Session;
 
 import static android.view.View.VISIBLE;
 
-
 /**
  * Created by rudyb on 15/01/2018.
  */
@@ -684,7 +683,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     Toast.makeText(getApplicationContext(), "Notification envoyée !", Toast.LENGTH_LONG).show();
                     v.setEnabled(false);
                     v.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(), "Merci d'attendre 30 secondes avant de pouvoir renvoyer une notification", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Merci d'attendre 20 secondes avant de pouvoir renvoyer une notification", Toast.LENGTH_LONG).show();
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -693,7 +692,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             v.setVisibility(VISIBLE);
                             v.setEnabled(true);
                         }
-                    }, 30000);
+                    }, 20000);
                 }
             });
 
