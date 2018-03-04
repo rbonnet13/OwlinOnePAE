@@ -35,35 +35,37 @@
         android:layout_marginTop="20dp"
         app:srcCompat="@drawable/covoiturage_photo" />
 
-    <Button
-        android:id="@+id/conducteur"
-        style="@style/Base.TextAppearance.AppCompat.Body1"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/background_login"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/conducteur"
-        android:textAllCaps="false"
-        android:textColor="@color/caldroid_holo_blue_light"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/client"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/background_signup"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/client"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/client"
-        style="@style/Base.TextAppearance.AppCompat.Body1"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/background_signup"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/client"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/conducteur"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/background_login"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/conducteur"
+            android:textAllCaps="false"
+            android:textColor="@color/caldroid_holo_blue_light"
+            android:textSize="18sp" />
+
+
 
         </LinearLayout>
     </ScrollView>

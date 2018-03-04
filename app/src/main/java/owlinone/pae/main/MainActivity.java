@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -454,7 +455,6 @@ public class MainActivity extends AppCompatActivity
                 notifcovoit.setTypeface(null,Typeface.BOLD);
                 notifcovoit.setTextColor(getResources().getColor(R.color.colorRed));
                 notifcovoit.setText(nbNotif);
-
         }
         private StringBuilder inputStreamToString(InputStream is) {
             String rLine = "";
