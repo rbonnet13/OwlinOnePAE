@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -316,11 +318,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
         destinationLatLng = new LatLng(0.0,0.0);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(Client.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-        }else{
-            mapFragment.getMapAsync(this);
-        }
+        mapFragment.getMapAsync(this);
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -358,12 +357,24 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         if(!previouslyStarted) {
 
             final CovoitViewCircle fadeBackground = findViewById(R.id.fadeBackground);
-            final ImageView bulle = findViewById(R.id.bulle_toast);
-            bulle.setVisibility(VISIBLE);
+            //final ImageView bulle = findViewById(R.id.bulle_toast);
+            //bulle.setVisibility(VISIBLE);
             fadeBackground.bringToFront();
             fadeBackground.setVisibility(VISIBLE);
             fadeBackground.animate().alpha(0.5f);
-            bulle.bringToFront();
+            new AlertDialog.Builder(this)
+                    .setTitle("Information")
+                    .setIcon(R.drawable.owl_in_one_logo)
+                    .setMessage("Vous devez choisir la destination en cliquant sur le bouton en surbrillance")
+                    //.setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton("J'ai compris", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            strDestination = "school";
+                            fadeBackground.setVisibility(View.GONE);
+                        }
+                    }).create().show();
+            //bulle.bringToFront();
             //On change la valeur dans le cache en true
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(getString(R.string.testClient57), Boolean.TRUE);
@@ -422,7 +433,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             // After some action
                             strDestination = "home";
                             fadeBackground.setVisibility(View.GONE);
-                            bulle.setVisibility(View.GONE);
+                            //bulle.setVisibility(View.GONE);
+
                             return;
                         }
 
