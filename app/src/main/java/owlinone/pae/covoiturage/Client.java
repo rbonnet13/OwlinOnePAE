@@ -430,11 +430,16 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             animatorSetHeart.start();
                         }
                         else {
-                            // After some action
-                            strDestination = "home";
                             fadeBackground.setVisibility(View.GONE);
-                            //bulle.setVisibility(View.GONE);
 
+                            // After some action
+                            if (toggle.isChecked()) {
+                                // The toggle is enabled
+                                strDestination ="home";
+                            } else {
+                                // The toggle is disabled
+                                strDestination ="school";
+                            }                            fadeBackground.setVisibility(View.GONE);
                             return;
                         }
 
