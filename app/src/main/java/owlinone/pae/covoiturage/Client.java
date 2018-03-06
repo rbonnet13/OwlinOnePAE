@@ -102,6 +102,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String IdConducteur ="";
     private  String IdConducteurtest ="";
     private  String Usernametest ="";
+    Boolean isRunning = false;
+    Runnable afterExe = null;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
 
@@ -130,7 +132,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     SupportMapFragment supportMapFragment = new SupportMapFragment();
     private Button  mRequest;
     private ToggleButton toggle;
+    private String telMarker;
     private LatLng pickupLocation;
+    Handler handler;
 
     private Boolean requestBol = false;
 
@@ -465,7 +469,10 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("sms:" + telephone));
+        InfoWindowData info = (InfoWindowData) marker.getTag();
+        Log.e(TAG, "Marker info: " + info.getFood());
+
+        sendIntent.setData(Uri.parse("sms:" + info.getFood()));
         startActivity(sendIntent);
 
     }
@@ -473,7 +480,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     @Override
     public void onInfoWindowLongClick(Marker marker) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri data = Uri.parse("mailto:" + email);
+        InfoWindowData info = (InfoWindowData) marker.getTag();
+        Uri data = Uri.parse("mailto:" + info.getHotel());
         intent.setData(data);
         startActivity(intent);
     }
@@ -648,10 +656,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
     }
     public boolean onMarkerClick(final Marker marker) {
+        final Button notifButton = (Button) findViewById(R.id.btn_notification);
+        notifButton.setVisibility(View.VISIBLE);
 
         if (marker.getTitle().equals("Maison") || marker.getTitle().equals("ESAIP")){
             mRequest.setVisibility(VISIBLE);
-            Button notifButton = (Button) findViewById(R.id.btn_notification);
             notifButton.setVisibility(View.INVISIBLE);
         }else {
 
@@ -694,8 +703,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             });
 
             mRequest.setVisibility(View.INVISIBLE);
-            Button notifButton = (Button) findViewById(R.id.btn_notification);
-            notifButton.setVisibility(VISIBLE);
             notifButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -707,14 +714,16 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     Toast.makeText(getApplicationContext(), "Notification envoyée !", Toast.LENGTH_LONG).show();
                     v.setEnabled(false);
                     v.setVisibility(View.INVISIBLE);
+                    handler = new Handler();
                     Toast.makeText(getApplicationContext(), "Merci d'attendre 20 secondes avant de pouvoir renvoyer une notification", Toast.LENGTH_LONG).show();
-                    final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             // Do something after 5s = 5000ms
                             v.setVisibility(VISIBLE);
                             v.setEnabled(true);
+
+
                         }
                     }, 20000);
                 }
