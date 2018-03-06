@@ -107,7 +107,7 @@ public class PasswordActivity extends AppCompatActivity {
                 try {
                     GMailSender sender = new GMailSender(GMailSender.mailOwlInOne,
                             GMailSender.mdpOwlInOne);
-                    sender.sendMail("Mot de passe oublié OwlIneOne", " Salut "+username+", \n Ton code pour changer ton mot de passe c'est: " + randomNum + ". \n Retourne sur l'application pour pouvoir choisir un nouveau mot de passe. \n L'équipe OwlInOne,",
+                    sender.sendMail("Owl In One - Code de vérification pour mot de passe oublié", "Bonjour "+username+",\n\nVous avez récemment fait une demande de mot de passe oublié sur notre application Owl In One.\nPour pouvoir modifier votre mot de passe, merci de rentrer ce code dans l'application: " + randomNum + ".\n\nL'équipe Owl In One.",
                             "owlinone.esaip@gmail.com", mailRecup);
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
@@ -137,7 +137,7 @@ public class PasswordActivity extends AppCompatActivity {
                     return;
                 }
                 if (newPassword.equals("") || reNewPassword.equals("") || codePassword.equals("")) {
-                    Toast.makeText(PasswordActivity.this, "Veuillez remplir tout les champs", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordActivity.this, "Veuillez remplir tous les champs", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (!codePassword.equals(String.valueOf(randomNum))) {
