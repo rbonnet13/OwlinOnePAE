@@ -22,30 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import owlinone.pae.R;
 import owlinone.pae.appartement.Appartement;
 import owlinone.pae.calendrier.CalendarExtra;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.covoiturage.Covoiturage;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Compte;
@@ -105,8 +88,7 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
 
         notifcovoit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.nav_covoiturage));
-        APropos.DataNotifConducteur asyncRequestObject = new APropos.DataNotifConducteur();
-        asyncRequestObject.execute(AddressUrl.strNbNotif, name);
+        new DataNotifConducteur().execute();
 
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
@@ -227,35 +209,21 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
     }
 
     private class DataNotifConducteur extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
-            HttpClient httpClient = new DefaultHttpClient(httpParameters);
-            HttpPost httpPost = new HttpPost(params[0]);
-            String jsonResult = "";
-
+        Exception exception;
+        protected String doInBackground(String... arg0) {
             try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("name", params[1]));
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpClient.execute(httpPost);
-                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+                HttpHandler sh = new HttpHandler();
+                HashMap<String, String> parametersConducteur = new HashMap<>();
 
-            } catch (ClientProtocolException e) {
+                String urlNotification = AddressUrl.strNbNotif;
+                parametersConducteur.put("name",name);
 
-                e.printStackTrace();
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
+                String jsonresult = sh.performPostCall(urlNotification, parametersConducteur);
+                return jsonresult;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
             }
-
-            return jsonResult;
-
         }
 
         @Override
@@ -286,20 +254,6 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
             notifcovoit.setTextColor(getResources().getColor(R.color.colorRed));
             notifcovoit.setText(nbNotif);
 
-        }
-        private StringBuilder inputStreamToString(InputStream is) {
-            String rLine = "";
-            StringBuilder answer = new StringBuilder();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            try {
-                while ((rLine = br.readLine()) != null) {
-                    answer.append(rLine);
-                }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return answer;
         }
     }
 
