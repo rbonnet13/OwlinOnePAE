@@ -27,10 +27,6 @@ import owlinone.pae.session.Session;
 
 import static owlinone.pae.configuration.AddressUrl.strGCM;
 
-
-/**
- * Created by NgocTri on 4/8/2016.
- */
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
