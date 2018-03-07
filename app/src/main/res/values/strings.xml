@@ -79,7 +79,7 @@
     <string name="compte">Compte</string>
     <string name="mdpCourt">Mot de passe trop court</string>
     <string name="mdpDifferent">Les mots de passes sont différents</string>
-    <string name="remplirToutChamps">Veuillez remplir tout les champs</string>
+    <string name="remplirToutChamps">Veuillez remplir tous les champs</string>
     <string name="codeFaux">Le code est faux</string>
     <string name="mdpChange">Mot de passe changé</string>
     <string name="mailInconnu">Cet email est inconnu</string>
