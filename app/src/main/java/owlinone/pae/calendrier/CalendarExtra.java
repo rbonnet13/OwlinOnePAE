@@ -25,7 +25,6 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -64,18 +63,21 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
 
     private String TAG = CalendarExtra.class.getSimpleName();
     CompactCalendarView compactCalendar;
-    ArrayAdapter<String> adapter;
     private ListView lvEvent;
-    ArrayList<HashMap<String, String>> eventClicked;
-    ArrayList<HashMap<String, String>> eventCurrentDay;
+
+    long timeInMilliseconds = 0;
     Integer erreurMonth = 1;
     Integer erreurYear = 1900;
+
+    ArrayList<HashMap<String, String>> eventClicked;
+    ArrayList<HashMap<String, String>> eventCurrentDay;
     ArrayList<HashMap<String, String>> eventList;
     HashMap<String, String> testEvent = new HashMap();
-    long timeInMilliseconds = 0;
+
     String strHourFinal;
     String strMinuteFinal;
     String email, name, photoBDD;
+
     ImageView imgLogo = null;
     Date date = new Date();
     Session session;

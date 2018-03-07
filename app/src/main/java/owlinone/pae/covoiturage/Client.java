@@ -28,14 +28,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -102,22 +96,14 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private  String IdConducteur ="";
     private  String IdConducteurtest ="";
     private  String Usernametest ="";
-    Boolean isRunning = false;
-    Runnable afterExe = null;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
 
     Boolean test = false;
-    Toast toast = null;
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
-    private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(2);
     private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
-    HttpHandler sh = new HttpHandler();
+
     private String TAG = Appartement.class.getSimpleName();
-    String url= null;
     String strUsernameConducteur = "",nbNotif="", strNom = "", strPrenom = "", strAdresse = "", strTelephone = "", strDestination = "";
-    HashMap <String, String> obj = new HashMap();
-    HashMap <String, String> objDispo = new HashMap();
     ArrayList<LinkedHashMap<String, String>> covoitList;
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
@@ -128,33 +114,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     double latitude = 0.0;
     double longitude = 0.0;
     private ProgressDialog dialog;
-    private final String serverUrl = AddressUrl.strTriIndexGPS;
-    SupportMapFragment supportMapFragment = new SupportMapFragment();
     private Button  mRequest;
     private ToggleButton toggle;
-    private String telMarker;
-    private LatLng pickupLocation;
     Handler handler;
-
-    private Boolean requestBol = false;
-
-    private Marker pickupMarker;
-
     private SupportMapFragment mapFragment;
 
-    private String destination, requestService;
-
-    private LatLng destinationLatLng;
-
-    private LinearLayout mDriverInfo;
-
-    private ImageView mDriverProfileImage;
-
-    private TextView mDriverName, mDriverPhone, mDriverCar;
-
-    private RadioGroup mRadioGroup;
-
-    private RatingBar mRatingBar;
     List<Address> addresses = new List<Address>() {
         @Override
         public int size() {
@@ -252,6 +216,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             return null;
         }
     };
+    private LatLng destinationLatLng;
 
 
     @Override
@@ -259,10 +224,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
 
-
+        // Creer un chargement lors du démarrage
         dialog = ProgressDialog.show(Client.this, "",
                 "Chargement...", true);
 
+        // Récupération de l'utilisateur
         session = new Session(getApplicationContext());
         if(session.checkLogin())
             finish();
@@ -281,6 +247,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         longit = user.get(Session.KEY_LONGITUDE);
         telephone = user.get(Session.KEY_TEL);
 
+        // Récupération du context de l'activité
         final Context context = getApplicationContext();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -324,6 +291,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         mapFragment.getMapAsync(this);
 
+        // Récupération du nbNotif de l'activité précédente
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -353,16 +321,21 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         });
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
-        strDestination="school";
+        // After some action
+        if (toggle.isChecked()) {
+            // The toggle is enabled
+            strDestination ="home";
+        } else {
+            // The toggle is disabled
+            strDestination ="school";
+        }
 
         //Test si première connexion pour afficher bulle information bouton
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean previouslyStarted = prefs.getBoolean(getString(R.string.testClient57), false);
+        boolean previouslyStarted = prefs.getBoolean(getString(R.string.premiereConnexionClient), false);
         if(!previouslyStarted) {
 
             final CovoitViewCircle fadeBackground = findViewById(R.id.fadeBackground);
-            //final ImageView bulle = findViewById(R.id.bulle_toast);
-            //bulle.setVisibility(VISIBLE);
             fadeBackground.bringToFront();
             fadeBackground.setVisibility(VISIBLE);
             fadeBackground.animate().alpha(0.5f);
@@ -370,18 +343,23 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     .setTitle("Information")
                     .setIcon(R.drawable.owl_in_one_logo)
                     .setMessage("Vous devez choisir la destination en cliquant sur le bouton en surbrillance")
-                    //.setNegativeButton(android.R.string.no, null)
                     .setPositiveButton("J'ai compris", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            strDestination = "school";
+                            // After some action
+                            if (toggle.isChecked()) {
+                                // The toggle is enabled
+                                strDestination ="home";
+                            } else {
+                                // The toggle is disabled
+                                strDestination ="school";
+                            }
                             fadeBackground.setVisibility(View.GONE);
                         }
                     }).create().show();
-            //bulle.bringToFront();
             //On change la valeur dans le cache en true
             SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.testClient57), Boolean.TRUE);
+            edit.putBoolean(getString(R.string.premiereConnexionClient), Boolean.TRUE);
             edit.commit();
 
 
@@ -422,6 +400,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
 
+                        // Si l'imge toggle est clické
                         toggle.setOnClickListener(new View.OnClickListener()
                         {
                             @Override
@@ -430,9 +409,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                                 test = true;
                             }
                         });
+                        // Si pas clické le bouton reste animé
                         if(test == false) {
                             animatorSetHeart.start();
                         }
+                        // On enlève la view avec le cercle et on sort
                         else {
                             fadeBackground.setVisibility(View.GONE);
 
@@ -443,51 +424,49 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             } else {
                                 // The toggle is disabled
                                 strDestination ="school";
-                            }                            fadeBackground.setVisibility(View.GONE);
+                            }
                             return;
                         }
-
                     }
-
                 });
+            }
 
-        }
-
-        mRequest = (Button) findViewById(R.id.request);
-        mRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                covoitList = new ArrayList<>();
-                new Client.AsyncDataClass().execute();
-                LatLng position = new LatLng(Double.valueOf(latit),Double.valueOf(longit));
-                CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 15);
-                mMap.animateCamera(yourLocation);
+            mRequest = (Button) findViewById(R.id.request);
+            mRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+            covoitList = new ArrayList<>();
+            new Client.AsyncDataClass().execute();
+            LatLng position = new LatLng(Double.valueOf(latit),Double.valueOf(longit));
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 15);
+            mMap.animateCamera(yourLocation);
             }
         });
     }
 
+    //Click sur un marker
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         InfoWindowData info = (InfoWindowData) marker.getTag();
-        Log.e(TAG, "Marker info: " + info.getFood());
+        Log.e(TAG, "Marker info: " + info.getTel());
 
-        sendIntent.setData(Uri.parse("sms:" + info.getFood()));
+        sendIntent.setData(Uri.parse("sms:" + info.getTel()));
         startActivity(sendIntent);
 
     }
 
+    //Click long sur un marker
     @Override
     public void onInfoWindowLongClick(Marker marker) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         InfoWindowData info = (InfoWindowData) marker.getTag();
-        Uri data = Uri.parse("mailto:" + info.getHotel());
+        Uri data = Uri.parse("mailto:" + info.getMail());
         intent.setData(data);
         startActivity(intent);
     }
 
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
-        // public List<ArrayList<HashMap<String,String>>> Covoite = new ArrayList<ArrayList<HashMap<String,String>>>();
 
         @Override
         protected void onPreExecute()
@@ -527,7 +506,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             try
             {
                 JSONArray jsonArray = new JSONArray(jsonStr);
-                // looping through All Appartements
+                // Boucle sur tout les appartements
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     JSONObject a            = jsonArray.getJSONObject(i);
@@ -546,10 +525,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                     double result_covoiturage =  Distance(latitude,longitude,latitudeAppart,longitudeAppart);
 
                     // Affiche les appartements que s'il est disponible ou non disponible
-                    if(adresseMail.equals(email))
+                    if(!adresseMail.equals(email))
                     {
-                        //on n'ajoute pas l'adresse de l'utilisateur courant
-                    }else{
                         if (result_covoiturage <= 10000.0 ){
                             LinkedHashMap<String, String> covoit = new LinkedHashMap<>();
                             // adding each child node to HashMap key => value
@@ -629,6 +606,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         getTelephone = value;
                     }
                 }
+                //On créé un nouveau marqueur associé à un étudiant
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_conducteur))
                         .title(IdConducteur)
@@ -637,12 +615,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         )));
                 InfoWindowData info = new InfoWindowData();
 
-                info.setHotel(getEmail);
-                info.setFood(getTelephone);
-                info.setTransport(getAdresse);
+                info.setMail(getEmail);
+                info.setTel(getTelephone);
+                info.setAdresse(getAdresse);
                 marker.setTag(info);
                 markers.add(marker);
             }
+            // On a fini le chargement
             dialog.dismiss();
 
             markers.size();
@@ -655,10 +634,12 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
 
     }
+    //Click sur un marker
     public boolean onMarkerClick(final Marker marker) {
         final Button notifButton = (Button) findViewById(R.id.btn_notification);
         notifButton.setVisibility(View.VISIBLE);
 
+        // Si on click sur le marker de l'école ou la notre on affiche pas le boutton notification
         if (marker.getTitle().equals("Maison") || marker.getTitle().equals("ESAIP")){
             mRequest.setVisibility(VISIBLE);
             notifButton.setVisibility(View.INVISIBLE);
@@ -703,6 +684,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             });
 
             mRequest.setVisibility(View.INVISIBLE);
+            // Si on click sur le bouton notification
             notifButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -738,16 +720,16 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     public void onMapReady(GoogleMap map) {
         this.mMap = map;
 
+        // Infos marker Esaip
         Marker markerEsaip = map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_esaip))
                 .snippet("GROUPE ESAIP")
                 .title("ESAIP")
                 .position(new LatLng(47.464051, -0.497334)));
         InfoWindowData info = new InfoWindowData();
-        info.setImage("");
-        info.setHotel("contact.esaip@esaip.org");
-        info.setFood("02414517475");
-        info.setTransport("3 rue du 8 mai 1945");
+        info.setMail("contact.esaip@esaip.org");
+        info.setTel("02414517475");
+        info.setAdresse("3 rue du 8 mai 1945");
         markerEsaip.setTag(info);
 
         // Infos marker Domicile
@@ -758,10 +740,9 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 .position(new LatLng( Double.valueOf(latit),Double.valueOf(longit)
                 )));
         InfoWindowData info1 = new InfoWindowData();
-        info1.setImage("");
-        info1.setHotel(" " + email);
-        info1.setFood(" " + telephone);
-        info1.setTransport(" " + adresse);
+        info1.setMail(" " + email);
+        info1.setTel(" " + telephone);
+        info1.setAdresse(" " + adresse);
         markerAppart.setTag(info1);
         CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
 
@@ -770,15 +751,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         mMap.setOnInfoWindowClickListener(this);
         mMap.setOnInfoWindowLongClickListener(this);
 
-
+        // On enlève le dialog de chargement
         dialog.dismiss();
 
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
         map.animateCamera(yourLocation);
 
-        // You can customize the marker_conducteur image using images bundled with
-        // your app, or dynamically generated bitmaps.
     }
 
 
@@ -832,6 +811,8 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         }
     }
+
+
     private class sendUsers extends AsyncTask<Void, Void, Void> {
         Exception exception;
         protected Void doInBackground(Void... arg0) {
@@ -877,6 +858,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        dialog.dismiss();
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("nbNotif", nbNotif);

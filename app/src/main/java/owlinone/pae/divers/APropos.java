@@ -199,7 +199,6 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
-            //System.exit(0);
         }
     }
     @Override
@@ -238,13 +237,11 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
-                //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = MainActivity.returnParsedJsonObject(result);
             if (jsonResult == 0) {
-                //Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 return;
             }
             nbNotif = Integer.toString(jsonResult);
@@ -288,10 +285,6 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
             finish();
-        /*} else if (id == R.id.nav_a_propos) {
-            Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
-            startActivity(searchIntent);
-            finish();*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

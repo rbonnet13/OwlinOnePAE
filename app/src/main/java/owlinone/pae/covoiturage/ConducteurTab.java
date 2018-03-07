@@ -1,5 +1,6 @@
 package owlinone.pae.covoiturage;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +35,9 @@ import owlinone.pae.session.Session;
 public class ConducteurTab extends AppCompatActivity{
     TabLayout myTabs;
     ViewPager myPage;
+    private ProgressDialog dialogChargementEsaip;
+    private ProgressDialog dialogChargementHome;
+
 
     HashMap<String, String> notification;
     Session session;
@@ -240,6 +244,7 @@ public class ConducteurTab extends AppCompatActivity{
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("nbNotif", nbNotif);

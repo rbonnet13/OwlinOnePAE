@@ -135,12 +135,6 @@ public class DetailArticle extends AppCompatActivity {
         Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
         imgDetail.setImageBitmap(image);
 
-
-        /*Picasso.with(this)
-                .load(strImage)
-                .resize(width,600)
-                .into(imgDetail);*/
-
         //Affichage dans les TextView avec les string précèdent-------------------------------------
         textCategorie.setText(strCategorie);
         textCorps.setText(strCorps);

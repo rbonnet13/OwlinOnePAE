@@ -25,9 +25,7 @@ public class AddressUrl {
     public static final String strTriAppartPrix        = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrix.php";
     public static final String strTriAppartPrixDispo   = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/triAppartementPrixDispo.php";
     public static final String strTriIndex             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/index.php";
-    public static final String strNotifGeneral            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationGeneral.php";
-    public static final String strNotifHome            = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationHome.php";
-    public static final String strNotifSchool          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationSchool.php";
+    public static final String strNotifGeneral         = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/notificationGeneral.php";
     public static final String strTriIndexCompte       = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexCompte.php";
     public static final String strTriIndexGPS          = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexGPS.php";
     public static final String strIndexBug             = "http://" + strUrl + ":"+ strPort +"/"+ strDossierPhp +"/indexBug.php";

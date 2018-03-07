@@ -18,8 +18,8 @@
     <string name="app_bug">Signaler un bug</string>
     <string name="app_a_propos">À propos</string>
 
-    <!--Définition des strings concernant le header du drawer-->
-    <string name="bienvenue">Bienvenue</string>
+    <!--Définition des strings concernant le header du drawer et général à l'appli-->
+    <string name="bienvenue">Bienvenue </string>
     <string name="action_settings">Settings</string>
 
     <!-- Définition des strings pour l'activité appartement -->
@@ -72,11 +72,25 @@
     <string name="sign_up2">Valider l\'inscription</string>
     <string name="sign_up_password">Valider le mot de passe</string>
     <string name="valider_activation">Valider le code</string>
-    <item name="actionsettings" type="id">Settings</item>
+    <item   name="actionsettings" type="id">Settings</item>
     <string name="connexion">Connexion</string>
     <string name="inscription">Inscription</string>
     <string name="déconnexion">Déconnexion</string>
     <string name="compte">Compte</string>
+    <string name="mdpCourt">Mot de passe trop court</string>
+    <string name="mdpDifferent">Les mots de passes sont différents</string>
+    <string name="remplirToutChamps">Veuillez remplir tout les champs</string>
+    <string name="codeFaux">Le code est faux</string>
+    <string name="mdpChange">Mot de passe changé</string>
+    <string name="mailInconnu">Cet email est inconnu</string>
+    <string name="pseudoMdpRequis">Pseudo et mot de passe requis</string>
+    <string name="pseudoMdpCaractere">Le pseudo et le mot de passe doivent dépasser 3 caractères</string>
+    <string name="pseudoMdpIncorrect">Pseudo ou Mot de passe incorrect</string>
+    <string name="connexionObligatoire">Connexion obligatoire</string>
+    <string name="pseudoMdpUtilise">Le pseudo ou l\'email est déjà utilisé</string>
+    <string name="mailFormat">Votre email doit être sous la forme @esaip.org</string>
+    <string name="codeNouveauMail">Vous avez reçu un nouveau code par mail</string>
+
 
     <!-- Définition des strings pour le covoiturage -->
     <string name="intro_covoiturage">Avec Owl In One, rentrez chez vous ou venez à l\'ESAIP en quelques clics !</string>
@@ -89,7 +103,7 @@
     <string name="newMdp2">Nouveau mot de passe</string>
     <string name="rechercheCovoit">Recherche</string>
     <string name="notificationCovoit">Notifications</string>
-    <string name="testClient57">testClient57</string>
+    <string name="premiereConnexionClient">premiereConnexionClient</string>
 
     <string name="DestinationNotif">Destination:</string>
     <string name="HomeNotif">Vers Domicile</string>
@@ -116,6 +130,15 @@
     <string name="a_propos_text">Avec Owl In One, rentrez chez vous
         ou venez à l\'ESAIP en quelques clics !</string>
 
+    <string name="titreCovoiturage">Covoiturage</string>
+    <string name="saisirCoordonneeCovoiturage">Merci de saisir vos coordonnées</string>
+    <string name="oui">OUI</string>
+    <string name="non">NON</string>
+    <string name="accepterCovoiturage">Accepter le covoiturage ?</string>
+    <string name="toastNotifAccepterCovoiturage">Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l\'item</string>
+    <string name="toastNotifRefuserCovoiturage">Refusé</string>
+    <string name="toastNotifSpamCovoiturage">Vous avez déjà envoyé une notification</string>
+
 
     <!-- Définition des strings pour le rapport de bug -->
     <string name="bugTitle">Rapportez-nous les bugs ou envoyez-nous des suggestions d\'amélioration</string>
@@ -125,5 +148,17 @@
     <string name="bugSpinner3">Autres</string>
     <string name="bugFeedbackBody">Décrivez votre remarque...</string>
     <string name="bugSubmitButton">Envoyez votre remarque</string>
+    <string name="detaillerBug">Merci de mieux détailler votre rapport</string>
+    <string name="rapportExist">Le rapport existe déjà !</string>
+    <string name="rapportEnvoye">Rapport envoyé! Merci</string>
+    <string name="rapportProbleme">Un problème est survenu. Veuillez réessayer !</string>
+
+
+    <!-- Définition des strings pour le général -->
+    <string name="chargement">Chargement...</string>
+    <string name="problemeServeur">Problème de connexion au serveur</string>
+    <string name="problemeReseau">Problème de connexion</string>
+    <string name="quitterApplication">Êtes-vous sûr de vouloir quitter?</string>
+
 
 </resources>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -45,6 +46,7 @@ public class ConducteurEsaip extends Fragment {
     public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View PageEsaip = inflater.inflate(R.layout.conducteur_esaip, container, false);
 
+        //On récupère toutes les notifications pour aller vers l'esaip
         notifEsaip = (NotificationEsaip) getArguments().getSerializable(
                 "esaip");
 
@@ -53,6 +55,7 @@ public class ConducteurEsaip extends Fragment {
 
         notifEsaipList = new ArrayList<>();
         notifEsaipList = notifEsaip.getNotif();
+
         Log.e("Test", "notifEsaipList: " + notifEsaipList.toString());
 
 
@@ -62,8 +65,6 @@ public class ConducteurEsaip extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //  JSONObject sTest = new JSONObject();
-                //  String strTest = String.valueOf(lv.getItemAtPosition(position));
                 obj = (HashMap) lvEsaip.getItemAtPosition(position);
                 strIdNotif = obj.get("ID_NOTIF");
                 strPseudo = obj.get("PSEUDO_CONDUCTEUR_NOTIF");
@@ -78,41 +79,43 @@ public class ConducteurEsaip extends Fragment {
                 strPrenomUser = obj.get("USER_PRENOM");
                 strClicked = obj.get("CLICKED_NOTIF");
 
-                Log.e("strClicked", "strClicked: " + strClicked );
-
+                //Si l'item n'a jamais été clické
                 if("FALSE".equals(strClicked)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Covoiturage");
+                    builder.setTitle(R.string.titreCovoiturage);
                     builder.setIcon(R.drawable.owl_in_one_logo);
-                    builder.setMessage("Accepter le covoiturage ?");
+                    builder.setMessage(R.string.accepterCovoiturage);
 
-                    builder.setNegativeButton("OUI", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.oui, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), "Notification push envoyée, vous pouvez envoyer un sms en effectuant un appui long sur l'item", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.toastNotifAccepterCovoiturage, Toast.LENGTH_LONG).show();
                             new sendGCMRetour().execute();
                             dialog.dismiss();
                             dialogChargement = ProgressDialog.show(getContext(), "",
                                     "Chargement...", true);
+                            timerDelayRemoveDialog(8000, dialogChargement);
+
                         }
                     });
 
-                    builder.setPositiveButton("NON", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(R.string.non, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
                             // Do nothing but close the dialog
-                            Toast.makeText(getContext(), "Refusé", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.toastNotifRefuserCovoiturage, Toast.LENGTH_LONG).show();
                             new sendGCMRefus().execute();
                             dialog.dismiss();
                             dialogChargement = ProgressDialog.show(getContext(), "",
                                     "Chargement...", true);
+                            timerDelayRemoveDialog(8000, dialogChargement);
                         }
                     });
 
                     AlertDialog alert = builder.create();
                     alert.show();
                 } else {
-                    Toast.makeText(getContext(), "Vous avez déjà envoyé une notification", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.toastNotifSpamCovoiturage, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -237,5 +240,12 @@ public class ConducteurEsaip extends Fragment {
             Intent intent = new Intent(getContext(), ConducteurTab.class);
             startActivity(intent);
         }
+    }
+    public void timerDelayRemoveDialog(long time, final ProgressDialog d){
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                d.dismiss();
+            }
+        }, time);
     }
 }

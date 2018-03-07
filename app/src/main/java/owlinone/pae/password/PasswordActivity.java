@@ -129,28 +129,24 @@ public class PasswordActivity extends AppCompatActivity {
                 Log.e("codePassword", "codePassword: " + codePassword);
 
                 if (newPassword.length() <= 3) {
-                    Toast.makeText(PasswordActivity.this, "Mot de passe trop court", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordActivity.this, R.string.mdpCourt, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (!newPassword.equals(reNewPassword)) {
-                    Toast.makeText(PasswordActivity.this, "Les mots de passes sont différents", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordActivity.this, R.string.mdpDifferent, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (newPassword.equals("") || reNewPassword.equals("") || codePassword.equals("")) {
-                    Toast.makeText(PasswordActivity.this, "Veuillez remplir tout les champs", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordActivity.this, R.string.remplirToutChamps, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (!codePassword.equals(String.valueOf(randomNum))) {
-                    Toast.makeText(PasswordActivity.this, "Le code est faux", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordActivity.this, R.string.codeFaux, Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 new ChangeMDP().execute();
             }
         });
-        //Test Log
-        Log.e("mailRecup", "mailRecup: " + mailRecup);
-        Log.e("username", "username: " + username);
     }
 
        private class ChangeMDP extends AsyncTask<Void, Void, Void>
@@ -186,13 +182,12 @@ public class PasswordActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result)
         {
-            Toast.makeText(PasswordActivity.this, "Mot de passe changé", Toast.LENGTH_LONG).show();
+            Toast.makeText(PasswordActivity.this, R.string.mdpChange, Toast.LENGTH_LONG).show();
 
             super.onPostExecute(result);
             Intent intent = new Intent(getApplicationContext(), MainLogin.class);
             startActivity(intent);
         }
-
     }
     @Override
     public void onBackPressed() {

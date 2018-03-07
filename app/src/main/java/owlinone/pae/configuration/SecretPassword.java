@@ -33,7 +33,7 @@ public class SecretPassword {
     public static String encryptMsg(String message, SecretKey secret)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException
     {
-   /* Encrypt the message. */
+   /* Encrypte le message. */
         Cipher cipher = null;
         cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, secret);
@@ -45,7 +45,7 @@ public class SecretPassword {
     public static String decryptMsg(String cipherText, SecretKey secret)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidParameterSpecException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException
     {
-    /* Decrypt the message, given derived encContentValues and initialization vector. */
+    /* Decrypte le message. */
         Cipher cipher = null;
         cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, secret);

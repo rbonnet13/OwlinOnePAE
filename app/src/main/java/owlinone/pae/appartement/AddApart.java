@@ -160,6 +160,7 @@ public class AddApart extends AppCompatActivity {
         HideKeyboard hideKeyboard = new HideKeyboard(this);
         hideKeyboard.setupUI(findViewById(R.id.layout_add_appart));
 
+        //Initialisation du Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 

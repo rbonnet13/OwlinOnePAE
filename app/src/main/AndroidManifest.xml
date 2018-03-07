@@ -88,10 +88,6 @@
             android:label="@string/app_calendrier">
         </activity>
         <activity
-            android:name="owlinone.pae.session.Parametre"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".covoiturage.Covoiturage"
             android:label="@string/app_covoiturage"
             android:screenOrientation="portrait">

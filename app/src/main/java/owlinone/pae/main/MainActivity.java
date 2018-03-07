@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity
     int top;
     Session session;
     TextView notifcovoit;
-    protected String response;
-    private final String serverUrl = AddressUrl.strNbNotif;
     private  String nbNotif = "";
     private String email, name, photoBDD = "";
     private ProgressDialog dialog;
@@ -226,6 +224,7 @@ public class MainActivity extends AppCompatActivity
     // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
     @Override
     public void onBackPressed() {
+        dialog.dismiss();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -256,10 +255,6 @@ public class MainActivity extends AppCompatActivity
             Intent searchIntent = new Intent(getApplicationContext(), Compte.class);
             startActivity(searchIntent);
             finish();
-        /*} else if (id == R.id.nav_article) {
-            Intent searchIntent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(searchIntent);
-            finish();*/
         } else if (id == R.id.nav_appartement) {
             Intent searchIntent = new Intent(getApplicationContext(), Appartement.class);
             startActivity(searchIntent);
@@ -356,7 +351,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
+                                    R.string.problemeServeur,
                                     Toast.LENGTH_LONG).show();
                         }
                     });
@@ -413,13 +408,11 @@ public class MainActivity extends AppCompatActivity
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
-                //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = MainActivity.returnParsedJsonObject(result);
             if (jsonResult == 0) {
-                //Toast.makeText(MainActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
                 return;
             }
             nbNotif = Integer.toString(jsonResult);

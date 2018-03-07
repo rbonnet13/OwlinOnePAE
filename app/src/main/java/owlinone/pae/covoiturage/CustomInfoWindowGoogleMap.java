@@ -6,12 +6,9 @@ package owlinone.pae.covoiturage;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
@@ -47,9 +44,9 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
 
         InfoWindowData infoWindowData = (InfoWindowData) marker.getTag();
 
-        hotel_tv.setText(infoWindowData.getHotel());
-        food_tv.setText(infoWindowData.getFood());
-        transport_tv.setText(infoWindowData.getTransport());
+        hotel_tv.setText(infoWindowData.getMail());
+        food_tv.setText(infoWindowData.getTel());
+        transport_tv.setText(infoWindowData.getAdresse());
 
         return view;
     }

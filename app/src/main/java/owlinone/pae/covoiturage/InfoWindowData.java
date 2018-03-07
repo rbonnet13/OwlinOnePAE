@@ -5,40 +5,31 @@ package owlinone.pae.covoiturage;
  */
 
 public class InfoWindowData {
-    private String image;
-    private String hotel;
-    private String food;
-    private String transport;
+    private String mail;
+    private String telephone;
+    private String adresse;
 
-    public String getImage() {
-        return image;
+    public String getMail() {
+        return mail;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
-    public String getHotel() {
-        return hotel;
+    public String getTel() {
+        return telephone;
     }
 
-    public void setHotel(String hotel) {
-        this.hotel = hotel;
+    public void setTel(String telephone) {
+        this.telephone = telephone;
     }
 
-    public String getFood() {
-        return food;
+    public String getAdresse() {
+        return adresse;
     }
 
-    public void setFood(String food) {
-        this.food = food;
-    }
-
-    public String getTransport() {
-        return transport;
-    }
-
-    public void setTransport(String transport) {
-        this.transport = transport;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 }

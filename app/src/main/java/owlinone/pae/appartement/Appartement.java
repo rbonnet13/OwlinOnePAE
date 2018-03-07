@@ -265,6 +265,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        dialogChargement.dismiss();
         // Check si le drawer est ouvert. Si oui, on le ferme
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -479,7 +480,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                     public void run()
                     {
                         Toast.makeText(getApplicationContext(),
-                                "Problème de connexion au serveur",
+                                R.string.problemeServeur,
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -573,8 +574,3 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         }
     }
 }
-
-
-
-
-

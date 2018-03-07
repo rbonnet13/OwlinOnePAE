@@ -21,6 +21,7 @@ public class Pager extends FragmentStatePagerAdapter {
     NotificationHome notifHome;
 
 
+
     //Constructor to the class
     public Pager(FragmentManager fm, int tabCount, NotificationEsaip notifEsaip, NotificationHome notifHome) {
         super(fm);
@@ -42,6 +43,7 @@ public class Pager extends FragmentStatePagerAdapter {
                 ConducteurEsaip esaip = new ConducteurEsaip();
                 Bundle bundleEsaip = new Bundle();
                 bundleEsaip.putSerializable("esaip", notifEsaip);
+
                 esaip.setArguments(bundleEsaip);
 
                 return esaip;
@@ -49,6 +51,7 @@ public class Pager extends FragmentStatePagerAdapter {
                 ConducteurHome home = new ConducteurHome();
                 Bundle bundleHome = new Bundle();
                 bundleHome.putSerializable("home", notifHome);
+
                 home.setArguments(bundleHome);
                 return home;
 

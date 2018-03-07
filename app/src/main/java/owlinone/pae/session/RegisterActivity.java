@@ -18,11 +18,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -56,12 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
     protected String enteredEmail;
     protected String enteredPhoto;
     private String enteredCode;
-    private String enteredMail;
     protected String response;
     protected String responseValidUserMail;
 
-    private  int jsonResultValidUserMail;
-    private JSONObject myJsonObject;
     private Bitmap bitmap;
     private ImageView imagePhoto;
     private int request_code = 1;
@@ -160,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if (!enteredCode.equals(String.valueOf(randomNum))) {
-                    Toast.makeText(RegisterActivity.this, "Code faux", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, R.string.codeFaux, Toast.LENGTH_LONG).show();
                     return;
                 }
                 else{
@@ -203,19 +197,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-        /*@Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-    //noinspection SimplifiableIfStatement
-            if (id == R.id.actionsettings) {
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }*/
-
     private class AsyncDataClass extends AsyncTask<Void, Void, Void> {
         Exception exception;
         @Override
@@ -255,7 +236,7 @@ public class RegisterActivity extends AppCompatActivity {
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + response);
             if(response.equals("") || response == null){
-                Toast.makeText(RegisterActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.problemeServeur, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -290,23 +271,23 @@ public class RegisterActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             if (responseValidUserMail.contains("username")) {
-                Toast.makeText(RegisterActivity.this, "Le pseudo ou l'email est déjà utilisé", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.pseudoMdpUtilise, Toast.LENGTH_LONG).show();
                 return;
             }
             Log.e("test", "test password: " + enteredPassword + " " + enteredRePassword);
 
             if (!enteredPassword.equals(enteredRePassword)) {
-                Toast.makeText(RegisterActivity.this, "Mots de passes différents", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.mdpDifferent, Toast.LENGTH_LONG).show();
                 return;
             }
 
             if (enteredUsername.equals("") || enteredPassword.equals("") || enteredEmail.equals("")) {
-                Toast.makeText(RegisterActivity.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.pseudoMdpRequis, Toast.LENGTH_LONG).show();
                 return;
             }
 
             if (enteredUsername.length() <= 3 || enteredPassword.length() <= 3) {
-                Toast.makeText(RegisterActivity.this, "Le pseudo et le login doivent dépasser 3 caractères", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.pseudoMdpCaractere, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -315,7 +296,7 @@ public class RegisterActivity extends AppCompatActivity {
             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(inputStr);
             if (!matcher.matches()) {
-                Toast.makeText(RegisterActivity.this, "Votre email doit être sous la forme @esaip.org", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.mailFormat, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -335,7 +316,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
             }).start();
-            Toast.makeText(RegisterActivity.this, "Vous avez reçu un nouveau code par mail", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, R.string.codeNouveauMail, Toast.LENGTH_LONG).show();
 
             codeActivation.setVisibility(View.VISIBLE);
             validationCode.setVisibility(View.VISIBLE);

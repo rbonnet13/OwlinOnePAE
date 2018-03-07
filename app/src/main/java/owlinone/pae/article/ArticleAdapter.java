@@ -110,20 +110,6 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
         Bitmap image = BitmapFactory.decodeByteArray(decodedBase64, 0, decodedBase64.length);
         viewHolder.imageView.setImageBitmap(image);
 
-        // Picasso n'est pas nécessaire pour afficher les images stockées en Base64
-        /*Picasso.with(context).load(text).resize(width,600).into(viewHolder.imageView, new Callback() {
-            @Override
-            public void onSuccess() {
-                Log.d("Success...", "picasso loaded successfully");
-            }
-
-            @Override
-            public void onError() {
-                Log.d("Error...", "picasso load error");
-
-            }
-        });*/
-
             if (prefs.getBoolean(String.valueOf(article.getStrID()), false) == true) {
                 article.setLike(true);
                 viewHolder.likeCoeurGris.setImageResource(coeur_rouge);
@@ -214,6 +200,8 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
                         editor.putBoolean(String.valueOf(article.getStrID()), article.getLike());
                         editor.commit();
                         finalViewHolder.likeCoeurGris.setImageResource(coeur_rouge);
+
+                        // Envoi à la base si on aime l'article
                         class sendLike extends AsyncTask<Void, Void, Void>
                         {
                             HttpHandler sh = new HttpHandler();

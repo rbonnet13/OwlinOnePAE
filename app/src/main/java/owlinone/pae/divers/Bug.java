@@ -99,7 +99,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
 
         // Show user data on activity
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
-        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + name);
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue "+ name);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
         ImageView photo = header.findViewById(R.id.image_menu);
 
@@ -176,10 +176,6 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
             Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
             startActivity(searchIntent);
             finish();
-        /*} else if (id == R.id.nav_bug) {
-            Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
-            startActivity(searchIntent);
-            finish();*/
         } else if (id == R.id.nav_a_propos) {
             Intent searchIntent = new Intent(getApplicationContext(), APropos.class);
             startActivity(searchIntent);
@@ -220,12 +216,12 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + response);
             if(response.equals("") || response == null){
-                Toast.makeText(Bug.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                Toast.makeText(Bug.this, R.string.problemeServeur, Toast.LENGTH_LONG).show();
                 return;
             }
             int jsonResult = sh.returnParsedJsonObject(response);
             if(jsonResult == 0){
-                Toast.makeText(Bug.this, "Le rapport existe déjà !", Toast.LENGTH_LONG).show();
+                Toast.makeText(Bug.this, R.string.rapportExist, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -233,11 +229,11 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
                 Intent intent = new Intent(getApplicationContext(), Bug.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                Toast.makeText(Bug.this, "Rapport envoyé! Merci", Toast.LENGTH_LONG).show();
+                Toast.makeText(Bug.this, R.string.rapportEnvoye, Toast.LENGTH_LONG).show();
             }
 
             if(jsonResult == 2){
-                Toast.makeText(Bug.this, "Un problème est survenu. Veuillez réessayer !", Toast.LENGTH_LONG).show();
+                Toast.makeText(Bug.this, R.string.rapportProbleme, Toast.LENGTH_LONG).show();
                 return;
             }
         }

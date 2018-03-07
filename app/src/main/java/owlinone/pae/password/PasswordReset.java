@@ -33,8 +33,8 @@ import owlinone.pae.session.MainLogin;
 
 public class PasswordReset extends AppCompatActivity {
     private EditText email;
-    private String url = AddressUrl.strEmailRecup;
-    private String username= null;
+    private String url         = AddressUrl.strEmailRecup;
+    private String username    = null;
     private String enteredEmail= null;
     private Boolean mauvaisMail= false;
 
@@ -74,7 +74,7 @@ public class PasswordReset extends AppCompatActivity {
         }
         // Si la personne a mis un mail qui n'existe pas
         if(mauvaisMail == true){
-            Toast.makeText(PasswordReset.this, "Cet email est inconnu", Toast.LENGTH_LONG).show();
+            Toast.makeText(PasswordReset.this, R.string.mailInconnu, Toast.LENGTH_LONG).show();
         }
         // Déclarations ID
         email = (EditText) findViewById(R.id.emailReset);
@@ -90,7 +90,7 @@ public class PasswordReset extends AppCompatActivity {
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(inputStr);
                 if (!matcher.matches()) {
-                    Toast.makeText(PasswordReset.this, "Cet email est inconnu", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PasswordReset.this, R.string.mailInconnu, Toast.LENGTH_LONG).show();
                     return;
                 }
                 else{

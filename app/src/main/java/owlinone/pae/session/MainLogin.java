@@ -140,11 +140,11 @@ public class MainLogin extends AppCompatActivity {
 
 
                 if (enteredUsername.equals("") || enteredPassword.equals("")) {
-                    Toast.makeText(MainLogin.this, "Pseudo et mot de passe requis", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainLogin.this, R.string.pseudoMdpRequis, Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (enteredUsername.length() <= 3 || enteredPassword.length() <= 3) {
-                    Toast.makeText(MainLogin.this, "Le pseudo et le mot de passe doivent dépasser 3 caractères", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainLogin.this, R.string.pseudoMdpCaractere, Toast.LENGTH_LONG).show();
                     return;
                 }
 // request authentication with remote server4
@@ -223,13 +223,13 @@ public class MainLogin extends AppCompatActivity {
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
-                Toast.makeText(MainLogin.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainLogin.this, R.string.problemeServeur, Toast.LENGTH_LONG).show();
                 return;
             }
 
             int jsonResult = returnParsedJsonObject(result);
             if (jsonResult == 0) {
-                Toast.makeText(MainLogin.this, "Pseudo ou Mot de passe incorrect", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainLogin.this, R.string.pseudoMdpIncorrect, Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -451,17 +451,15 @@ public class MainLogin extends AppCompatActivity {
     public void onBackPressed() {
         // Ouverture d'un Alert Dialog pour montrer que la connexion est obligatoire
         new AlertDialog.Builder(this)
-                .setTitle("Connexion obligatoire")
+                .setTitle(R.string.connexionObligatoire)
                 .setIcon(R.drawable.owl_in_one_logo)
-                .setMessage("Êtes-vous sûr de vouloir quitter?")
+                .setMessage(R.string.quitterApplication)
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
                         finish();
                         System.exit(0);
-                        //int pid = android.os.Process.myPid();
-                        //android.os.Process.killProcess(pid);
                     }
                 }).create().show();
     }
