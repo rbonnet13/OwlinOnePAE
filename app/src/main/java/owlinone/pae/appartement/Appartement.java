@@ -577,7 +577,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     private void showProgressDialog() {
         if (pDialog == null) {
             pDialog = new ProgressDialog(Appartement.this);
-            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setMessage("Chargement...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
         }

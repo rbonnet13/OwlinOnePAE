@@ -864,7 +864,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     private void showProgressDialog() {
         if (pDialog == null) {
             pDialog = new ProgressDialog(Client.this);
-            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setMessage("Chargement...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
         }

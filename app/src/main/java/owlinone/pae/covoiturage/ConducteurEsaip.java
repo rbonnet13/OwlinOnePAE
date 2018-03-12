@@ -249,7 +249,7 @@ public class ConducteurEsaip extends Fragment {
     private void showProgressDialog() {
         if (pDialog == null) {
             pDialog = new ProgressDialog(getContext());
-            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setMessage("Chargement...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
         }
