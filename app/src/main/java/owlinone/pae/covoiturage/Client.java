@@ -223,7 +223,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
-        showProgressDialog();
         // Récupération de l'utilisateur
         session = new Session(getApplicationContext());
         if(session.checkLogin())
