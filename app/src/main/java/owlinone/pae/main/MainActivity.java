@@ -434,19 +434,21 @@ public class MainActivity extends AppCompatActivity
         }
         return returnedResult;
     }
-    private void showProgressDialog() {
-        if (pDialog == null) {
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Chargement. Attendez svp...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-        }
-        pDialog.show();
-    }
 
-    private void dismissProgressDialog() {
-        if (pDialog != null && pDialog.isShowing()) {
-            pDialog.dismiss();
+
+        private void showProgressDialog() {
+            if (pDialog == null) {
+                pDialog = new ProgressDialog(MainActivity.this);
+                pDialog.setMessage("Chargement. Attendez svp...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+            }
+            pDialog.show();
         }
-    }
+
+        private void dismissProgressDialog() {
+            if (pDialog != null && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+        }
 }

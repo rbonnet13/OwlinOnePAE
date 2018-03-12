@@ -113,7 +113,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     Address addressName = new Address(Locale.FRANCE);
     double latitude = 0.0;
     double longitude = 0.0;
-    private ProgressDialog dialog;
+    private ProgressDialog pDialog;
     private Button  mRequest;
     private ToggleButton toggle;
     Handler handler;
@@ -223,7 +223,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
-
+        showProgressDialog();
         // Récupération de l'utilisateur
         session = new Session(getApplicationContext());
         if(session.checkLogin())
@@ -468,6 +468,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         @Override
         protected void onPreExecute()
         {
+            showProgressDialog();
             super.onPreExecute();
         }
         public double convertRad(double input){
@@ -571,7 +572,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             String getEmail="" ;
             String getAdresse ="" ;
             String getTelephone ="" ;
-
+            dismissProgressDialog();
             super.onPostExecute(result);
             List<Marker> markers = new ArrayList<Marker>();
             for (LinkedHashMap<String, String> map : covoitList){
@@ -618,8 +619,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 marker.setTag(info);
                 markers.add(marker);
             }
-            // On a fini le chargement
-            dialog.dismiss();
 
             markers.size();
 
@@ -748,9 +747,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         mMap.setOnInfoWindowClickListener(this);
         mMap.setOnInfoWindowLongClickListener(this);
 
-        // On enlève le dialog de chargement
-        dialog.dismiss();
-
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
         map.animateCamera(yourLocation);
@@ -855,12 +851,26 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
-        dialog.dismiss();
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("nbNotif", nbNotif);
         startActivity(intent);
         finish();
+    }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(Client.this);
+            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
     }
 
 }

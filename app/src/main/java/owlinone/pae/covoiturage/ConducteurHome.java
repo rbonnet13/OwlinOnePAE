@@ -37,7 +37,7 @@ public class ConducteurHome extends Fragment {
     HashMap<String, String> obj = new HashMap();
     private ArrayList<HashMap<String, String>> notifHomeList;
     NotificationHome notifHome;
-    private ProgressDialog dialogChargement;
+    private ProgressDialog pDialog;
 
     @Nullable
     @Override
@@ -87,9 +87,8 @@ public class ConducteurHome extends Fragment {
                             Toast.makeText(getContext(), R.string.toastNotifAccepterCovoiturage, Toast.LENGTH_LONG).show();
                             new sendGCMRetour().execute();
                             dialog.dismiss();
-                            dialogChargement = ProgressDialog.show(getContext(), "",
-                                    "Chargement...", true);
-                            timerDelayRemoveDialog(8000,dialogChargement);
+                            showProgressDialog();
+                            timerDelayRemoveDialog(8000,pDialog);
 
                         }
                     });
@@ -101,9 +100,8 @@ public class ConducteurHome extends Fragment {
                             Toast.makeText(getContext(), R.string.toastNotifRefuserCovoiturage, Toast.LENGTH_LONG).show();
                             new sendGCMRefus().execute();
                             dialog.dismiss();
-                            dialogChargement = ProgressDialog.show(getContext(), "",
-                                    "Chargement...", true);
-                            timerDelayRemoveDialog(8000,dialogChargement);
+                            showProgressDialog();
+                            timerDelayRemoveDialog(8000,pDialog);
                         }
                     });
 
@@ -230,8 +228,8 @@ public class ConducteurHome extends Fragment {
         }
         @Override
         protected void onPostExecute(Void result) {
+            dismissProgressDialog();
             super.onPostExecute(result);
-            dialogChargement.dismiss();
             Intent intent = new Intent(getContext(), ConducteurTab.class);
             startActivity(intent);
         }
@@ -242,5 +240,20 @@ public class ConducteurHome extends Fragment {
                 d.dismiss();
             }
         }, time);
+    }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(getContext());
+            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
     }
 }

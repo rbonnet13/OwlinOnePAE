@@ -78,7 +78,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView notifcovoit;
     private String nbNotif;
-    private ProgressDialog dialogChargement;
+    private ProgressDialog pDialog;
 
     //Redémarre l'activité
     private void restartActivity()
@@ -127,10 +127,10 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        showProgressDialog();
         // Affiche le contenu de l'activté sélectionnée
         setContentView(R.layout.activity_appartement);
-        dialogChargement = ProgressDialog.show(Appartement.this, "",
-                "Chargement...", true);
+
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -265,7 +265,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
-        dialogChargement.dismiss();
         // Check si le drawer est ouvert. Si oui, on le ferme
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -405,6 +404,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         @Override
         protected void onPreExecute()
         {
+            showProgressDialog();
             super.onPreExecute();
         }
         @Override
@@ -490,8 +490,8 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         @Override
         protected void onPostExecute(Void result)
         {
+            dismissProgressDialog();
             super.onPostExecute(result);
-            dialogChargement.dismiss();
             ListAdapter adapter = new SimpleAdapter(Appartement.this, appartList,
                     R.layout.content_appartement, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
                     new int[]{R.id.descrip_appart,R.id.prix_appart, R.id.adresse_apart,R.id.cp_appart,R.id.ville_apart,R.id.dispo_appart,R.id.nom_prop});
@@ -519,13 +519,14 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
 
         @Override
         protected void onPreExecute() {
-
+            showProgressDialog();
             super.onPreExecute();
         }
 
         @Override
 
         protected void onPostExecute(String result) {
+            dismissProgressDialog();
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
@@ -571,6 +572,21 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 this.exception = e;
                 return null;
             }
+        }
+    }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(Appartement.this);
+            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
         }
     }
 }
