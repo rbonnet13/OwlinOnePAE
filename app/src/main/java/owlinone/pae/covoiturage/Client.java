@@ -847,10 +847,15 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         }
     }
-
+    @Override
+    public void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        dismissProgressDialog();
         Intent intent = new Intent(getApplicationContext(), Covoiturage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("nbNotif", nbNotif);
