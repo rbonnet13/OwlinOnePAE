@@ -317,14 +317,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         });
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
-        // After some action
-        if (toggle.isChecked()) {
-            // The toggle is enabled
-            strDestination ="home";
-        } else {
-            // The toggle is disabled
-            strDestination ="school";
-        }
 
         //Test si première connexion pour afficher bulle information bouton
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -335,29 +327,36 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             fadeBackground.bringToFront();
             fadeBackground.setVisibility(VISIBLE);
             fadeBackground.animate().alpha(0.5f);
+
+            //On change la valeur dans le cache en true
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.premiereConnexionClient), Boolean.TRUE);
+            edit.commit();
             new AlertDialog.Builder(this)
                     .setTitle("Information")
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    test = true;
+                }
+            })
+
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    test = true;
+                }
+            })
                     .setIcon(R.drawable.owl_in_one_logo)
                     .setMessage("Vous devez choisir la destination en cliquant sur le bouton en surbrillance")
                     .setPositiveButton("J'ai compris", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            // After some action
-                            if (toggle.isChecked()) {
-                                // The toggle is enabled
-                                strDestination ="home";
-                            } else {
-                                // The toggle is disabled
-                                strDestination ="school";
-                            }
-                            fadeBackground.setVisibility(View.GONE);
+                            test = true;
                         }
                     }).create().show();
-            //On change la valeur dans le cache en true
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.premiereConnexionClient), Boolean.TRUE);
-            edit.commit();
-
 
             //Animation du Toggle button
             toggle.setScaleY(0.7f);
@@ -403,6 +402,18 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                             public void onClick(View v)
                             {
                                 test = true;
+                                fadeBackground.setVisibility(View.GONE);
+                                if (toggle.isChecked()) {
+                                    // The toggle is enabled
+                                    strDestination ="home";
+                                    Log.e(TAG, "Stop animation toggle: " + strDestination);
+                                } else {
+                                    // The toggle is disabled
+                                    strDestination ="school";
+                                    Log.e(TAG, "Stop animation toggle: " + strDestination);
+                                }
+                                Log.e(TAG, "Stop animation toggle: " + strDestination);
+
                             }
                         });
                         // Si pas clické le bouton reste animé
@@ -412,15 +423,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         // On enlève la view avec le cercle et on sort
                         else {
                             fadeBackground.setVisibility(View.GONE);
-
-                            // After some action
-                            if (toggle.isChecked()) {
-                                // The toggle is enabled
-                                strDestination ="home";
-                            } else {
-                                // The toggle is disabled
-                                strDestination ="school";
-                            }
                             return;
                         }
                     }
