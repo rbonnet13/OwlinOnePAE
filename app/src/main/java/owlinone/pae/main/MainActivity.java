@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity
     TextView notifcovoit;
     private  String nbNotif = "";
     private String email, name, photoBDD = "";
-    private ProgressDialog dialog;
+    private ProgressDialog pDialog;
     @Override
     public void onRestart() {
         super.onRestart();
-
+        showProgressDialog();
         arrayList = new ArrayList<Article>();
         lv = (ListView) findViewById(R.id.listviewperso);
         new ReadJson().execute();
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
         // Affiche le contenu de la page home (activity_main)
         setContentView(R.layout.activity_main);
+        showProgressDialog();
 
         // Affiche la toolbar correspondant à l'activité affichée
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,8 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         // Met en surbrillance dans le drawer l'activité affichée
         navigationView.setCheckedItem(R.id.nav_article);
-        dialog = ProgressDialog.show(MainActivity.this, "",
-                "Chargement...", true);
+
         // User Session Manager
         session = new Session(getApplicationContext());
         if(session.checkLogin())
@@ -176,19 +176,16 @@ public class MainActivity extends AppCompatActivity
                 class sendView extends AsyncTask<Void, Void, Void>
                 {
                     HttpHandler sh = new HttpHandler();
-                    ProgressDialog pd;
                     @Override
                     protected void onPreExecute() {
+                        showProgressDialog();
                         super.onPreExecute();
                     }
 
                     @Override
                     protected void onPostExecute(Void result) {
+                        dismissProgressDialog();
                         super.onPostExecute(result);
-                        if (pd != null)
-                        {
-                            pd.dismiss();
-                        }
                     }
                     Exception exception;
                     @Override
@@ -224,7 +221,7 @@ public class MainActivity extends AppCompatActivity
     // Permet de fermer le drawer à l'appui de la touche retour si ce premier est ouvert
     @Override
     public void onBackPressed() {
-        dialog.dismiss();
+        dismissProgressDialog();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -240,6 +237,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDestroy() {
+        dismissProgressDialog();
         super.onDestroy();
         Runtime.getRuntime().gc();
     }
@@ -292,6 +290,7 @@ public class MainActivity extends AppCompatActivity
     class ReadJson extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
+            showProgressDialog();
             super.onPreExecute();
         }
 
@@ -367,6 +366,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void result) {
+            dismissProgressDialog();
             ArticleAdapter adapter = new ArticleAdapter(getApplicationContext(), R.layout.row_list, arrayList);
             if(lv.getAdapter()==null)
                 lv.setAdapter(adapter);
@@ -374,8 +374,6 @@ public class MainActivity extends AppCompatActivity
                 lv.setAdapter(adapter);
                 lv.setSelectionFromTop(index, top);
             }
-            dialog.dismiss();
-
         }
     }
     private class DataNotifConducteur extends AsyncTask<String, Void, String> {
@@ -398,13 +396,14 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void onPreExecute() {
-
+            showProgressDialog();
             super.onPreExecute();
         }
 
         @Override
 
         protected void onPostExecute(String result) {
+            dismissProgressDialog();
             super.onPostExecute(result);
             System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
@@ -435,5 +434,19 @@ public class MainActivity extends AppCompatActivity
         }
         return returnedResult;
     }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Chargement. Attendez svp...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
 
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
+    }
 }

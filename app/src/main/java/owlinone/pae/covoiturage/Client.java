@@ -224,10 +224,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clientmap);
 
-        // Creer un chargement lors du démarrage
-        dialog = ProgressDialog.show(Client.this, "",
-                "Chargement...", true);
-
         // Récupération de l'utilisateur
         session = new Session(getApplicationContext());
         if(session.checkLogin())
@@ -246,6 +242,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         latit = user.get(Session.KEY_LATITUDE);
         longit = user.get(Session.KEY_LONGITUDE);
         telephone = user.get(Session.KEY_TEL);
+        Log.e("adresse:", adresse);
 
         // Récupération du context de l'activité
         final Context context = getApplicationContext();

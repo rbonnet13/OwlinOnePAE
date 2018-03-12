@@ -233,13 +233,21 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         password = user.get(Session.KEY_PASSWORD);
         email = user.get(Session.KEY_EMAIL);
         prenom = user.get(Session.KEY_PRENOM);
-        prenom = prenom.replace("''","'");
+        if(prenom != null){
+            prenom = prenom.replace("''","'");
+        }
         nom = user.get(Session.KEY_NOM);
-        nom = nom.replace("''","'");
+        if(nom != null){
+            nom = nom.replace("''","'");
+        }
         ville = user.get(Session.KEY_VILLE);
-        ville = ville.replace("''","'");
+        if(ville != null) {
+            ville = ville.replace("''", "'");
+        }
         adresse = user.get(Session.KEY_ADRESSE);
-        adresse = adresse.replace("''","'");
+        if(adresse != null){
+            adresse = adresse.replace("''","'");
+        }
         cp = user.get(Session.KEY_CP);
         photoBDD = user.get(Session.KEY_PHOTO);
         telephone = user.get(Session.KEY_TEL);

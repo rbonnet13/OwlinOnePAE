@@ -83,6 +83,10 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         email = user.get(Session.KEY_EMAIL);
         // get base 64 photo code from BDD
         photoBDD = user.get(Session.KEY_PHOTO);
+        // get ville
+        ville = user.get(Session.KEY_VILLE);
+        // get adresse
+        adresse = user.get(Session.KEY_ADRESSE);
 
         notifcovoit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.nav_covoiturage));
@@ -111,6 +115,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
        mDriver.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
                if (adresse == null && ville == null)
                {
                    Toast.makeText(getApplicationContext(), R.string.saisirCoordonneeCovoiturage, Toast.LENGTH_LONG).show();
@@ -130,6 +135,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
        mCustomer.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
                if (adresse == null && ville == null)
                {
                    Toast.makeText(getApplicationContext(), R.string.saisirCoordonneeCovoiturage, Toast.LENGTH_LONG).show();
