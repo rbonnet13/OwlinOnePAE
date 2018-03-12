@@ -147,7 +147,7 @@ public class APropos extends AppCompatActivity implements NavigationView.OnNavig
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.linkedin.com/in/anthony-coppin-353405106/"));
+                intent.setData(Uri.parse("https://www.linkedin.com/in/anthonycoppin/"));
                 startActivity(intent);
             }
         });
