@@ -270,11 +270,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             Intent searchIntent = new Intent(getApplicationContext(), Covoiturage.class);
             startActivity(searchIntent);
             finish();
-        /*} else if (id == R.id.nav_calendrier) {
-            Intent searchIntent = new Intent(getApplicationContext(), CalendarExtra.class);
-            searchIntent.putExtra("mylist", arrayListEvent);
-            startActivity(searchIntent);
-            finish();*/
         } else if (id == R.id.nav_bug) {
             Intent searchIntent = new Intent(getApplicationContext(), Bug.class);
             startActivity(searchIntent);
@@ -313,9 +308,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                         String titre_event = a.getString("NOM_EVENEMENT");
                         String lien_event = a.getString("LIEN_EVENEMENT");
                         HashMap<String, String> evenement = new HashMap<>();
-                        Log.e(TAG, "DEBUT_EVENEMENT : " + date_event);
-                        Log.e(TAG, "NOM_EVENEMENT : " + titre_event);
-                        Log.e(TAG, "LIEN_EVENEMENT : " + lien_event);
 
                         if (lien_event != "null") {
                             Log.e(TAG, "FACEBOOK_EVENEMENT : " + String.valueOf(R.drawable.facebook));
@@ -329,11 +321,7 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             Date mDate = sdf.parse(date_event);
-                            Log.e(TAG, "YEARDATE : " + String.valueOf(mDate.getYear()));
-                            Log.e(TAG, "MONTHDATE : " + String.valueOf(mDate.getMonth()));
-                            Log.e(TAG, "DAYDATE : " + String.valueOf(mDate.getDate()));
-                            evenement.put("MINUTE_EVENEMENT", String.valueOf(mDate.getMinutes()));
-                            evenement.put("HOUR_EVENEMENT", String.valueOf(mDate.getHours()));
+
                             evenement.put("DAY_EVENEMENT", String.valueOf(mDate.getDate()));
                             evenement.put("MONTH_EVENEMENT", String.valueOf(mDate.getMonth()));
                             evenement.put("YEAR_EVENEMENT", String.valueOf(mDate.getYear()));
