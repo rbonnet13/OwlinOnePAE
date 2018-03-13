@@ -74,6 +74,7 @@ public class MainLogin extends AppCompatActivity {
     private final String serverUrl = AddressUrl.strTriIndex;
     private Session session;
     private SecretKey secret = null;
+    private String enteredUsernameEnvoi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +116,8 @@ public class MainLogin extends AppCompatActivity {
             public void onClick(View v) {
 
                 enteredUsername = username.getText().toString();
-                enteredUsername = enteredUsername.replace("'","''");
+                enteredUsernameEnvoi = enteredUsername.replace("'","''");
                 enteredPassword = password.getText().toString();
-                enteredPassword = enteredPassword.replace("'","''");
 
                 try {
                     secret = generateKey();
@@ -155,7 +155,7 @@ public class MainLogin extends AppCompatActivity {
                 Log.e("enteredUsername", "enteredUsername: " + enteredUsername);
                 Log.e("passwordEncrypted", "passwordEncrypted: " + passwordEncrypted);
 
-                asyncRequestObject.execute(serverUrl, enteredUsername, passwordEncrypted);
+                asyncRequestObject.execute(serverUrl, enteredUsernameEnvoi, passwordEncrypted);
             }
 
         });
@@ -271,6 +271,7 @@ public class MainLogin extends AppCompatActivity {
                 Intent intent = new Intent(MainLogin.this, LoginActivity.class);
                 intent.putExtra("USERNAME", enteredUsername);
                 intent.putExtra("MESSAGE", "Connexion réussie");
+                Log.e("Username Main Login:", enteredUsername);
 
                 session.createUserLoginSession(enteredUsername,jsonresultPrenom,jsonresultNom,jsonresultVille,jsonresultAdresse,jsonresultLatitude,jsonresultLongitude, jsonresultCP,jsonresultEmail,jsonresultTelephone,passwordEncrypted,jsonresultImg,"true");
                 startActivity(intent);

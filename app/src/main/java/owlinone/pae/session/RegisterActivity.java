@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout email;
 
     protected String enteredUsername;
-    protected String enteredUsername2;
+    protected String enteredUsernameEnvoi;
     protected String enteredPassword;
     protected String enteredRePassword;
     protected String enteredEmail;
@@ -118,12 +118,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 enteredUsername = username.getEditText().getText().toString();
-                enteredUsername = enteredUsername.replace("'","''");
-                enteredUsername2 = enteredUsername.replace("''", "'");
+                enteredUsernameEnvoi = enteredUsername.replace("'", "''");
                 enteredPassword = password.getEditText().getText().toString();
-                enteredPassword = enteredPassword.replace("'","''");
                 enteredRePassword = rePassword.getEditText().getText().toString();
-                enteredRePassword = enteredRePassword.replace("'","''");
                 enteredEmail = email.getEditText().getText().toString();
                 enteredPhoto = convertirImgString(bitmap);
                 randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
@@ -212,7 +209,7 @@ public class RegisterActivity extends AppCompatActivity {
                 secret = generateKey();
 
                 HashMap<String, String> parameters = new HashMap<>();
-                parameters.put("username", enteredUsername);
+                parameters.put("username", enteredUsernameEnvoi);
                 parameters.put("password", SecretPassword.encryptMsg(enteredPassword, secret));
                 parameters.put("email", enteredEmail);
                 parameters.put("photo", enteredPhoto);
@@ -260,7 +257,7 @@ public class RegisterActivity extends AppCompatActivity {
             try
             {
                 HashMap<String, String> parameters = new HashMap<>();
-                parameters.put("USER", enteredUsername);
+                parameters.put("USER", enteredUsernameEnvoi);
                 parameters.put("MAIL", enteredEmail);
                 responseValidUserMail = sh.performPostCall(urlActivationUserMail, parameters);
 
@@ -313,7 +310,7 @@ public class RegisterActivity extends AppCompatActivity {
                     try {
                         GMailSender sender = new GMailSender(GMailSender.mailOwlInOne,
                                 GMailSender.mdpOwlInOne);
-                        sender.sendMail("Owl In One - Code de vérification pour inscription", "Bonjour "+enteredUsername2+",\n\nVous avez récemment fait une demande d'inscription sur notre application Owl In One.\nPour vérifier votre compte, merci de rentrer ce code dans l'application: "+ randomNum +".\n\nL'équipe Owl In One.",
+                        sender.sendMail("Owl In One - Code de vérification pour inscription", "Bonjour "+enteredUsername+",\n\nVous avez récemment fait une demande d'inscription sur notre application Owl In One.\nPour vérifier votre compte, merci de rentrer ce code dans l'application: "+ randomNum +".\n\nL'équipe Owl In One.",
                                 "owlinone.esaip@gmail.com", enteredEmail);
                     } catch (Exception e) {
                         Log.e("SendMail", e.getMessage(), e);

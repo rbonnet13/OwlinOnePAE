@@ -52,7 +52,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -68,7 +67,6 @@ import owlinone.pae.appartement.Appartement;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.CovoitViewCircle;
 import owlinone.pae.configuration.HttpHandler;
-import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Session;
 
 import static android.view.View.VISIBLE;
@@ -216,7 +214,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             return null;
         }
     };
-    private LatLng destinationLatLng;
+    private String country = "FRANCE";
 
 
     @Override
@@ -239,8 +237,11 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         adresse = user.get(Session.KEY_ADRESSE);
         cp = user.get(Session.KEY_CP);
         latit = user.get(Session.KEY_LATITUDE);
+        latitude = Double.valueOf(latit);
         longit = user.get(Session.KEY_LONGITUDE);
+        longitude = Double.valueOf(longit);
         telephone = user.get(Session.KEY_TEL);
+
         Log.e("adresse:", adresse);
 
         // Récupération du context de l'activité
@@ -248,42 +249,6 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-
-        //Récupération de la lontitude et de la latitude de l'addresse finale
-        geocoder = new Geocoder(context, Locale.getDefault());
-        try {
-            String fulladresse = adresse +" "+ ville ;
-            addresses = geocoder.getFromLocationName(fulladresse, 1);
-            Log.e("adresse:", String.valueOf(addresses));
-            if(addresses != null && addresses.size() > 0){
-                addressName = addresses.get(0);
-                Log.e("adresse:", String.valueOf(addressName.getLongitude()));
-
-            }else{
-                Toast.makeText(getApplicationContext(),
-                        "Erreur de localisation veuillez vous déconnecter",
-                        Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-            if(addressName.getLongitude() != 0.0)
-            {
-                longitude = addressName.getLongitude();
-                latitude = addressName.getLatitude();
-            }else{
-                Toast.makeText(getApplicationContext(),
-                        "Erreur de localisation veuillez vous déconnecter",
-                        Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        destinationLatLng = new LatLng(0.0,0.0);
 
         mapFragment.getMapAsync(this);
 

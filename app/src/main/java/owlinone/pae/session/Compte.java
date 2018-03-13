@@ -69,16 +69,25 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     Context context;
     private String enteredNom;
     private String enteredPrenom ;
+    private String enteredPrenomEnvoi ;
+    private String enteredVilleEnvoi;
+    private String enteredNomEnvoi;
+    private String enteredAdressEnvoi;
     private String enteredAdress ;
     private String enteredVille;
     private String enteredTel;
-    private String enteredCP ;
+    private String enteredCP;
     private TextView notifcovoit;
+    private String usernameEnvoi;
 
     private  String username ="";
     private  String usernameAffichage ="";
     private  String password ="";
     private  String email ="";
+    private  String prenomAffichage ="";
+    private  String nomAffichage ="";
+    private  String adresseAffichage ="" ;
+    private  String villeAffichage ="" ;
     private  String prenom ="";
     private  String nom ="";
     private  String adresse ="" ;
@@ -197,6 +206,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     };
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,26 +241,13 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
         // Récupération des données utilisateur
         username = user.get(Session.KEY_NAME);
-        usernameAffichage = username.replace("''","'");
+        usernameEnvoi = username.replace("'","''");
         password = user.get(Session.KEY_PASSWORD);
-        password = password.replace("''","'");
         email = user.get(Session.KEY_EMAIL);
         prenom = user.get(Session.KEY_PRENOM);
-        if(prenom != null){
-            prenom = prenom.replace("''","'");
-        }
         nom = user.get(Session.KEY_NOM);
-        if(nom != null){
-            nom = nom.replace("''","'");
-        }
         ville = user.get(Session.KEY_VILLE);
-        if(ville != null) {
-            ville = ville.replace("''", "'");
-        }
         adresse = user.get(Session.KEY_ADRESSE);
-        if(adresse != null){
-            adresse = adresse.replace("''","'");
-        }
         cp = user.get(Session.KEY_CP);
         photoBDD = user.get(Session.KEY_PHOTO);
         telephone = user.get(Session.KEY_TEL);
@@ -267,12 +264,12 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_covoiturage = (CheckBox) findViewById(R.id.checkBox);
         Button SaveButton = (Button) findViewById(R.id.save_user);
 
-        user_username.setText(usernameAffichage);
+        user_username.setText(username);
         user_email.setText(email);
-        user_nom.setText(nom);
-        user_prenom.setText(prenom);
-        user_ville.setText(ville);
-        user_adresse.setText(adresse);
+        user_nom.setText(nomAffichage);
+        user_prenom.setText(prenomAffichage);
+        user_ville.setText(villeAffichage);
+        user_adresse.setText(adresseAffichage);
         user_cp.setText(cp);
         user_tel.setText(telephone);
         user_covoiturage.setChecked(Boolean.valueOf(covoiturage));
@@ -283,7 +280,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
         // Affiche les données utilisateur dans le header du drawer
         View header = (navigationView).getHeaderView(0);
-        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + usernameAffichage);
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + username);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
         ImageView photo = header.findViewById(R.id.image_menu);
 
@@ -306,13 +303,13 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
             public void onClick(View v) {
                 String country = "FRANCE";
                 enteredNom = user_nom.getText().toString();
-                enteredNom = enteredNom.replace("'","''");
+                enteredNomEnvoi = enteredNom.replace("'","''");
                 enteredPrenom = user_prenom.getText().toString();
-                enteredPrenom = enteredPrenom.replace("'","''");
+                enteredPrenomEnvoi = enteredPrenom.replace("'","''");
                 enteredVille = user_ville.getText().toString();
-                enteredVille = enteredVille.replace("'","''");
+                enteredVilleEnvoi = enteredVille.replace("'","''");
                 enteredAdress = user_adresse.getText().toString();
-                enteredAdress = enteredAdress.replace("'","''");
+                enteredAdressEnvoi = enteredAdress.replace("'","''");
                 enteredCP = user_cp.getText().toString();
                 enteredTel = user_tel.getText().toString();
                 if (user_covoiturage.isChecked()) {
@@ -415,15 +412,19 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         {
             try
             {
+                Log.e("usernameEnvoi:", usernameEnvoi);
+                Log.e("enteredNomEnvoi:", enteredNomEnvoi);
+                Log.e("enteredPrenomEnvoi:", enteredPrenomEnvoi);
+                Log.e("enteredVilleEnvoi:", enteredVilleEnvoi);
+                Log.e("enteredAdressEnvoi:", enteredAdressEnvoi);
+
                 HashMap<String, String> parameters = new HashMap<>();
-                parameters.put("username", username);
-                parameters.put("nom", enteredNom);
-                parameters.put("prenom", enteredPrenom);
-                parameters.put("password", password);
-                parameters.put("email", email);
+                parameters.put("username", usernameEnvoi);
+                parameters.put("nom", enteredNomEnvoi);
+                parameters.put("prenom", enteredPrenomEnvoi);
                 parameters.put("telephone", enteredTel);
-                parameters.put("ville", enteredVille);
-                parameters.put("adresse", enteredAdress);
+                parameters.put("ville", enteredVilleEnvoi);
+                parameters.put("adresse", enteredAdressEnvoi);
                 parameters.put("latitude", String.valueOf(latitude));
                 parameters.put("longitude", String.valueOf(longitude));
                 parameters.put("cp", enteredCP);

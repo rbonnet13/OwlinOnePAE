@@ -33,6 +33,7 @@ import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.Email;
 import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.main.MainActivity;
 import owlinone.pae.main.SplashScreen;
 
 
@@ -300,7 +301,14 @@ public class AddApart extends AppCompatActivity {
                         }
                         i++;
                     }
-
+                    if(addressName.getLongitude() == 0.0){
+                        Toast.makeText(getApplicationContext(),
+                                "Erreur de localisation veuillez vous déconnecter",
+                                Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                 } catch (IOException e)
                 {
                     e.printStackTrace();
