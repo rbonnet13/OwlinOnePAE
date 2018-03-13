@@ -123,7 +123,9 @@ public class PasswordActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 newPassword = editNewPassword.getText().toString();
+                newPassword = newPassword.replace("'","''");
                 reNewPassword = editReNewPassword.getText().toString();
+                reNewPassword = reNewPassword.replace("'","''");
                 codePassword = editCode.getText().toString();
                 Log.e("randomNum", "randomNum: " + String.valueOf(randomNum));
                 Log.e("codePassword", "codePassword: " + codePassword);

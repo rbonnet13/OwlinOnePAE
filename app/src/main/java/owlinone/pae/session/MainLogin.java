@@ -115,7 +115,10 @@ public class MainLogin extends AppCompatActivity {
             public void onClick(View v) {
 
                 enteredUsername = username.getText().toString();
+                enteredUsername = enteredUsername.replace("'","''");
                 enteredPassword = password.getText().toString();
+                enteredPassword = enteredPassword.replace("'","''");
+
                 try {
                     secret = generateKey();
                     passwordEncrypted = SecretPassword.encryptMsg(enteredPassword, secret);

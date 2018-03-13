@@ -230,7 +230,9 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
         // Récupération des données utilisateur
         username = user.get(Session.KEY_NAME);
+        username = username.replace("''","'");
         password = user.get(Session.KEY_PASSWORD);
+        password = password.replace("''","'");
         email = user.get(Session.KEY_EMAIL);
         prenom = user.get(Session.KEY_PRENOM);
         if(prenom != null){

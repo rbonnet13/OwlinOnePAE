@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle intentBundle = intent.getExtras();
         String loggedUser = intentBundle.getString("USERNAME");
+        loggedUser = loggedUser.replace("''","'");
         loggedUser = capitalizeFirstCharacter(loggedUser);
         final String message = intentBundle.getString("MESSAGE");
 
