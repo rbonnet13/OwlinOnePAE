@@ -76,6 +76,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private TextView notifcovoit;
 
     private  String username ="";
+    private  String usernameAffichage ="";
     private  String password ="";
     private  String email ="";
     private  String prenom ="";
@@ -230,7 +231,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
         // Récupération des données utilisateur
         username = user.get(Session.KEY_NAME);
-        username = username.replace("''","'");
+        usernameAffichage = username.replace("''","'");
         password = user.get(Session.KEY_PASSWORD);
         password = password.replace("''","'");
         email = user.get(Session.KEY_EMAIL);
@@ -266,7 +267,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_covoiturage = (CheckBox) findViewById(R.id.checkBox);
         Button SaveButton = (Button) findViewById(R.id.save_user);
 
-        user_username.setText(username);
+        user_username.setText(usernameAffichage);
         user_email.setText(email);
         user_nom.setText(nom);
         user_prenom.setText(prenom);
@@ -282,7 +283,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
         // Affiche les données utilisateur dans le header du drawer
         View header = (navigationView).getHeaderView(0);
-        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + username);
+        ((TextView) header.findViewById(R.id.id_pseudo_user)).setText("Bienvenue " + usernameAffichage);
         ((TextView) header.findViewById(R.id.id_email_user)).setText(email);
         ImageView photo = header.findViewById(R.id.image_menu);
 
