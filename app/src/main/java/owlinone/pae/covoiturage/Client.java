@@ -317,7 +317,13 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
             }
         });
         toggle  = (ToggleButton) findViewById(R.id.toggleDestination);
-
+        if (toggle.isChecked()) {
+            // The toggle is enabled
+            strDestination ="home";
+        } else {
+            // The toggle is disabled
+            strDestination ="school";
+        }
         //Test si première connexion pour afficher bulle information bouton
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.premiereConnexionClient), false);
