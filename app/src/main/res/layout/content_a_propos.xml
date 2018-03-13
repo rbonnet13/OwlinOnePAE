@@ -12,7 +12,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,6 +57,10 @@
         android:textSize="18sp" />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/texte1">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -221,8 +224,8 @@
                 android:text="Benjamin Marty"/>
         </LinearLayout>
 
-
     </LinearLayout>
 
+    </ScrollView>
 
 </RelativeLayout>

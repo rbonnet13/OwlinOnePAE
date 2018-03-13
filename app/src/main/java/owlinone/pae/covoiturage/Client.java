@@ -356,7 +356,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 }
             })
                     .setIcon(R.drawable.owl_in_one_logo)
-                    .setMessage("Vous devez choisir la destination en cliquant sur le bouton en surbrillance")
+                    .setMessage("Vous devez choisir la destination en cliquant sur le bouton qui clignote")
                     .setPositiveButton("J'ai compris", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
