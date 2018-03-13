@@ -4,6 +4,7 @@ package owlinone.pae.session;
  * Created by rudy on 22/11/2017.
  */
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -56,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String enteredCode;
     protected String response;
     protected String responseValidUserMail;
-
+    private ProgressDialog pDialog;
     private Bitmap bitmap;
     private ImageView imagePhoto;
     private int request_code = 1;
@@ -229,19 +230,19 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
+            showProgressDialog();
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            dismissProgressDialog();
             System.out.println("Resulted Value: " + response);
             if(response.equals("") || response == null){
                 Toast.makeText(RegisterActivity.this, R.string.problemeServeur, Toast.LENGTH_LONG).show();
                 return;
             }
-
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             intent.putExtra("USERNAME", enteredUsername);
             intent.putExtra("MESSAGE", "Inscription réussie");
@@ -330,6 +331,29 @@ public class RegisterActivity extends AppCompatActivity {
             email.setVisibility(View.INVISIBLE);
             signUpButton.setVisibility(View.INVISIBLE);
             imagePhoto.setEnabled(false);
+        }
+
+    }
+    @Override
+    public void onBackPressed() {
+        dismissProgressDialog();
+        Intent intent = new Intent(getApplicationContext(), MainLogin.class);
+        startActivity(intent);
+        finish();
+    }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(RegisterActivity.this);
+            pDialog.setMessage("Chargement...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
         }
     }
 }

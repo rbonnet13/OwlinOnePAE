@@ -1,5 +1,6 @@
 package owlinone.pae.password;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -19,7 +20,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.crypto.SecretKey;
 
 import owlinone.pae.R;
-import owlinone.pae.configuration.*;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.GMailSender;
+import owlinone.pae.configuration.HideKeyboard;
+import owlinone.pae.configuration.HttpHandler;
+import owlinone.pae.configuration.SecretPassword;
 import owlinone.pae.session.MainLogin;
 
 import static owlinone.pae.configuration.SecretPassword.generateKey;
@@ -35,6 +40,7 @@ public class PasswordActivity extends AppCompatActivity {
     String reNewPassword = null ;
     String codePassword = null ;
     Button buttonValidate = null ;
+    private ProgressDialog pDialog;
     private String url = AddressUrl.strChangerMDP;
     int min = 1000;
     int max = 9998;
@@ -160,6 +166,7 @@ public class PasswordActivity extends AppCompatActivity {
         protected void onPreExecute()
         {
             super.onPreExecute();
+            showProgressDialog();
         }
         @Override
         protected Void doInBackground(Void... arg0) {
@@ -184,6 +191,7 @@ public class PasswordActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result)
         {
+            dismissProgressDialog();
             Toast.makeText(PasswordActivity.this, R.string.mdpChange, Toast.LENGTH_LONG).show();
 
             super.onPostExecute(result);
@@ -193,8 +201,24 @@ public class PasswordActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        dismissProgressDialog();
         Intent intent = new Intent(getApplicationContext(), PasswordReset.class);
         startActivity(intent);
         finish();
+    }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(PasswordActivity.this);
+            pDialog.setMessage("Chargement...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
     }
 }

@@ -81,7 +81,6 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private String usernameEnvoi;
 
     private  String username ="";
-    private  String usernameAffichage ="";
     private  String password ="";
     private  String email ="";
     private  String prenomAffichage ="";
