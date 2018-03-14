@@ -79,9 +79,6 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         HashMap<String, String> user = session.getUserDetails();
         // get name
         name = user.get(Session.KEY_NAME);
-        if(name != null) {
-            name = name.replace("''", "'");
-        }
         // get email
         email = user.get(Session.KEY_EMAIL);
         // get base 64 photo code from BDD

@@ -215,6 +215,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
         }
     };
     private String country = "FRANCE";
+    private String strUsernameConducteurEnvoi;
 
 
     @Override
@@ -631,6 +632,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                         if (marker.getTitle().equals(IdConducteurtest)){
 
                             strUsernameConducteur = Usernametest;
+                            strUsernameConducteurEnvoi = strUsernameConducteur.replace("'", "''");
                             strNom = nom;
                             strPrenom = prenom;
                             strAdresse = adresse;
@@ -785,7 +787,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 HttpHandler sh = new HttpHandler();
                 HashMap<String, String> parametersConducteur = new HashMap<>();
                 String urlNotification = AddressUrl.strNotifUser;
-                parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteur);
+                parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteurEnvoi);
                 parametersConducteur.put("NOM_NOTIF",strNom);
                 parametersConducteur.put("PRENOM_NOTIF", strPrenom);
                 parametersConducteur.put("ADRESSE_NOTIF",strAdresse );
@@ -810,7 +812,7 @@ public class Client extends AppCompatActivity implements OnMapReadyCallback, Goo
                 parametersConducteur.put("prenom", prenom);
                 parametersConducteur.put("nom", nom);
                 parametersConducteur.put("DESTINATION_NOTIF", strDestination);
-                parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteur);
+                parametersConducteur.put("PSEUDO_CONDUCTEUR_NOTIF", strUsernameConducteurEnvoi);
                 sh.performPostCall(urlNotification, parametersConducteur);
                 return null;
             } catch (Exception e) {
