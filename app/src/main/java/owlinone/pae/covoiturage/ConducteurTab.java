@@ -56,6 +56,8 @@ public class ConducteurTab extends AppCompatActivity{
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     private String strNameUserEnvoi;
+    private int toeic;
+    private boolean obtentionDiplome;
 
     //Redémarre l'activité
     private void restartActivity() {
@@ -261,3 +263,4 @@ public class ConducteurTab extends AppCompatActivity{
         return true;
     }
 }
+
