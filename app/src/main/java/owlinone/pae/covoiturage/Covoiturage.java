@@ -44,6 +44,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
     String email, name, photoBDD, nbNotif;
     private TextView notifcovoit;
     Button mDriver;
+    private String nameEnvoi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         HashMap<String, String> user = session.getUserDetails();
         // get name
         name = user.get(Session.KEY_NAME);
+        if(name != null){
+            nameEnvoi = name.replace("'", "''");}
         // get email
         email = user.get(Session.KEY_EMAIL);
         // get base 64 photo code from BDD
@@ -160,7 +163,7 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
                 HashMap<String, String> parametersConducteur = new HashMap<>();
 
                 String urlNotification = AddressUrl.strNbNotif;
-                parametersConducteur.put("name",name);
+                parametersConducteur.put("name",nameEnvoi);
 
                 String jsonresult = sh.performPostCall(urlNotification, parametersConducteur);
                 return jsonresult;

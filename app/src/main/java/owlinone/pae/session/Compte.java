@@ -475,7 +475,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 HashMap<String, String> parametersConducteur = new HashMap<>();
 
                 String urlNotification = AddressUrl.strNbNotif;
-                parametersConducteur.put("name",username);
+                parametersConducteur.put("name",usernameEnvoi);
 
                String jsonresult = sh.performPostCall(urlNotification, parametersConducteur);
                 return jsonresult;
