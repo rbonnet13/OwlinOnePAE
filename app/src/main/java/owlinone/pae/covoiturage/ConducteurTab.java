@@ -55,6 +55,7 @@ public class ConducteurTab extends AppCompatActivity{
 
 
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private String strNameUserEnvoi;
 
     //Redémarre l'activité
     private void restartActivity() {
@@ -120,6 +121,7 @@ public class ConducteurTab extends AppCompatActivity{
         HashMap<String, String> user = session.getUserDetails();
         // get name
         strNameUser = user.get(Session.KEY_NAME);
+        strNameUserEnvoi   = strNameUser.replace("'","''");
         // get name
         strPrenomUser = user.get(Session.KEY_PRENOM);
         strNomUser = user.get(Session.KEY_NOM);
@@ -143,11 +145,11 @@ public class ConducteurTab extends AppCompatActivity{
             try {
                 HashMap<String, String> parameters = new HashMap<>();
                 HttpHandler sh = new HttpHandler();
-                parameters.put("PSEUDO_CONDUCTEUR_NOTIF", strNameUser);
+                parameters.put("PSEUDO_CONDUCTEUR_NOTIF", strNameUserEnvoi);
 
                 responseRequete = sh.performPostCall(url, parameters);
 
-                System.out.println("User :: " + strNameUser);
+                System.out.println("User :: " + strNameUserEnvoi);
 
                 JSONArray jsonArray = new JSONArray(responseRequete);
                 // looping through All Notification
