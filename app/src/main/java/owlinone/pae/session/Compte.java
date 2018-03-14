@@ -265,10 +265,10 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
         user_username.setText(username);
         user_email.setText(email);
-        user_nom.setText(nomAffichage);
-        user_prenom.setText(prenomAffichage);
-        user_ville.setText(villeAffichage);
-        user_adresse.setText(adresseAffichage);
+        user_nom.setText(nom);
+        user_prenom.setText(prenom);
+        user_ville.setText(ville);
+        user_adresse.setText(adresse);
         user_cp.setText(cp);
         user_tel.setText(telephone);
         user_covoiturage.setChecked(Boolean.valueOf(covoiturage));
