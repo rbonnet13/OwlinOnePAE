@@ -63,6 +63,9 @@ public class RegistrationIntentService extends IntentService {
                 HashMap<String, String> user = session.getUserDetails();
                 // get name
                 String name = user.get(Session.KEY_NAME);
+                if(name != null){
+                    name = name.replace("'", "''");
+                }
                 sendRegistrationToServer(name,token);
                 // Si le token a déjà été engistre pas la peine de le renvoyer
                 if (!sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false))

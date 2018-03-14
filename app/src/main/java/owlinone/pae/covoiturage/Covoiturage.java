@@ -114,8 +114,13 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         }
         mDriver = (Button) findViewById(R.id.conducteur);
        final Button mCustomer = (Button) findViewById(R.id.client);
+        if(nbNotif == null){
+            mDriver.setVisibility(View.INVISIBLE);
+        } else {
+            mDriver.setVisibility(View.VISIBLE);
+        }
 
-       mDriver.setOnClickListener(new View.OnClickListener() {
+        mDriver.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
 

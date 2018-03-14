@@ -81,6 +81,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
     private String usernameEnvoi;
 
     private  String username ="";
+    private  String usernameAffichage ="";
     private  String password ="";
     private  String email ="";
     private  String prenomAffichage ="";
@@ -263,12 +264,12 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_covoiturage = (CheckBox) findViewById(R.id.checkBox);
         Button SaveButton = (Button) findViewById(R.id.save_user);
 
-        user_username.setText(username);
+        user_username.setText(usernameAffichage);
         user_email.setText(email);
-        user_nom.setText(nom);
-        user_prenom.setText(prenom);
-        user_ville.setText(ville);
-        user_adresse.setText(adresse);
+        user_nom.setText(nomAffichage);
+        user_prenom.setText(prenomAffichage);
+        user_ville.setText(villeAffichage);
+        user_adresse.setText(adresseAffichage);
         user_cp.setText(cp);
         user_tel.setText(telephone);
         user_covoiturage.setChecked(Boolean.valueOf(covoiturage));
@@ -411,7 +412,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         {
             try
             {
-                Log.e("usernameEnvoi:", usernameEnvoi);
+                Log.e("username:", username);
                 Log.e("enteredNomEnvoi:", enteredNomEnvoi);
                 Log.e("enteredPrenomEnvoi:", enteredPrenomEnvoi);
                 Log.e("enteredVilleEnvoi:", enteredVilleEnvoi);
@@ -475,7 +476,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 HashMap<String, String> parametersConducteur = new HashMap<>();
 
                 String urlNotification = AddressUrl.strNbNotif;
-                parametersConducteur.put("name",usernameEnvoi);
+                parametersConducteur.put("name",username);
 
                String jsonresult = sh.performPostCall(urlNotification, parametersConducteur);
                 return jsonresult;
