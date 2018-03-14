@@ -50,6 +50,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
     private final String serverUrl = AddressUrl.strIndexBug;
     HttpHandler sh = new HttpHandler();
     private TextView notifcovoit;
+    private String nameEnvoi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -87,9 +88,8 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
         HashMap<String, String> user = session.getUserDetails();
         // get name
         name = user.get(Session.KEY_NAME);
-        if(name != null) {
-            name = name.replace("''", "'");
-        }
+        nameEnvoi = name.replace("'", "''");
+
         // get email
         email = user.get(Session.KEY_EMAIL);
         // get base 64 photo code from BDD
@@ -249,7 +249,7 @@ public class Bug extends AppCompatActivity implements NavigationView.OnNavigatio
                 HashMap<String, String> parametersConducteur = new HashMap<>();
 
                 String urlNotification = AddressUrl.strNbNotif;
-                parametersConducteur.put("name",name);
+                parametersConducteur.put("name",nameEnvoi);
 
                 String jsonresult = sh.performPostCall(urlNotification, parametersConducteur);
                 return jsonresult;
