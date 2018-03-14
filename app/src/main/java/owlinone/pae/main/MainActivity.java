@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity
         HashMap<String, String> user = session.getUserDetails();
         // get name
         name = user.get(Session.KEY_NAME);
-        nameEnvoi = name.replace("'", "''");
-
+        if(name != null){
+            nameEnvoi = name.replace("'", "''");}
         // get email
         email = user.get(Session.KEY_EMAIL);
         // get base 64 photo code from BDD

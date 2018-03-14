@@ -119,7 +119,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 enteredUsername = username.getEditText().getText().toString();
-                enteredUsernameEnvoi = enteredUsername.replace("'", "''");
+                if(enteredUsername != null){
+                    enteredUsernameEnvoi = enteredUsername.replace("'", "''");
+                }
                 enteredPassword = password.getEditText().getText().toString();
                 enteredRePassword = rePassword.getEditText().getText().toString();
                 enteredEmail = email.getEditText().getText().toString();

@@ -116,7 +116,8 @@ public class MainLogin extends AppCompatActivity {
             public void onClick(View v) {
 
                 enteredUsername = username.getText().toString();
-                enteredUsernameEnvoi = enteredUsername.replace("'","''");
+                if(enteredUsername != null){
+                enteredUsernameEnvoi = enteredUsername.replace("'","''");}
                 enteredPassword = password.getText().toString();
 
                 try {
