@@ -9,8 +9,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -55,7 +57,6 @@ import owlinone.pae.divers.Bug;
 import owlinone.pae.main.MainActivity;
 import owlinone.pae.session.Compte;
 import owlinone.pae.session.Session;
-
 
 
 public class Appartement extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -124,6 +125,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

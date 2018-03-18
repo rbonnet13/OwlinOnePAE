@@ -24,17 +24,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,8 +36,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -57,6 +45,7 @@ import javax.crypto.SecretKey;
 
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.configuration.SecretPassword;
 import owlinone.pae.password.PasswordReset;
 
@@ -75,6 +64,9 @@ public class MainLogin extends AppCompatActivity {
     private Session session;
     private SecretKey secret = null;
     private String enteredUsernameEnvoi;
+    HttpHandler sh = new HttpHandler();
+    private String jsonResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,12 +143,10 @@ public class MainLogin extends AppCompatActivity {
                     Toast.makeText(MainLogin.this, R.string.pseudoMdpCaractere, Toast.LENGTH_LONG).show();
                     return;
                 }
-// request authentication with remote server4
-                AsyncDataClass asyncRequestObject = new AsyncDataClass();
                 Log.e("enteredUsername", "enteredUsername: " + enteredUsername);
                 Log.e("passwordEncrypted", "passwordEncrypted: " + passwordEncrypted);
 
-                asyncRequestObject.execute(serverUrl, enteredUsernameEnvoi, passwordEncrypted);
+                new AsyncDataClass().execute();
             }
 
         });
@@ -181,36 +171,25 @@ public class MainLogin extends AppCompatActivity {
 
     }
     private class AsyncDataClass extends AsyncTask<String, Void, String> {
+        Exception exception;
 
         @Override
         protected String doInBackground(String... params) {
 
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
-            HttpClient httpClient = new DefaultHttpClient(httpParameters);
-            HttpPost httpPost = new HttpPost(params[0]);
-            String jsonResult = "";
+                try
+                {
+                    HashMap<String, String> parameters = new HashMap<>();
+                    parameters.put("username", enteredUsernameEnvoi);
+                    parameters.put("password", passwordEncrypted);
+                    jsonResult = sh.performPostCall(serverUrl, parameters);
 
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("username", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("password", params[2]));
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpClient.execute(httpPost);
-                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+                    return jsonResult;
+                } catch (Exception e)
+                {
+                    this.exception = e;
+                    return null;
+                }
 
-            } catch (ClientProtocolException e) {
-
-                e.printStackTrace();
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            }
-
-            return jsonResult;
 
         }
 

@@ -8,8 +8,10 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -207,6 +209,7 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,12 +267,12 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
         user_covoiturage = (CheckBox) findViewById(R.id.checkBox);
         Button SaveButton = (Button) findViewById(R.id.save_user);
 
-        user_username.setText(usernameAffichage);
+        user_username.setText(username);
         user_email.setText(email);
-        user_nom.setText(nomAffichage);
-        user_prenom.setText(prenomAffichage);
-        user_ville.setText(villeAffichage);
-        user_adresse.setText(adresseAffichage);
+        user_nom.setText(nom);
+        user_prenom.setText(prenom);
+        user_ville.setText(ville);
+        user_adresse.setText(adresse);
         user_cp.setText(cp);
         user_tel.setText(telephone);
         user_covoiturage.setChecked(Boolean.valueOf(covoiturage));
