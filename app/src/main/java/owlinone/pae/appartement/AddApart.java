@@ -30,6 +30,7 @@ import java.util.Locale;
 
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.Email;
 import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.main.MainActivity;
@@ -319,7 +320,14 @@ public class AddApart extends AppCompatActivity {
                     Toast.makeText(context, text, duration).show();
                 }
 
-
+                //Si email est nul and mail valid-----------------------------------------------------------
+                else if (strMail_prop != null)
+                {
+                    if(Email.isEmailValid(strMail_prop) == false) {
+                        mail_prop.setError("Veuillez saisir une addresse mail valide");
+                        Toast.makeText(context, text, duration).show();
+                    }
+                }
 
                 //Si téléphone propriétaire est nul------------------------------------------------
                 else if((strTelProp.length()!= 10)||(strTelProp.length()!= 12)) {
