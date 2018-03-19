@@ -342,7 +342,13 @@ public class Compte extends AppCompatActivity implements NavigationView.OnNaviga
                 {
                     e.printStackTrace();
                 }
-                if ( enteredNom.length() <= 1 || enteredPrenom.length() <= 1 || enteredVille.length() <= 1 || enteredAdress.length() <= 1 || enteredCP.length() != 5 || enteredTel.length() != 10) {
+                //Si téléphone mauvais nombre de chiffre ou avec le +-----------------------------------------------------------
+                boolean test1 = false;
+                boolean test2 = false;
+                if(enteredTel.trim().length()== 10) test1 = true;
+                if(enteredTel.trim().length()== 12) test2 = true;
+
+                if ( enteredNom.length() <= 1 || enteredPrenom.length() <= 1 || enteredVille.length() <= 1 || enteredAdress.length() <= 1 || enteredCP.length() != 5 || !test1 && !test2) {
                     Toast.makeText(Compte.this, R.string.remplirToutChamps, Toast.LENGTH_LONG).show();
                     return;
                 }
