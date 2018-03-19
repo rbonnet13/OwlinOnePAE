@@ -161,6 +161,14 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"/>
 
+            <TextView
+                android:text="Photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24dp"/>
 
         </LinearLayout>
     </ScrollView>
