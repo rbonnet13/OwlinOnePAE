@@ -450,6 +450,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         String strCp_appart    = String.valueOf(cp_appart) + " ";
                         String adresseMail     = a.getString("ADRESSE_MAIL");
 
+
                         // Affiche les appartements que s'il est disponible ou non disponible
                         if(dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible") )
                         {
