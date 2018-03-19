@@ -90,5 +90,13 @@
         android:textStyle="bold"
         android:background="#11000000"
         android:hint="Disponibilité"/>
-
+    <ImageView
+        android:id="@+id/image_appart_princ"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="10dp"/>
 </LinearLayout>

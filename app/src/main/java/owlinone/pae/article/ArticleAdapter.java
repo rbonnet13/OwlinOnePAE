@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -31,8 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,7 +44,7 @@ import static owlinone.pae.R.drawable.coeur_rouge;
  * Created by rudybonnet on 14/12/2016.
  */
 
-public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Listener {
+public class ArticleAdapter extends ArrayAdapter<Article>  {
 
     ArrayList<Article> article;
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
@@ -331,7 +328,4 @@ public class ArticleAdapter extends ArrayAdapter<Article>  implements Picasso.Li
         LinearLayout linearLike;
     }
 
-    @Override
-    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-        Log.e("PICASSO", "exception: " + exception.toString());    }
 }

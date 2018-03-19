@@ -30,8 +30,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
     String strDetailAppart = "";
     String strDetailTel= "";
     String strNomPropDetail= "";
-    String strLongitude= "";
-    String strLatitude= "";
+    Double doubleLongitude= 0.0;
+    Double doubleLatitude= 0.0;
     String strMail= "";
     String strAdresse= "";
     String strVille= "";
@@ -118,24 +118,24 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                strLongitude = null;
+                doubleLongitude = null;
             } else {
-                strLongitude = extras.getString("strLongitude");
+                doubleLongitude = extras.getDouble("strLongitude");
             }
         } else {
-            strLongitude = (String) savedInstanceState.getSerializable("strLongitude");
+            doubleLongitude = (Double) savedInstanceState.getSerializable("strLongitude");
         }
 
         //Récupère le string strLongitude pour la latitude de l'adresse---------------------------
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                strLatitude = null;
+                doubleLatitude = null;
             } else {
-                strLatitude = extras.getString("strLatitude");
+                doubleLatitude = extras.getDouble("strLatitude");
             }
         } else {
-            strLatitude = (String) savedInstanceState.getSerializable("strLatitude");
+            doubleLatitude = (Double) savedInstanceState.getSerializable("strLatitude");
         }
 
         //Récupère le string strMail pour le mail du propriétaire-----------------------------------
@@ -254,7 +254,7 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
                 .position(new LatLng(47.464051, -0.497334)));
         map.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_home))
-                .position(new LatLng( Double.valueOf(strLatitude),Double.valueOf(strLongitude)
+                .position(new LatLng( doubleLatitude,doubleLongitude
                 )));
         LatLng position = new LatLng(47.46848551035859, -0.5252838134765625);
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);

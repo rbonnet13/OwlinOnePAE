@@ -34,9 +34,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,24 +61,26 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
 
     // Déclaration des variables
     Session session;
+    ArrayList<Appart> arrayListAppart;
 
     private String TAG = Appartement.class.getSimpleName();
     private ListView lv;
     String url= null;
     String email, name, photoBDD;
-    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "" , strDetailAppart = "";
+    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "" , strDetailAppart = "", strImagePrinc="", strImageSecond="";
     String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
     String strNomContext = "", strIdContext = "", disponible = "Disponible", nonDisponible = "Non disponible";
 
     HashMap <String, String> obj = new HashMap();
     HashMap <String, String> objDispo = new HashMap();
-    ArrayList<HashMap<String, String>> appartList;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView notifcovoit;
     private String nbNotif;
     private ProgressDialog pDialog;
     private String nameEnvoi;
+    private int index;
+    private int top;
 
     //Redémarre l'activité
     private void restartActivity()
@@ -205,7 +205,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                     public void run()
                     {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        appartList = new ArrayList<>();
+                        arrayListAppart = new ArrayList<Appart>();
                         lv = (ListView) findViewById(R.id.list);
                         new GetApparts().execute();
 
@@ -226,39 +226,35 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
-        appartList = new ArrayList<>();
+        arrayListAppart = new ArrayList<Appart>();
         lv         = (ListView) findViewById(R.id.list);
         new GetApparts().execute();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                obj              = (HashMap)lv.getItemAtPosition(position);
-                strDetail        = obj.get("DETAIL_APPART");
-                strNomPropDetail = obj.get("NOM_PROP");
-                strDetailTel     = obj.get("TELEPHONE_PROP");
-                strLongitude     = obj.get("LONGITUDE_APPART");
-                strLatitude      = obj.get("LATITUDE_APPART");
-                strMail          = obj.get("ADRESSE_MAIL");
-                strPrix          = obj.get("PRIX_APPART");
-                strAdresse       = obj.get("ADRESSE_APPART");
-                strVille         = obj.get("VILLE_APPART");
-                strDispoContext  = obj.get("DISPO_APPART");
-                strDetailAppart  = obj.get("DESCRIP_APPART");
 
-                // On récupère les valeurs et utilisont INTENT pour l'enregistrer pour la prochaine activité
+                final Appart appartSelected =   arrayListAppart.get(position);
                 Intent intentAppart = new Intent(getApplicationContext(), DetailAppart.class);
-                intentAppart.putExtra("strDetail",strDetail);
-                intentAppart.putExtra("strDetailTel",strDetailTel);
-                intentAppart.putExtra("strLongitude",strLongitude);
-                intentAppart.putExtra("strLatitude",strLatitude);
-                intentAppart.putExtra("strNomPropDetail",strNomPropDetail);
-                intentAppart.putExtra("strMail",strMail);
-                intentAppart.putExtra("strAdresse",strAdresse);
-                intentAppart.putExtra("strVille",strVille);
-                intentAppart.putExtra("strPrix",strPrix);
-                intentAppart.putExtra("strDispoContext",strDispoContext);
-                intentAppart.putExtra("strDetailAppart",strDetailAppart);
+
+                index = lv.getFirstVisiblePosition();
+                View v = lv.getChildAt(0);
+                top = (v == null) ? 0 : (v.getTop() - lv.getPaddingTop());
+
+                // Récupérer les string pour l'INTENT. Utilisation dans la classe DetailArticle-----
+                intentAppart.putExtra("strDetail",appartSelected.getStrDetail());
+                intentAppart.putExtra("strDetailTel",appartSelected.getStrTel());
+                intentAppart.putExtra("strLongitude",appartSelected.getLongitude());
+                intentAppart.putExtra("strLatitude",appartSelected.getLatitude());
+                intentAppart.putExtra("strNomPropDetail",appartSelected.getStrNom());
+                intentAppart.putExtra("strMail",appartSelected.getStrMail());
+                intentAppart.putExtra("strAdresse",appartSelected.getStrAdresse());
+                intentAppart.putExtra("strVille",appartSelected.getStrVille());
+                intentAppart.putExtra("strPrix",appartSelected.getPrix());
+                intentAppart.putExtra("strDispoContext",appartSelected.getStrDispo());
+                intentAppart.putExtra("strDetailAppart",appartSelected.getStrDetail());
+                intentAppart.putExtra("strImagePrinc",appartSelected.getStrImagePrinc());
+                intentAppart.putExtra("strImageSecond",appartSelected.getStrImageSecond());
                 startActivity(intentAppart);
             }
         });
@@ -334,11 +330,11 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             int index = info.position;
             // On récupère l'objet de l'appartement à l'aide de la position de l'item appuyé
-            objDispo  = (HashMap)lv.getItemAtPosition(index);
+            final Appart appartSelected =   arrayListAppart.get(index);
             //Récupération des données par HASHMAP
-            strDispoContext = objDispo.get("DISPO_APPART");
-            strNomContext   = objDispo.get("NOM_PROP");
-            strIdContext    = objDispo.get("ID_APPART");
+            strDispoContext = appartSelected.getStrDispo();
+            strNomContext   = appartSelected.getStrNom();
+            strIdContext    = String.valueOf(appartSelected.getStrID());
             menu.setHeaderTitle(strNomContext);
 
             if(disponible.equals(strDispoContext)) // Si l'appart est disponible on affiche ceci
@@ -358,8 +354,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int index = info.position;
-        obj = (HashMap)lv.getItemAtPosition(index);
         strDispoContext = (String)item.getTitle();
 
         if("Signaler".equals(item.getTitle()))
@@ -434,43 +428,47 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                     // looping through All Appartements
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
-                        JSONObject a           = jsonArray.getJSONObject(i);
-                        int id_appart          = a.getInt("ID_APPART");
-                        String nom_prop        = a.getString("NOM_PROP");
-                        String adresse_appart  = a.getString("ADRESSE_APPART");
-                        String ville_appart    = a.getString("VILLE_APPART");
-                        String descrip_appart  = a.getString("DESCRIP_APPART");
-                        String detail_appart   = a.getString("DETAIL_APPART");
-                        String telephone_prop  = a.getString("TELEPHONE_PROP");
-                        int prix_appart        = a.getInt("PRIX_APPART");
-                        String dispo_appart    = a.getString("DISPO_APPART");
-                        int cp_appart          = a.getInt("CP_APPART");
-                        Double longitudeAppart = a.getDouble("LONGITUDE_APPART");
-                        Double latitudeAppart  = a.getDouble("LATITUDE_APPART");
-                        String strCp_appart    = String.valueOf(cp_appart) + " ";
-                        String adresseMail     = a.getString("ADRESSE_MAIL");
-
+                        JSONObject a              = jsonArray.getJSONObject(i);
+                        int id_appart             = a.getInt("ID_APPART");
+                        String nom_prop           = a.getString("NOM_PROP");
+                        String adresse_appart     = a.getString("ADRESSE_APPART");
+                        String ville_appart       = a.getString("VILLE_APPART");
+                        String descrip_appart     = a.getString("DESCRIP_APPART");
+                        String detail_appart      = a.getString("DETAIL_APPART");
+                        String telephone_prop     = a.getString("TELEPHONE_PROP");
+                        int prix_appart           = a.getInt("PRIX_APPART");
+                        String dispo_appart       = a.getString("DISPO_APPART");
+                        int cp_appart             = a.getInt("CP_APPART");
+                        Double longitudeAppart    = a.getDouble("LONGITUDE_APPART");
+                        Double latitudeAppart     = a.getDouble("LATITUDE_APPART");
+                        String strPrix_appart       = String.valueOf(prix_appart) + " ";
+                        String strCp_appart       = String.valueOf(cp_appart) + " ";
+                        String adresseMail        = a.getString("ADRESSE_MAIL");
+                        String strImage_princ     = a.getString("IMAGE_PRINCIPALE");
+                        String strImage_second    = a.getString("IMAGE_SECONDAIRE");
 
                         // Affiche les appartements que s'il est disponible ou non disponible
                         if(dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible") )
                         {
-                            HashMap<String, String> appartement = new HashMap<>();
-                            // adding each child node to HashMap key => value
-                            appartement.put("ID_APPART", String.valueOf(id_appart));
-                            appartement.put("NOM_PROP", nom_prop);
-                            appartement.put("ADRESSE_APPART", adresse_appart);
-                            appartement.put("VILLE_APPART", ville_appart);
-                            appartement.put("DESCRIP_APPART", descrip_appart);
-                            appartement.put("DETAIL_APPART", detail_appart);
-                            appartement.put("TELEPHONE_PROP", telephone_prop);
-                            appartement.put("PRIX_APPART", String.valueOf(prix_appart));
-                            appartement.put("DISPO_APPART", dispo_appart);
-                            appartement.put("CP_APPART", strCp_appart);
-                            appartement.put("LONGITUDE_APPART", String.valueOf(longitudeAppart));
-                            appartement.put("LATITUDE_APPART", String.valueOf(latitudeAppart));
-                            appartement.put("ADRESSE_MAIL", adresseMail);
+                            Appart appartement = new Appart();
+                           appartement.setStrID(id_appart);
+                           appartement.setStrNom(nom_prop);
+                           appartement.setStrAdresse(adresse_appart);
+                           appartement.setStrVille(ville_appart);
+                           appartement.setStrDescript(descrip_appart);
+                           appartement.setStrDetail(detail_appart);
+                           appartement.setStrTel(telephone_prop);
+                           appartement.setPrix(strPrix_appart);
+                           appartement.setStrDispo(dispo_appart);
+                           appartement.setStrCp(strCp_appart);
+                           appartement.setLongitude(longitudeAppart);
+                           appartement.setLatitude(latitudeAppart);
+                           appartement.setStrMail(adresseMail);
+                           appartement.setStrImagePrinc(strImage_princ);
+                           appartement.setStrImageSecond(strImage_second);
+
                             // adding contact to contact list
-                            appartList.add(appartement);
+                            arrayListAppart.add(appartement);
                         }
                     }
                 } catch (final JSONException e)
@@ -498,10 +496,13 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         {
             dismissProgressDialog();
             super.onPostExecute(result);
-            ListAdapter adapter = new SimpleAdapter(Appartement.this, appartList,
-                    R.layout.content_appartement, new String[]{ "DESCRIP_APPART","PRIX_APPART","ADRESSE_APPART","CP_APPART","VILLE_APPART","DISPO_APPART","NOM_PROP"},
-                    new int[]{R.id.descrip_appart,R.id.prix_appart, R.id.adresse_apart,R.id.cp_appart,R.id.ville_apart,R.id.dispo_appart,R.id.nom_prop});
-            lv.setAdapter(adapter);
+            AppartementAdapter adapter = new AppartementAdapter(getApplicationContext(), R.layout.content_appartement, arrayListAppart);
+            if(lv.getAdapter()==null)
+                lv.setAdapter(adapter);
+            else{
+                lv.setAdapter(adapter);
+                lv.setSelectionFromTop(index, top);
+            }
         }
     }
 
