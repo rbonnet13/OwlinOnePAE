@@ -56,7 +56,6 @@
                 android:layout_height="40dp"
                 android:id="@+id/username_field"
                 android:background="#11000000"
-                android:textColor="@color/colorWhite"
                 android:drawableStart="@drawable/ic_action_name"
                 android:inputType="textCapSentences"/>
         </android.support.design.widget.TextInputLayout>
