@@ -45,7 +45,7 @@ public class AddApart extends AppCompatActivity {
     Button buttonSubmit;
     EditText nomProp, adresse_appart, ville_appart, descrip_appart, detail_appart, tel_prop, prix_appart, cp_appart,mail_prop;
     String strAdresseAppart= "", strAdresseGoogle= "",strvilleAppart= "", strDescripAppart= "", strDetailAppart= "", strTelProp= "", strPrixAppart= "", finalDescrip="";
-    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = null, strNomProp= "";
+    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = null, strNomProp= "",strImagePrincipale="",strImageSecondaire="";
     String country = "France";
     Spinner spinnerAppart;
     Spinner spinnerDispo;
@@ -313,60 +313,68 @@ public class AddApart extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
+                Log.e("strMail_prop:", strMail_prop);
+
+                //Si téléphone mauvais nombre de chiffre ou avec le +-----------------------------------------------------------
+                boolean test1 = false;
+                boolean test2 = false;
+                if(strTelProp.trim().length()== 10) test1 = true;
+                if(strTelProp.trim().length()== 12) test2 = true;
+
+                Log.e("strTelProp:", String.valueOf(strTelProp.trim().length()));
 
                 //Si Nom propriétaire est nul------------------------------------------------
                 if(strNomProp.length() == 0) {
                     nomProp.setError("Veuillez saisir votre nom");
                     Toast.makeText(context, text, duration).show();
                 }
-
-                //Si email est nul and mail valid-----------------------------------------------------------
-                else if (strMail_prop != null)
+                else if ((strMail_prop.trim().length() > 0) && (Email.isEmailValid(strMail_prop) == false))
                 {
-                    if(Email.isEmailValid(strMail_prop) == false) {
+                    Log.e("strMail_prop:", strMail_prop);
+
                         mail_prop.setError("Veuillez saisir une addresse mail valide");
                         Toast.makeText(context, text, duration).show();
-                    }
+
                 }
 
                 //Si téléphone propriétaire est nul------------------------------------------------
-                else if((strTelProp.length()!= 10)||(strTelProp.length()!= 12)) {
-                    tel_prop.setError("Veuillez saisir un numéro à 10 chiffres");
+                else if(!test1 && !test2) {
+                    tel_prop.setError("Veuillez saisir un numéro correcte");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si adresse appartement est nul------------------------------------------------
-                else if(strAdresseAppart.length() == 0) {
+                else if(strAdresseAppart.trim().length() == 0) {
                     adresse_appart.setError("Veuillez saisir une adresse");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si code postal est nul------------------------------------------------
-                else if(strCPAppart.length() != 5) {
+                else if(strCPAppart.trim().length() != 5) {
                     cp_appart.setError("Veuillez saisir un code postal");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si ville appartement est nul------------------------------------------------
-                else if(strvilleAppart.length() == 0 || strvilleAppart.matches("^[\\w\\.-]")) {
+                else if(strvilleAppart.trim().length() == 0 || strvilleAppart.matches("^[\\w\\.-]")) {
                     ville_appart.setError("Veuillez vérifier votre num de ville");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si taille appartement est nul------------------------------------------------
-                else if(strDescripAppart.length() == 0 || sTaille.length() == 0) {
+                else if(strDescripAppart.trim().length() == 0 || sTaille.length() == 0) {
                     descrip_appart.setError("Veuillez saisir la superficie");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si prix appartement est nul--------------------------------------------------------
-                else if(strPrixAppart.length()==0 || strPrixAppart.length() > 4 ) {
+                else if(strPrixAppart.trim().length()==0 || strPrixAppart.length() > 4 ) {
                     prix_appart.setError("Veuillez saisir un prix à 4 chiffres maximum");
                     Toast.makeText(context, text, duration).show();
                 }
 
                 //Si prix appartement est nul--------------------------------------------------------
-                else if(strDescripAppart.length()==0 || strDescripAppart.length() > 3 ) {
+                else if(strDescripAppart.trim().length()==0 || strDescripAppart.length() > 3 ) {
                     descrip_appart.setError("Merci de vérifier la superficie de votre appartement");
                     Toast.makeText(context, text, duration).show();
                 }
@@ -429,6 +437,8 @@ public class AddApart extends AppCompatActivity {
                 parameters.put("LONGITUDE_APPART", String.valueOf(longitude));
                 parameters.put("LATITUDE_APPART", String.valueOf(latitude));
                 parameters.put("ADRESSE_MAIL", strMail_prop);
+                parameters.put("IMAGE_PRINCIPALE",strImagePrincipale );
+                parameters.put("IMAGE_SECONDAIRE", strImageSecondaire);
                 sh.performPostCall(url, parameters);
                 return null;
             } catch (Exception e)
