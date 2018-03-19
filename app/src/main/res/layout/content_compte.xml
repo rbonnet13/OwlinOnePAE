@@ -86,10 +86,9 @@
         <EditText
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:ems="10"
             android:id="@+id/user_telephone"
             android:textSize="16dp"
-            android:inputType="numberSigned"
+            android:inputType="phone"
             android:layout_below="@+id/user_email"
             android:layout_alignLeft="@+id/user_field"
             android:layout_alignStart="@+id/user_field"

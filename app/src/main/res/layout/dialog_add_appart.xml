@@ -91,9 +91,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="#11000000"
-                android:ems="10"
                 android:hint="@string/telephoneBold"
-                android:inputType="number"
+                android:inputType="phone"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorGrey" />
 
