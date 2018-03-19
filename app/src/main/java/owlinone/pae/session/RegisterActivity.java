@@ -258,13 +258,13 @@ public class RegisterActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         capturedImageUri = data.getData();
         if(resultCode == RESULT_OK && requestCode == request_code){
-            imagePhoto.setImageURI(data.getData());
 
             try{
                 selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUri);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                     ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
                 } else {
+                    imagePhoto.setImageURI(data.getData());
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
                     try {
                         exifObject = new ExifInterface(selectedImagePath);
