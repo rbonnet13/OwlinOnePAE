@@ -30,7 +30,6 @@ import java.util.Locale;
 
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
-import owlinone.pae.configuration.Email;
 import owlinone.pae.configuration.HideKeyboard;
 import owlinone.pae.configuration.HttpHandler;
 import owlinone.pae.main.MainActivity;
@@ -45,7 +44,7 @@ public class AddApart extends AppCompatActivity {
     Button buttonSubmit;
     EditText nomProp, adresse_appart, ville_appart, descrip_appart, detail_appart, tel_prop, prix_appart, cp_appart,mail_prop;
     String strAdresseAppart= "", strAdresseGoogle= "",strvilleAppart= "", strDescripAppart= "", strDetailAppart= "", strTelProp= "", strPrixAppart= "", finalDescrip="";
-    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = "", strNomProp= "";
+    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = null, strNomProp= "";
     String country = "France";
     Spinner spinnerAppart;
     Spinner spinnerDispo;
@@ -320,19 +319,10 @@ public class AddApart extends AppCompatActivity {
                     Toast.makeText(context, text, duration).show();
                 }
 
-                //Si email est nul and mail valid-----------------------------------------------------------
-                else if (Email.isEmailValid(strMail_prop) == false)
-                {
-                    mail_prop.setError("Veuillez saisir une addresse mail valide");
-                    Toast.makeText(context, text, duration).show();
-                }
-                else if(strMail_prop.length() == 0) {
-                    mail_prop.setError("Veuillez saisir une adresse mail");
-                    Toast.makeText(context, text, duration).show();
-                }
+
 
                 //Si téléphone propriétaire est nul------------------------------------------------
-                else if(strTelProp.length()!= 10) {
+                else if((strTelProp.length()!= 10)||(strTelProp.length()!= 12)) {
                     tel_prop.setError("Veuillez saisir un numéro à 10 chiffres");
                     Toast.makeText(context, text, duration).show();
                 }
