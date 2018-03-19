@@ -58,7 +58,7 @@
                 android:background="#11000000"
                 android:textColor="@color/colorWhite"
                 android:drawableStart="@drawable/ic_action_name"
-                android:inputType="textCapSentences"/>
+                android:inputType="textCapSentences|textNoSuggestions"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
