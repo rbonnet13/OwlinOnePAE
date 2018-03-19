@@ -5,14 +5,21 @@ package owlinone.pae.session;
  */
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -31,6 +38,7 @@ import java.util.regex.Pattern;
 
 import javax.crypto.SecretKey;
 
+import owlinone.pae.Manifest;
 import owlinone.pae.R;
 import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.GMailSender;
@@ -47,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout rePassword;
     private TextInputLayout codeActivation;
     private TextInputLayout email;
-
+    private Uri capturedImageUri;
     protected String enteredUsername;
     protected String enteredUsernameEnvoi;
     protected String enteredPassword;
@@ -61,10 +69,12 @@ public class RegisterActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private ImageView imagePhoto;
     private int request_code = 1;
-
-
+    private String selectedImagePath;
+    private ExifInterface exifObject;
+    private Bitmap imageRotate;
     private Button signUpButton;
     private Button validationCode;
+    private static final int REQUEST_READ_PERMISSION = 100;
 
     private int min = 1000;
     private int max = 9998;
@@ -140,10 +150,12 @@ public class RegisterActivity extends AppCompatActivity {
                     //android 4.3  y anteriores
                     i = new Intent();
                     i.setAction(Intent.ACTION_GET_CONTENT);
+
                 } else {
                     //android 4.4 y superior
                     i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                  //  i.addCategory(Intent.CATEGORY_OPENABLE);
+                    i.setAction(Intent.ACTION_PICK);
                 }
                 i.setType("image/*");
                 startActivityForResult(i, request_code);
@@ -175,8 +187,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String convertirImgString(Bitmap bitmap) {
         String imagenString;
         ByteArrayOutputStream array=new ByteArrayOutputStream();
-        if(bitmap!=null){
-            bitmap.compress(Bitmap.CompressFormat.JPEG,30,array);
+        if(imageRotate!=null){
+            imageRotate.compress(Bitmap.CompressFormat.JPEG,30,array);
             byte[] imagenByte=array.toByteArray();
             imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
         }else{
@@ -185,16 +197,86 @@ public class RegisterActivity extends AppCompatActivity {
 
         return imagenString;
     }
-
+    private String getRealPathFromURIPath(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
+        capturedImageUri = data.getData();
         if(resultCode == RESULT_OK && requestCode == request_code){
             imagePhoto.setImageURI(data.getData());
 
             try{
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
-                imagePhoto.setImageBitmap(bitmap);
+                selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUri);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
+                } else {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
+                    try {
+                        exifObject = new ExifInterface(selectedImagePath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                    Bitmap imageRotate = rotateBitmap(bitmap,orientation);
+                    imagePhoto.setImageBitmap(imageRotate);
+                }
+
             }catch (IOException e){
                 e.printStackTrace();
             }

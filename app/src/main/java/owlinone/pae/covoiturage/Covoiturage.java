@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,11 +118,6 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
         }
         mDriver = (Button) findViewById(R.id.conducteur);
        final Button mCustomer = (Button) findViewById(R.id.client);
-        if(nbNotif == null){
-            mDriver.setVisibility(View.INVISIBLE);
-        } else {
-            mDriver.setVisibility(View.VISIBLE);
-        }
 
         mDriver.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -203,6 +199,12 @@ public class Covoiturage extends AppCompatActivity implements NavigationView.OnN
                 return;
             }
             nbNotif = Integer.toString(jsonResult);
+            if(nbNotif == null){
+                mDriver.setVisibility(View.INVISIBLE);
+            } else {
+                mDriver.setVisibility(View.VISIBLE);
+                Log.e("nbNotif", "nbNotif: " + nbNotif.toString());
+            }
 
             notifcovoit.setGravity(Gravity.CENTER_VERTICAL);
             notifcovoit.setTypeface(null, Typeface.BOLD);
