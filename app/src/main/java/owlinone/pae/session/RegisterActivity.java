@@ -256,7 +256,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        capturedImageUri = data.getData();
         if(resultCode == RESULT_OK && requestCode == request_code){
 
             try{
@@ -264,6 +263,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                     ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
                 } else {
+                    capturedImageUri = data.getData();
                     imagePhoto.setImageURI(data.getData());
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
                     try {
