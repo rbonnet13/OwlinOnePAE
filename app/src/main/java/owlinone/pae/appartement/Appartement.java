@@ -447,29 +447,30 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         String strImage_princ     = a.getString("IMAGE_PRINCIPALE");
                         String strImage_second    = a.getString("IMAGE_SECONDAIRE");
                         String strValidation      = a.getString("VALIDATION");
+                        Log.e(TAG, "strValidation: " + strValidation);
 
                         // Affiche les appartements que s'il est disponible ou non disponible
-                        if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && strValidation == "TRUE" )
+                        if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && ("TRUE".equals(strValidation)))
                         {
-                            Appart appartement = new Appart();
-                           appartement.setStrID(id_appart);
-                           appartement.setStrNom(nom_prop);
-                           appartement.setStrAdresse(adresse_appart);
-                           appartement.setStrVille(ville_appart);
-                           appartement.setStrDescript(descrip_appart);
-                           appartement.setStrDetail(detail_appart);
-                           appartement.setStrTel(telephone_prop);
-                           appartement.setPrix(strPrix_appart);
-                           appartement.setStrDispo(dispo_appart);
-                           appartement.setStrCp(strCp_appart);
-                           appartement.setLongitude(longitudeAppart);
-                           appartement.setLatitude(latitudeAppart);
-                           appartement.setStrMail(adresseMail);
-                           appartement.setStrImagePrinc(strImage_princ);
-                           appartement.setStrImageSecond(strImage_second);
+                                Appart appartement = new Appart();
+                                appartement.setStrID(id_appart);
+                                appartement.setStrNom(nom_prop);
+                                appartement.setStrAdresse(adresse_appart);
+                                appartement.setStrVille(ville_appart);
+                                appartement.setStrDescript(descrip_appart);
+                                appartement.setStrDetail(detail_appart);
+                                appartement.setStrTel(telephone_prop);
+                                appartement.setPrix(strPrix_appart);
+                                appartement.setStrDispo(dispo_appart);
+                                appartement.setStrCp(strCp_appart);
+                                appartement.setLongitude(longitudeAppart);
+                                appartement.setLatitude(latitudeAppart);
+                                appartement.setStrMail(adresseMail);
+                                appartement.setStrImagePrinc(strImage_princ);
+                                appartement.setStrImageSecond(strImage_second);
 
-                            // adding contact to contact list
-                            arrayListAppart.add(appartement);
+                                // adding contact to contact list
+                                arrayListAppart.add(appartement);
                         }
                     }
                 } catch (final JSONException e)
