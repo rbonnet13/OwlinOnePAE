@@ -292,12 +292,6 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
 
         textDispoMaj.setText("Mise à jour: " + strMajDispo + "\n");
 
-        if (strImageSecond != null){
-            textePhoto.setText("Photos");
-        }else{
-            textePhoto.setText("Photo");
-        }
-
         //click pour appeler au téléphone
         textTel.setOnClickListener(new View.OnClickListener() {
 
@@ -315,6 +309,12 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             textMail.setVisibility(View.INVISIBLE);
         }else{
             textMail.setVisibility(View.VISIBLE);
+        }
+
+        if (strImageSecond.equals("NULL")){
+            textePhoto.setText("Photo");
+        }else{
+            textePhoto.setText("Photos");
         }
 
         //click pour envoyer un mail
