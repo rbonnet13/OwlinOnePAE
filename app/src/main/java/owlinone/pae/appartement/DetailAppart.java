@@ -42,7 +42,7 @@ import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 
 public class DetailAppart extends AppCompatActivity implements OnMapReadyCallback{
-    String strDetail= "";
+    String strDescript= "";
     String strDetailAppart = "";
     String strDetailTel= "";
     String strNomPropDetail= "";
@@ -107,12 +107,12 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                strDetail = null;
+                strDescript = null;
             } else {
-                strDetail = extras.getString("strDetail");
+                strDescript = extras.getString("strDescript");
             }
         } else {
-            strDetail = (String) savedInstanceState.getSerializable("strDetail");
+            strDescript = (String) savedInstanceState.getSerializable("strDescript");
         }
 
         //Récupère le string srtDetailTel pour le telephone-----------------------------------------
@@ -248,15 +248,15 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         }
         new sendView().execute();
         // dans la toolbar
-        textDetailAppart.setText(strDetailAppart);
+        textDetailAppart.setText(strDescript);
         // sous le google map
         textDetailPrix.setText(strPrix + "€ CC/mois");
         textNomPropDetail.setText(strNomPropDetail);
         textDetailAdresse.setText(strAdresse.trim() + "\n" + strVille + "\n");
         // description appart
-        textDetail.setText(strDetail + "\n");
+        textDetail.setText(strDetailAppart + "\n");
         textDispo.setText(strDispoContext);
-        textDetail.setText(strDetail.trim() + "\n");
+        textDetail.setText(strDetailAppart.trim() + "\n");
         textDispo.setText(strDispoContext + "\n");
 
         if (strImageSecond != null){

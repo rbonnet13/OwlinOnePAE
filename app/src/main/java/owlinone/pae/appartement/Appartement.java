@@ -253,7 +253,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 top = (v == null) ? 0 : (v.getTop() - lv.getPaddingTop());
 
                 // Récupérer les string pour l'INTENT. Utilisation dans la classe DetailArticle-----
-                intentAppart.putExtra("strDetail",appartSelected.getStrDetail());
+                intentAppart.putExtra("strDescript",appartSelected.getStrDescript());
                 intentAppart.putExtra("strDetailTel",appartSelected.getStrTel());
                 intentAppart.putExtra("strLongitude",appartSelected.getLongitude());
                 intentAppart.putExtra("strLatitude",appartSelected.getLatitude());
