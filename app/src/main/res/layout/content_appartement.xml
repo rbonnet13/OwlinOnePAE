@@ -8,95 +8,109 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:padding="@dimen/activity_horizontal_margin">
 
-
-
-    <TextView
-        android:id="@+id/descrip_appart"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description appartement"
-        android:background="#11000000"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:textSize="23dp"/>
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#11000000">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/prix_appart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:hint="500"
-            android:textColorHint="@color/colorPrimary"
-            android:textColor="@color/colorPrix"
-            android:textSize="18dp"/>
-
-        <TextView
-            android:id="@+id/symbole_prix"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/euro"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrix"
-            android:textSize="18dp"/>
-    </LinearLayout>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/adresse_apart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#11000000"
-        android:textColor="@color/colorWhite"
-        android:hint="Adresse"/>
+            <TextView
+                android:id="@+id/descrip_appart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#11000000"
+                android:hint="Description appartement"
+                android:textColor="@color/colorWhite"
+                android:textSize="23dp"
+                android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#11000000">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#11000000"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/cp_appart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:hint="49000"/>
-        <TextView
-            android:id="@+id/ville_apart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:hint="Ville"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/prix_appart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="500"
+                    android:textColor="@color/colorPrix"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/nom_prop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#11000000"
-        android:textColor="@color/colorWhite"
-        android:hint="Nom du propriétaire"/>
+                <TextView
+                    android:id="@+id/symbole_prix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/euro"
+                    android:textColor="@color/colorPrix"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/dispo_appart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:background="#11000000"
-        android:hint="Disponibilité"/>
-    <ImageView
-        android:id="@+id/image_appart_princ"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/adresse_apart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Adresse"
+                android:background="#11000000"
+                android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/cp_appart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="49000"
+                    android:background="#11000000"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/ville_apart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ville"
+                    android:background="#11000000"
+                    android:textColor="@color/colorWhite" />
+            <TextView
+                android:id="@+id/nom_prop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#11000000"
+                android:hint="Nom du propriétaire"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/dispo_appart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#11000000"
+                android:hint="Disponibilité"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_appart_princ"
+                android:layout_width="140dp"
+                android:layout_height="131dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/omar" />
+        </RelativeLayout>
+
+
+</RelativeLayout>
 </LinearLayout>
