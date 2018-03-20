@@ -5,13 +5,17 @@ package owlinone.pae.appartement;
  */
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -35,6 +39,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
     String strMail= "";
     String strAdresse= "";
     String strVille= "";
+    String strImagePrinc= "";
+    String strImageSecond= "";
     String strPrix= "";
     String strDispoContext= "";
     SupportMapFragment supportMapFragment = new SupportMapFragment();
@@ -76,7 +82,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
         TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
         TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
-
+        ImageView imagePrincipale = (ImageView) findViewById(R.id.image_principale_detail);
+        ImageView imageSecondaire = (ImageView) findViewById(R.id.image_secondaire_detail);
 
         //Récupère le string srtDetail pour les détails--------------------------------------------
         if (savedInstanceState == null) {
@@ -210,6 +217,30 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             strDetailAppart = (String) savedInstanceState.getSerializable("strDetailAppart");
         }
 
+        //Récupère le string photo principale----------------------------------
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                strImagePrinc = null;
+            } else {
+                strImagePrinc = extras.getString("strImagePrinc");
+            }
+        } else {
+            strImagePrinc = (String) savedInstanceState.getSerializable("strImagePrinc");
+        }
+
+        //Récupère le string seconde photo ----------------------------------
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                strImageSecond = null;
+            } else {
+                strImageSecond = extras.getString("strImageSecond");
+            }
+        } else {
+            strImageSecond = (String) savedInstanceState.getSerializable("strImageSecond");
+        }
+
         // dans la toolbar
         textDetailAppart.setText(strDetailAppart);
         // sous le google map
@@ -219,6 +250,19 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         // description appart
         textDetail.setText(strDetail + "\n");
         textDispo.setText(strDispoContext);
+        if(strImagePrinc != null){
+            String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
+            byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);
+            Bitmap imagePrinc = BitmapFactory.decodeByteArray(decodedBase64Second, 0, decodedBase64Second.length);
+            imagePrincipale.setImageBitmap(imagePrinc);
+        }
+
+        if(strImagePrinc != null){
+            String base64Second = strImageSecond.substring(strImageSecond.indexOf(","));
+            byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
+            Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);
+            imageSecondaire.setImageBitmap(imageSecond);
+        }
 
 
         //click pour appeler au téléphone

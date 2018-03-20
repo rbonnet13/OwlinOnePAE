@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                 enteredPassword = password.getEditText().getText().toString();
                 enteredRePassword = rePassword.getEditText().getText().toString();
                 enteredEmail = email.getEditText().getText().toString();
-                enteredPhoto = convertirImgString(bitmap);
+                enteredPhoto = convertirImgString(imageRotate);
                 randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
 
                 new ValidUserMail().execute();
@@ -184,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Convertir image en string
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private String convertirImgString(Bitmap bitmap) {
+    private String convertirImgString(Bitmap imageRotate) {
         String imagenString;
         ByteArrayOutputStream array=new ByteArrayOutputStream();
         if(imageRotate!=null){
@@ -259,11 +259,11 @@ public class RegisterActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == request_code){
 
             try{
-                selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUri);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                     ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
                 } else {
                     capturedImageUri = data.getData();
+                    selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUri);
                     imagePhoto.setImageURI(data.getData());
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
                     try {
