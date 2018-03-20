@@ -357,14 +357,14 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         protected void onPostExecute(Void result) {
             dismissProgressDialog();
             super.onPostExecute(result);
-            if(strImagePrinc != null){
+            if("NULL".equals(strImagePrinc)){
                 String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
                 byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);
                 Bitmap imagePrinc = BitmapFactory.decodeByteArray(decodedBase64Second, 0, decodedBase64Second.length);
                 imagePrincipale.setImageBitmap(imagePrinc);
             }
 
-            if(strImagePrinc != null){
+            if("null".equals(strImageSecond)){
                 String base64Second = strImageSecond.substring(strImageSecond.indexOf(","));
                 byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
                 Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);

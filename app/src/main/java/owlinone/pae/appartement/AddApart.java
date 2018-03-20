@@ -66,18 +66,27 @@ public class AddApart extends AppCompatActivity {
     Spinner spinnerMonsieur;
     CheckBox checkAdd = null;
     private Uri capturedImageUri;
+    private Uri capturedImageUriSecond;
     double latitude = 0.0;
     double longitude = 0.0;
     Address addressName = new Address(Locale.FRANCE);
     Geocoder geocoder;
     private Bitmap bitmap;
+    private Bitmap bitmapSecond;
     private ImageView imagePhoto;
+    private ImageView imagePhotoSecond;
     private int request_code = 1;
+    private int request_codeSecond = 2;
     private String selectedImagePath;
     private ExifInterface exifObject;
     private Bitmap imageRotate;
+    private Bitmap imageRotateSecondaire = null;
     private static final int REQUEST_READ_PERMISSION = 100;
     protected String enteredPhoto;
+    protected String enteredPhotoSecondaire = null;
+    Boolean photoClick = false;
+    Boolean photoClickSecond = false;
+
 
 
     List<Address> addresses = new List<Address>() {
@@ -184,6 +193,8 @@ public class AddApart extends AppCompatActivity {
         setContentView(R.layout.dialog_add_appart);
         HideKeyboard hideKeyboard = new HideKeyboard(this);
         hideKeyboard.setupUI(findViewById(R.id.layout_add_appart));
+        photoClick = false;
+        photoClickSecond = false;
 
         //Initialisation du Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -268,6 +279,9 @@ public class AddApart extends AppCompatActivity {
         imagePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                photoClick = true;
+                photoClickSecond = false;
+
                 Intent i = null;
                 //verificacion de la version de plataforma
                 if (Build.VERSION.SDK_INT < 19) {
@@ -283,6 +297,31 @@ public class AddApart extends AppCompatActivity {
                 }
                 i.setType("image/*");
                 startActivityForResult(i, request_code);
+            }
+        });
+
+        imagePhotoSecond = (ImageView) findViewById(R.id.photo_appartsecond);
+        imagePhotoSecond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoClickSecond = true;
+                photoClick = false;
+
+                Intent i = null;
+                //verificacion de la version de plataforma
+                if (Build.VERSION.SDK_INT < 19) {
+                    //android 4.3  y anteriores
+                    i = new Intent();
+                    i.setAction(Intent.ACTION_GET_CONTENT);
+
+                } else {
+                    //android 4.4 y superior
+                    i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    //  i.addCategory(Intent.CATEGORY_OPENABLE);
+                    i.setAction(Intent.ACTION_PICK);
+                }
+                i.setType("image/*");
+                startActivityForResult(i, request_codeSecond);
             }
         });
 
@@ -331,6 +370,9 @@ public class AddApart extends AppCompatActivity {
                         + ", "+ country;
                 strMail_prop     = mail_prop.getText().toString().trim();
                 enteredPhoto = convertirImgString(imageRotate);
+                if(imageRotateSecondaire != null){
+                enteredPhotoSecondaire = convertirImgString(imageRotateSecondaire);
+                }
 
                 //Récupération de la longitude et de la latitude de l'addresse finale
                 geocoder = new Geocoder(context, Locale.getDefault());
@@ -526,28 +568,60 @@ public class AddApart extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode == RESULT_OK && requestCode == request_code){
-            try{
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-                    ActivityCompat.requestPermissions(AddApart.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
-                } else {
-                    capturedImageUri = data.getData();
-                    selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUri);
-                    imagePhoto.setImageURI(data.getData());
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
-                    try {
-                        exifObject = new ExifInterface(selectedImagePath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        if(resultCode == RESULT_OK && requestCode == request_code ) {
+            Log.e("photoClick:", String.valueOf(photoClick));
+            Log.e("photoClickSecond:", String.valueOf(photoClickSecond));
+
+            if (photoClick == true) {
+                try {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(AddApart.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
+                    } else {
+                        capturedImageUri = data.getData();
+                        selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUri);
+                        imagePhoto.setImageURI(data.getData());
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                        try {
+                            exifObject = new ExifInterface(selectedImagePath);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                        imageRotate = rotateBitmap(bitmap, orientation);
+                        imagePhoto.setImageBitmap(imageRotate);
                     }
-                    int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
-                    imageRotate = rotateBitmap(bitmap,orientation);
-                    imagePhoto.setImageBitmap(imageRotate);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }
+        }
+        if(resultCode == RESULT_OK && requestCode == request_codeSecond ) {
 
-            }catch (IOException e){
-                e.printStackTrace();
+            if (photoClickSecond == true) {
+                try {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(AddApart.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
+                    } else {
+                        capturedImageUriSecond = data.getData();
+                        selectedImagePath = getRealPathFromURIPath(getApplicationContext(), capturedImageUriSecond);
+                        imagePhotoSecond.setImageURI(data.getData());
+                        bitmapSecond = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                        try {
+                            exifObject = new ExifInterface(selectedImagePath);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                        imageRotateSecondaire = rotateBitmap(bitmapSecond, orientation);
+                        imagePhotoSecond.setImageBitmap(imageRotateSecondaire);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -594,7 +668,7 @@ public class AddApart extends AppCompatActivity {
                 parameters.put("LATITUDE_APPART", String.valueOf(latitude));
                 parameters.put("ADRESSE_MAIL", strMail_prop);
                 parameters.put("IMAGE_PRINCIPALE", enteredPhoto);
-                parameters.put("IMAGE_SECONDAIRE", enteredPhoto);
+                parameters.put("IMAGE_SECONDAIRE", enteredPhotoSecondaire);
                 sh.performPostCall(url, parameters);
                 return null;
             } catch (Exception e)
