@@ -357,14 +357,12 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         protected void onPostExecute(Void result) {
             dismissProgressDialog();
             super.onPostExecute(result);
-            if("NULL".equals(strImagePrinc)){
                 String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
                 byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);
                 Bitmap imagePrinc = BitmapFactory.decodeByteArray(decodedBase64Second, 0, decodedBase64Second.length);
                 imagePrincipale.setImageBitmap(imagePrinc);
-            }
 
-            if("null".equals(strImageSecond)){
+            if(!"null".equals(strImageSecond)){
                 String base64Second = strImageSecond.substring(strImageSecond.indexOf(","));
                 byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
                 Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);
@@ -384,11 +382,14 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
 
             if (jsonStr != null) {
                 try {
+
+
                     JSONArray jsonArray = new JSONArray(jsonStr);
                     JSONObject a        = jsonArray.getJSONObject(0);
                     strImagePrinc  = a.getString("IMAGE_PRINCIPALE");
                     strImageSecond  = a.getString("IMAGE_SECONDAIRE");
-
+                    Log.e("strImagePrinc", "strImagePrinc: " + strImagePrinc);
+                    Log.e("strImageSecond", "strImageSecond: " + strImageSecond);
 
                 } catch (final JSONException e) {
                     Log.e("ERROR", "Json parsing error: " + e.getMessage());
