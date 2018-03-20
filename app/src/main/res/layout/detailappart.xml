@@ -118,6 +118,14 @@
             </LinearLayout>
 
         <TextView
+            android:text="Adresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_adresse"
+            android:fontFamily="casual"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"/>
+        <TextView
             android:text="CP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,15 +133,16 @@
             android:fontFamily="casual"
             android:textColor="@color/colorWhite"
             android:textSize="18sp"/>
-            <TextView
-                android:text="Adresse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/detail_adresse"
-                android:fontFamily="casual"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"/>
 
+
+        <TextView
+            android:text="Ville"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_adresse2"
+            android:fontFamily="casual"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"/>
             <TextView
                 android:text="Description"
                 android:layout_width="match_parent"

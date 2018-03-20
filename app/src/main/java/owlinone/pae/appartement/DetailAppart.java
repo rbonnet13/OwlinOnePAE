@@ -100,8 +100,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         TextView textDetailAppart = (TextView) findViewById(R.id.detail_appart);
         TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
         TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
+        TextView textDetailAdresse2 = (TextView) findViewById(R.id.detail_adresse2);
         TextView textCp = (TextView) findViewById(R.id.cp_detail);
-
         TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
         TextView textDispoMaj = (TextView) findViewById(R.id.maj_dispo_detail);
         imagePrincipale = (ImageView) findViewById(R.id.image_principale_detail);
@@ -280,15 +280,17 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         // sous le google map
         textDetailPrix.setText(strPrix + "€ CC/mois");
         textNomPropDetail.setText(strNomPropDetail);
-        textDetailAdresse.setText(strAdresse.trim() + "\n" + strVille + "\n");
+        textDetailAdresse.setText(strAdresse.trim());
+        textCp.setText(strCP);
+        textDetailAdresse2.setText(strVille + "\n");
         // description appart
         textDetail.setText(strDetailAppart + "\n");
         textDispo.setText(strDispoContext);
         textDetail.setText(strDetailAppart.trim() + "\n");
-        textDispo.setText(strDispoContext + "\n");
-        textCp.setText(strCP + "\n");
+        textDispo.setText(strDispoContext);
 
-        textDispoMaj.setText(strMajDispo + "\n");
+
+        textDispoMaj.setText("Mise à jour: " + strMajDispo + "\n");
 
         if (strImageSecond != null){
             textePhoto.setText("Photos");

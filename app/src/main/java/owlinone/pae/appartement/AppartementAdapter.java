@@ -77,7 +77,7 @@ public class AppartementAdapter extends ArrayAdapter<Appart>  {
                 viewHolder.villeAppart.setText(viewHolder.appart.getStrVille());
                 viewHolder.dispoAppart.setText(viewHolder.appart.getStrDispo());
                 viewHolder.nomAppart.setText(viewHolder.appart.getStrNom());
-                viewHolder.majDispo.setText(viewHolder.appart.getStrMajDispo());
+                viewHolder.majDispo.setText("Màj: " + viewHolder.appart.getStrMajDispo());
 
             }
 
