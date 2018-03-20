@@ -276,6 +276,13 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        // si le mail est vide on affiche pas le bouton
+        if(strMail.equals("")){
+            textMail.setVisibility(View.INVISIBLE);
+        }else{
+            textMail.setVisibility(View.VISIBLE);
+        }
+
         //click pour envoyer un mail
         textMail.setOnClickListener(new View.OnClickListener() {
 
