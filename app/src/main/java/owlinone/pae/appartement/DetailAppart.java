@@ -264,7 +264,6 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             imageSecondaire.setImageBitmap(imageSecond);
         }
 
-
         //click pour appeler au téléphone
         textTel.setOnClickListener(new View.OnClickListener() {
 
