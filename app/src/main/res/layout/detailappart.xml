@@ -204,8 +204,7 @@
             android:layout_gravity="center"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/omar"/>
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/image_secondaire_detail"
@@ -213,7 +212,6 @@
             android:layout_height="150dp"
             android:layout_gravity="right"
             android:layout_alignParentRight="true"
-            android:src="@drawable/omar"
             android:scaleType="centerCrop" />
         </RelativeLayout>
     </LinearLayout>

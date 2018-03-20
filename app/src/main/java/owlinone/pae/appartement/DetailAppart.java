@@ -362,7 +362,9 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
                 Bitmap imagePrinc = BitmapFactory.decodeByteArray(decodedBase64Second, 0, decodedBase64Second.length);
                 imagePrincipale.setImageBitmap(imagePrinc);
 
-            if(!"null".equals(strImageSecond)){
+                Log.e("ERROR", "strImageSecond: " + strImageSecond);
+
+            if(!"NULL".equals(strImageSecond)){
                 String base64Second = strImageSecond.substring(strImageSecond.indexOf(","));
                 byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
                 Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);

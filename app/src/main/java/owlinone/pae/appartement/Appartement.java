@@ -470,7 +470,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                             String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time, DateUtils.SECOND_IN_MILLIS);
 
                         // Affiche les appartements que s'il est disponible ou non disponible
-                        if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && ("TRUE".equals(strValidation)))
+                        if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && ("1".equals(strValidation)))
                         {
                                 Appart appartement = new Appart();
                                 appartement.setStrID(strId_appart);
