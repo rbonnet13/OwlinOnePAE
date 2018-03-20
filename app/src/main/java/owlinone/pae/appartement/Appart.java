@@ -1,13 +1,10 @@
 package owlinone.pae.appartement;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Created by AnthonyCOPPIN on 19/03/2018.
  */
 
-public class Appart implements Parcelable {
+public class Appart {
 
     private String strID;
     private String strNom        = "";
@@ -21,14 +18,14 @@ public class Appart implements Parcelable {
     private String strCp         = "";
     private String strMail       = "";
     private String strImagePrinc = "";
-    private String strImageSecond= "";
+    private String strMajDispo= "";
 
     private double longitude;
     private double latitude;
 
     public Appart (String strID, String strNom, String strAdresse, String strVille, String strDescript,
                    String strDetail, String strTel, String prix, String strDispo, String strCp,
-                   String strMail, double longitude, double latitude, String strImagePrinc, String strImageSecond) {
+                   String strMail, double longitude, double latitude, String strImagePrinc, String strImageSecond, String strMajDispo) {
         this.strID         = strID;
         this.strNom        = strNom;
         this.strAdresse    = strAdresse;
@@ -43,11 +40,20 @@ public class Appart implements Parcelable {
         this.longitude     = longitude;
         this.latitude      = latitude;
         this.strImagePrinc = strImagePrinc;
-        this.strImageSecond= strImageSecond;
+        this.strMajDispo   = strMajDispo;
+
+
     }
 
     public Appart() {
         super();
+    }
+    public String getStrMajDispo() {
+        return strMajDispo;
+    }
+
+    public void setStrMajDispo(String strMajDispo) {
+        this.strMajDispo = strMajDispo;
     }
     public String getStrID() {
         return strID;
@@ -145,14 +151,6 @@ public class Appart implements Parcelable {
         this.strImagePrinc = strImagePrinc;
     }
 
-    public String getStrImageSecond() {
-        return strImageSecond;
-    }
-
-    public void setStrImageSecond(String strImageSecond) {
-        this.strImageSecond = strImageSecond;
-    }
-
     public double getLongitude() {
         return longitude;
     }
@@ -168,56 +166,4 @@ public class Appart implements Parcelable {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-
-    @Override
-    public int describeContents() {
-        return hashCode();
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-    parcel.writeString(strNom);
-    parcel.writeString(strAdresse);
-    parcel.writeString(strVille);
-    parcel.writeString(strDescript);
-    parcel.writeString(strDetail);
-    parcel.writeString(strTel);
-    parcel.writeString(prix);
-    parcel.writeString(strDispo);
-    parcel.writeString(strCp);
-    parcel.writeString(strMail);
-    parcel.writeString(strImagePrinc);
-    parcel.writeString(strImageSecond);
-    parcel.writeDouble(longitude);
-    parcel.writeDouble(latitude);
-    }
-    public Appart(Parcel p) {
-        strNom = p.readString();
-        strAdresse = p.readString();
-        strVille = p.readString();
-        strDescript = p.readString();
-        strDetail = p.readString();
-        strTel = p.readString();
-        prix = p.readString();
-        strDispo = p.readString();
-        strCp = p.readString();
-        strMail = p.readString();
-        strImagePrinc = p.readString();
-        strImageSecond = p.readString();
-        longitude = p.readDouble();
-        latitude = p.readDouble();
-    }
-    // We need to add a Creator
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-
-        @Override
-        public Appart createFromParcel(Parcel parcel) {
-            return new Appart(parcel);
-        }
-
-        @Override
-        public Appart[] newArray(int size) {
-            return new Appart[size];
-        }
-    };
 }

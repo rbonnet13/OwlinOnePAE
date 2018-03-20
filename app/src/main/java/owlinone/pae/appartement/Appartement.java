@@ -256,6 +256,9 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 intentAppart.putExtra("strDispoContext",appartSelected.getStrDispo());
                 intentAppart.putExtra("strDetailAppart",appartSelected.getStrDetail());
                 intentAppart.putExtra("strId",appartSelected.getStrID());
+                intentAppart.putExtra("strMajDispo",appartSelected.getStrMajDispo());
+                intentAppart.putExtra("strCP",appartSelected.getStrCp());
+
                 Log.e(TAG, "strId: " + appartSelected.getStrID());
 
                 startActivity(intentAppart);
@@ -452,20 +455,19 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         String strImage_princ     = a.getString("IMAGE_PRINCIPALE");
                         String strValidation      = a.getString("VALIDATION");
                         String strDate            = a.getString("DATE_MAJ_DISPO");
+                            Log.e(TAG, "strValidation: " + strValidation);
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            try {
+                                Date mDate = sdf.parse(strDate);
+                                timeInMilliseconds = mDate.getTime();
+                                System.out.println("Date in milli :: " + timeInMilliseconds);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            long time = System.currentTimeMillis();
 
-                        Log.e(TAG, "strValidation: " + strValidation);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        try {
-                            Date mDate = sdf.parse(strDate);
-                            timeInMilliseconds = mDate.getTime();
-                            System.out.println("Date in milli :: " + timeInMilliseconds);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        long time = System.currentTimeMillis();
-
-                        //Fonction pour utiliser agoTime
-                        String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time, DateUtils.SECOND_IN_MILLIS);
+                            //Fonction pour utiliser agoTime
+                            String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time, DateUtils.SECOND_IN_MILLIS);
 
                         // Affiche les appartements que s'il est disponible ou non disponible
                         if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && ("TRUE".equals(strValidation)))
@@ -479,14 +481,16 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                                 appartement.setStrDetail(detail_appart);
                                 appartement.setStrTel(telephone_prop);
                                 appartement.setPrix(strPrix_appart);
-                                appartement.setStrDispo(dispo_appart + " " + agoTime);
+                                appartement.setStrDispo(dispo_appart);
                                 appartement.setStrCp(strCp_appart);
                                 appartement.setLongitude(longitudeAppart);
                                 appartement.setLatitude(latitudeAppart);
                                 appartement.setStrMail(adresseMail);
                                 appartement.setStrImagePrinc(strImage_princ);
+                                appartement.setStrMajDispo(agoTime);
 
-                                // adding contact to contact list
+
+                            // adding contact to contact list
                                 arrayListAppart.add(appartement);
                         }
                     }

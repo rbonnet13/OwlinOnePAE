@@ -51,6 +51,7 @@ public class AppartementAdapter extends ArrayAdapter<Appart>  {
         viewHolder.prixAppart = (TextView) convertView.findViewById(R.id.prix_appart);
         viewHolder.adresseAppart = (TextView) convertView.findViewById(R.id.adresse_apart);
         viewHolder.villeAppart = (TextView) convertView.findViewById(R.id.ville_apart);
+        viewHolder.majDispo = (TextView) convertView.findViewById(R.id.maj_dispo_appart);
 
         viewHolder.dispoAppart = (TextView) convertView.findViewById(R.id.dispo_appart);
         viewHolder.nomAppart = (TextView) convertView.findViewById(R.id.nom_prop);
@@ -76,6 +77,7 @@ public class AppartementAdapter extends ArrayAdapter<Appart>  {
                 viewHolder.villeAppart.setText(viewHolder.appart.getStrVille());
                 viewHolder.dispoAppart.setText(viewHolder.appart.getStrDispo());
                 viewHolder.nomAppart.setText(viewHolder.appart.getStrNom());
+                viewHolder.majDispo.setText(viewHolder.appart.getStrMajDispo());
 
             }
 
@@ -87,6 +89,8 @@ public class AppartementAdapter extends ArrayAdapter<Appart>  {
                 TextView villeAppart;
                 TextView dispoAppart;
                 TextView nomAppart;
+                TextView majDispo;
+
                 ImageView imagePrincipalAppart;
 
             }

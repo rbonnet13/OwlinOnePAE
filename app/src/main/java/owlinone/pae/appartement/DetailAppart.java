@@ -46,6 +46,7 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
     String strDetailAppart = "";
     String strDetailTel= "";
     String strNomPropDetail= "";
+    String strMajDispo= "";
     Double doubleLongitude= 0.0;
     private ProgressDialog pDialog;
     Double doubleLatitude= 0.0;
@@ -56,6 +57,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
     String strImageSecond= "";
     String strPrix= "";
     String strDispoContext= "";
+    String strCP= "";
+
     SupportMapFragment supportMapFragment = new SupportMapFragment();
     String strId= "";
     ImageView imagePrincipale = null;
@@ -97,7 +100,10 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         TextView textDetailAppart = (TextView) findViewById(R.id.detail_appart);
         TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
         TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
+        TextView textCp = (TextView) findViewById(R.id.cp_detail);
+
         TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
+        TextView textDispoMaj = (TextView) findViewById(R.id.maj_dispo_detail);
         imagePrincipale = (ImageView) findViewById(R.id.image_principale_detail);
         imageSecondaire = (ImageView) findViewById(R.id.image_secondaire_detail);
         TextView textePhoto = (TextView) findViewById(R.id.id_photo);
@@ -174,6 +180,17 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             strMail = (String) savedInstanceState.getSerializable("strMail");
         }
+        //Récupère le string strMajDispo pour la maj de la dispo-----------------------------------
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                strMajDispo = null;
+            } else {
+                strMajDispo = extras.getString("strMajDispo");
+            }
+        } else {
+            strMajDispo = (String) savedInstanceState.getSerializable("strMajDispo");
+        }
 
         //Récupère le string strAdresse pour l'adresse de l'appartement-----------------------------
         if (savedInstanceState == null) {
@@ -222,6 +239,17 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             strDispoContext = (String) savedInstanceState.getSerializable("strDispoContext");
         }
+        //Récupère le string code postal----------------------------------
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                strCP = null;
+            } else {
+                strCP = extras.getString("strCP");
+            }
+        } else {
+            strCP = (String) savedInstanceState.getSerializable("strCP");
+        }
 
         //Récupère le string strDispoContext pour le détail (T2 etc..)----------------------------------
         if (savedInstanceState == null) {
@@ -258,6 +286,9 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         textDispo.setText(strDispoContext);
         textDetail.setText(strDetailAppart.trim() + "\n");
         textDispo.setText(strDispoContext + "\n");
+        textCp.setText(strCP + "\n");
+
+        textDispoMaj.setText(strMajDispo + "\n");
 
         if (strImageSecond != null){
             textePhoto.setText("Photos");
