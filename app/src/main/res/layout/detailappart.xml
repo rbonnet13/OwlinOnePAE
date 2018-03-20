@@ -161,6 +161,14 @@
                 android:fontFamily="casual"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"/>
+        <TextView
+            android:text="Date màj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/maj_dispo_detail"
+            android:fontFamily="casual"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"/>
 
             <TextView
                 android:text="Photos"

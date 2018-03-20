@@ -64,13 +64,6 @@
                 android:background="#11000000"
                 android:textColor="@color/colorWhite" />
 
-                <TextView
-                    android:id="@+id/cp_appart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="49000"
-                    android:background="#11000000"
-                    android:textColor="@color/colorWhite" />
 
                 <TextView
                     android:id="@+id/ville_apart"
@@ -95,6 +88,14 @@
                 android:layout_height="wrap_content"
                 android:background="#11000000"
                 android:hint="Disponibilité"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/maj_dispo_appart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#11000000"
+                android:hint="MàJ:"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>

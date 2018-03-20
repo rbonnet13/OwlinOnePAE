@@ -220,19 +220,19 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/photo_appartfirst"
                     android:layout_marginTop="15dp"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
                     android:layout_marginLeft="30dp"
-                    android:src="@drawable/ic_appartement"
+                    android:src="@drawable/maison2"
                     android:scaleType="centerCrop"
-                    app:civ_border_color="@color/colorWhite"
+                    app:civ_border_color="@color/colorPrimary"
                     android:layout_marginBottom="10dp"
                     app:civ_border_width="4dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Obligatoire !"
+                        android:text="Image principale"
                         android:drawableLeft="@drawable/warning"
                         android:layout_gravity="center_vertical"
                         android:background="#11000000"
@@ -240,19 +240,35 @@
                         android:layout_marginLeft="30dp"
                         android:textColor="@color/colorWhite" />
                 </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/photo_appartsecond"
                     android:layout_marginTop="15dp"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:src="@drawable/ic_appartement"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/maison2"
                     android:layout_marginRight="30dp"
                     android:layout_alignParentEnd="true"
                     android:scaleType="centerCrop"
-                    app:civ_border_color="@color/colorWhite"
+                    app:civ_border_color="@color/colorPrimary"
                     android:layout_marginBottom="10dp"
                     app:civ_border_width="4dp"/>
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/photo_appartsecond"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="30dp"
+                        android:background="#11000000"
+                        android:gravity="center_vertical|center"
+                        android:text="Image secondaire"
+                        android:textColor="@color/colorWhite" />
+                </RelativeLayout>
 
             </RelativeLayout>
 
