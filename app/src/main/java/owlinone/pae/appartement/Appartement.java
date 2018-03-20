@@ -23,6 +23,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -42,7 +43,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import owlinone.pae.R;
@@ -78,6 +82,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     private String nameEnvoi;
     private int index;
     private int top;
+    private long timeInMilliseconds;
 
     //Redémarre l'activité
     private void restartActivity()
@@ -446,7 +451,21 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         String adresseMail        = a.getString("ADRESSE_MAIL");
                         String strImage_princ     = a.getString("IMAGE_PRINCIPALE");
                         String strValidation      = a.getString("VALIDATION");
+                        String strDate            = a.getString("DATE_MAJ_DISPO");
+
                         Log.e(TAG, "strValidation: " + strValidation);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try {
+                            Date mDate = sdf.parse(strDate);
+                            timeInMilliseconds = mDate.getTime();
+                            System.out.println("Date in milli :: " + timeInMilliseconds);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        long time = System.currentTimeMillis();
+
+                        //Fonction pour utiliser agoTime
+                        String agoTime = (String) DateUtils.getRelativeTimeSpanString(timeInMilliseconds, time, DateUtils.SECOND_IN_MILLIS);
 
                         // Affiche les appartements que s'il est disponible ou non disponible
                         if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && ("TRUE".equals(strValidation)))
@@ -460,7 +479,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                                 appartement.setStrDetail(detail_appart);
                                 appartement.setStrTel(telephone_prop);
                                 appartement.setPrix(strPrix_appart);
-                                appartement.setStrDispo(dispo_appart);
+                                appartement.setStrDispo(dispo_appart + " " + agoTime);
                                 appartement.setStrCp(strCp_appart);
                                 appartement.setLongitude(longitudeAppart);
                                 appartement.setLatitude(latitudeAppart);
