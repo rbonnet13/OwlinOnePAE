@@ -257,7 +257,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK && requestCode == request_code){
-
             try{
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                     ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
@@ -273,7 +272,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
-                    Bitmap imageRotate = rotateBitmap(bitmap,orientation);
+                    imageRotate = rotateBitmap(bitmap,orientation);
                     imagePhoto.setImageBitmap(imageRotate);
                 }
 

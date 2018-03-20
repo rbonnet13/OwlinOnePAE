@@ -94,6 +94,17 @@
                     android:textSize="18sp"/>
 
                 <ImageButton
+                    android:id="@+id/detail_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:background="@drawable/background_login"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:src="@drawable/ic_tel_bleu"/>
+
+                <ImageButton
                     android:id="@+id/detail_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,16 +115,6 @@
                     style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:src="@drawable/ic_email_bleu"/>
 
-                <ImageButton
-                    android:id="@+id/detail_tel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:background="@drawable/background_login"
-                    android:layout_gravity="center_vertical"
-                    android:clickable="true"
-                    style="@style/Base.TextAppearance.AppCompat.Body1"
-                    android:src="@drawable/ic_tel_bleu"/>
             </LinearLayout>
 
 
