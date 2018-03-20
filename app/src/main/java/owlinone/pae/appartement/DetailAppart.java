@@ -249,7 +249,7 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         textDetailAdresse.setText(strAdresse + "\n" + strVille + "\n");
         // description appart
         textDetail.setText(strDetail + "\n");
-        textDispo.setText(strDispoContext);
+        textDispo.setText(strDispoContext + "\n");
         if(strImagePrinc != null){
             String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
             byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);

@@ -167,14 +167,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24dp"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image_principale_detail"
@@ -188,10 +186,11 @@
             android:id="@+id/image_secondaire_detail"
             android:layout_width="150dp"
             android:layout_height="150dp"
-
+            android:layout_gravity="right"
+            android:layout_alignParentRight="true"
             android:src="@drawable/omar"
             android:scaleType="centerCrop" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
     </ScrollView>
 </LinearLayout>
