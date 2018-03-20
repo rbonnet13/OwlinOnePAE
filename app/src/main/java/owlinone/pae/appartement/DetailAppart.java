@@ -82,6 +82,7 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
         TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
         TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
+        TextView textePhoto = (TextView) findViewById(R.id.id_photo);
         ImageView imagePrincipale = (ImageView) findViewById(R.id.image_principale_detail);
         ImageView imageSecondaire = (ImageView) findViewById(R.id.image_secondaire_detail);
 
@@ -246,10 +247,17 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         // sous le google map
         textDetailPrix.setText(strPrix + "€ CC/mois");
         textNomPropDetail.setText(strNomPropDetail);
-        textDetailAdresse.setText(strAdresse + "\n" + strVille + "\n");
+        textDetailAdresse.setText(strAdresse.trim() + "\n" + strVille + "\n");
         // description appart
-        textDetail.setText(strDetail + "\n");
+        textDetail.setText(strDetail.trim() + "\n");
         textDispo.setText(strDispoContext + "\n");
+
+        if (strImageSecond != null){
+            textePhoto.setText("Photos");
+        }else{
+            textePhoto.setText("Photo");
+        }
+
         if(strImagePrinc != null){
             String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
             byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);
