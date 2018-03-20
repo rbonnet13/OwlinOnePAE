@@ -441,14 +441,15 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         int cp_appart             = a.getInt("CP_APPART");
                         Double longitudeAppart    = a.getDouble("LONGITUDE_APPART");
                         Double latitudeAppart     = a.getDouble("LATITUDE_APPART");
-                        String strPrix_appart       = String.valueOf(prix_appart) + " ";
+                        String strPrix_appart     = String.valueOf(prix_appart) + " ";
                         String strCp_appart       = String.valueOf(cp_appart) + " ";
                         String adresseMail        = a.getString("ADRESSE_MAIL");
                         String strImage_princ     = a.getString("IMAGE_PRINCIPALE");
                         String strImage_second    = a.getString("IMAGE_SECONDAIRE");
+                        String strValidation      = a.getString("VALIDATION");
 
                         // Affiche les appartements que s'il est disponible ou non disponible
-                        if(dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible") )
+                        if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && strValidation == "TRUE" )
                         {
                             Appart appartement = new Appart();
                            appartement.setStrID(id_appart);
