@@ -1,14 +1,15 @@
 package owlinone.pae.appartement;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by AnthonyCOPPIN on 19/03/2018.
  */
 
-public class Appart implements Serializable {
+public class Appart implements Parcelable {
 
-    private int strID;
+    private String strID;
     private String strNom        = "";
     private String strAdresse    = "";
     private String strVille      = "";
@@ -19,15 +20,13 @@ public class Appart implements Serializable {
     private String strDispo      = "";
     private String strCp         = "";
     private String strMail       = "";
-    private String strLongitude  = "";
-    private String strLatitude   = "";
     private String strImagePrinc = "";
     private String strImageSecond= "";
 
     private double longitude;
     private double latitude;
 
-    public Appart (int strID, String strNom, String strAdresse, String strVille, String strDescript,
+    public Appart (String strID, String strNom, String strAdresse, String strVille, String strDescript,
                    String strDetail, String strTel, String prix, String strDispo, String strCp,
                    String strMail, double longitude, double latitude, String strImagePrinc, String strImageSecond) {
         this.strID         = strID;
@@ -46,14 +45,15 @@ public class Appart implements Serializable {
         this.strImagePrinc = strImagePrinc;
         this.strImageSecond= strImageSecond;
     }
+
     public Appart() {
         super();
     }
-    public int getStrID() {
+    public String getStrID() {
         return strID;
     }
 
-    public void setStrID(int strID) {
+    public void setStrID(String strID) {
         this.strID = strID;
     }
 
@@ -168,4 +168,56 @@ public class Appart implements Serializable {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeString(strNom);
+    parcel.writeString(strAdresse);
+    parcel.writeString(strVille);
+    parcel.writeString(strDescript);
+    parcel.writeString(strDetail);
+    parcel.writeString(strTel);
+    parcel.writeString(prix);
+    parcel.writeString(strDispo);
+    parcel.writeString(strCp);
+    parcel.writeString(strMail);
+    parcel.writeString(strImagePrinc);
+    parcel.writeString(strImageSecond);
+    parcel.writeDouble(longitude);
+    parcel.writeDouble(latitude);
+    }
+    public Appart(Parcel p) {
+        strNom = p.readString();
+        strAdresse = p.readString();
+        strVille = p.readString();
+        strDescript = p.readString();
+        strDetail = p.readString();
+        strTel = p.readString();
+        prix = p.readString();
+        strDispo = p.readString();
+        strCp = p.readString();
+        strMail = p.readString();
+        strImagePrinc = p.readString();
+        strImageSecond = p.readString();
+        longitude = p.readDouble();
+        latitude = p.readDouble();
+    }
+    // We need to add a Creator
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+        @Override
+        public Appart createFromParcel(Parcel parcel) {
+            return new Appart(parcel);
+        }
+
+        @Override
+        public Appart[] newArray(int size) {
+            return new Appart[size];
+        }
+    };
 }

@@ -4,19 +4,23 @@ package owlinone.pae.appartement;
  * Created by Julian on 09/12/2016.
  */
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,7 +31,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import owlinone.pae.R;
+import owlinone.pae.configuration.AddressUrl;
+import owlinone.pae.configuration.HttpHandler;
 
 public class DetailAppart extends AppCompatActivity implements OnMapReadyCallback{
     String strDetail= "";
@@ -35,6 +47,7 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
     String strDetailTel= "";
     String strNomPropDetail= "";
     Double doubleLongitude= 0.0;
+    private ProgressDialog pDialog;
     Double doubleLatitude= 0.0;
     String strMail= "";
     String strAdresse= "";
@@ -44,6 +57,9 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
     String strPrix= "";
     String strDispoContext= "";
     SupportMapFragment supportMapFragment = new SupportMapFragment();
+    String strId= "";
+    ImageView imagePrincipale = null;
+    ImageView imageSecondaire = null;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +98,10 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         TextView textDetailPrix = (TextView) findViewById(R.id.detail_prix);
         TextView textDetailAdresse = (TextView) findViewById(R.id.detail_adresse);
         TextView textDispo = (TextView) findViewById(R.id.detail_dispo);
+        imagePrincipale = (ImageView) findViewById(R.id.image_principale_detail);
+        imageSecondaire = (ImageView) findViewById(R.id.image_secondaire_detail);
         TextView textePhoto = (TextView) findViewById(R.id.id_photo);
-        ImageView imagePrincipale = (ImageView) findViewById(R.id.image_principale_detail);
-        ImageView imageSecondaire = (ImageView) findViewById(R.id.image_secondaire_detail);
+
 
         //Récupère le string srtDetail pour les détails--------------------------------------------
         if (savedInstanceState == null) {
@@ -218,30 +235,18 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             strDetailAppart = (String) savedInstanceState.getSerializable("strDetailAppart");
         }
 
-        //Récupère le string photo principale----------------------------------
+        //Récupère le string ID---------------------------------
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                strImagePrinc = null;
+                strId = null;
             } else {
-                strImagePrinc = extras.getString("strImagePrinc");
+                strId = extras.getString("strId");
             }
         } else {
-            strImagePrinc = (String) savedInstanceState.getSerializable("strImagePrinc");
+            strId = (String) savedInstanceState.getSerializable("strId");
         }
-
-        //Récupère le string seconde photo ----------------------------------
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                strImageSecond = null;
-            } else {
-                strImageSecond = extras.getString("strImageSecond");
-            }
-        } else {
-            strImageSecond = (String) savedInstanceState.getSerializable("strImageSecond");
-        }
-
+        new sendView().execute();
         // dans la toolbar
         textDetailAppart.setText(strDetailAppart);
         // sous le google map
@@ -249,6 +254,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         textNomPropDetail.setText(strNomPropDetail);
         textDetailAdresse.setText(strAdresse.trim() + "\n" + strVille + "\n");
         // description appart
+        textDetail.setText(strDetail + "\n");
+        textDispo.setText(strDispoContext);
         textDetail.setText(strDetail.trim() + "\n");
         textDispo.setText(strDispoContext + "\n");
 
@@ -256,20 +263,6 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
             textePhoto.setText("Photos");
         }else{
             textePhoto.setText("Photo");
-        }
-
-        if(strImagePrinc != null){
-            String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
-            byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);
-            Bitmap imagePrinc = BitmapFactory.decodeByteArray(decodedBase64Second, 0, decodedBase64Second.length);
-            imagePrincipale.setImageBitmap(imagePrinc);
-        }
-
-        if(strImagePrinc != null){
-            String base64Second = strImageSecond.substring(strImageSecond.indexOf(","));
-            byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
-            Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);
-            imageSecondaire.setImageBitmap(imageSecond);
         }
 
         //click pour appeler au téléphone
@@ -318,13 +311,95 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 12);
         map.animateCamera(yourLocation);
     }
+    class sendView extends AsyncTask<Void, Void, Void>
+    {
+        HttpHandler sh = new HttpHandler();
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+            super.onPreExecute();
+        }
 
+        @Override
+        protected void onPostExecute(Void result) {
+            dismissProgressDialog();
+            super.onPostExecute(result);
+            if(strImagePrinc != null){
+                String base64Princ = strImagePrinc.substring(strImagePrinc.indexOf(","));
+                byte[] decodedBase64Second = Base64.decode(base64Princ, Base64.DEFAULT);
+                Bitmap imagePrinc = BitmapFactory.decodeByteArray(decodedBase64Second, 0, decodedBase64Second.length);
+                imagePrincipale.setImageBitmap(imagePrinc);
+            }
+
+            if(strImagePrinc != null){
+                String base64Second = strImageSecond.substring(strImageSecond.indexOf(","));
+                byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
+                Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);
+                imageSecondaire.setImageBitmap(imageSecond);
+            }
+        }
+        Exception exception;
+        @Override
+        protected Void doInBackground(Void... arg0)
+        {
+            HttpHandler sh = new HttpHandler();
+            String jsonStr = null;
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("ID_APPART", strId);
+            jsonStr = sh.performPostCall(AddressUrl.strRecupImageDetailAppart, parameters);
+            Log.e("ERROR", "Reponse from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(jsonStr);
+                    JSONObject a        = jsonArray.getJSONObject(0);
+                    strImagePrinc  = a.getString("IMAGE_PRINCIPALE");
+                    strImageSecond  = a.getString("IMAGE_SECONDAIRE");
+
+
+                } catch (final JSONException e) {
+                    Log.e("ERROR", "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    R.string.problemeServeur,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+
+            } else {
+                Log.e("ERROR", "Couldn't get json from server.");
+            }
+
+            return null;
+        }
+
+    }
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        dismissProgressDialog();
         Intent intent = new Intent(getApplicationContext(), Appartement.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+    }
+    private void showProgressDialog() {
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(DetailAppart.this);
+            pDialog.setMessage("Chargement...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+        }
+        pDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
     }
 }

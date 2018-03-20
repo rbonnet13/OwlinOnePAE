@@ -34,6 +34,9 @@ public class AddressUrl {
     public static final String strNotifAccepte         = strUrl +"/repondre_notif_positif.php";
     public static final String strNotifRefuse          = strUrl +"/repondre_notif_negatif.php";
     public static final String strNotifClicked         = strUrl +"/notification_clicked.php";
+    public static final String strRecupImageDetailAppart= strUrl +"/recupImageDetailAppart.php";
+
+
 
 
 }

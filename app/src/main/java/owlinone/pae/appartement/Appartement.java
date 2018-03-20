@@ -38,6 +38,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,7 +92,10 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         intent.putExtra("url",url);
         startActivity(intent);
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void doThis(Appart appart) {
+        Toast.makeText(this, appart.getStrNom(), Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -123,6 +129,11 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -235,7 +246,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 final Appart appartSelected =   arrayListAppart.get(position);
-                Intent intentAppart = new Intent(getApplicationContext(), DetailAppart.class);
+                Intent intentAppart = new Intent(Appartement.this, DetailAppart.class);
 
                 index = lv.getFirstVisiblePosition();
                 View v = lv.getChildAt(0);
@@ -253,8 +264,9 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                 intentAppart.putExtra("strPrix",appartSelected.getPrix());
                 intentAppart.putExtra("strDispoContext",appartSelected.getStrDispo());
                 intentAppart.putExtra("strDetailAppart",appartSelected.getStrDetail());
-                intentAppart.putExtra("strImagePrinc",appartSelected.getStrImagePrinc());
-                intentAppart.putExtra("strImageSecond",appartSelected.getStrImageSecond());
+                intentAppart.putExtra("strId",appartSelected.getStrID());
+                Log.e(TAG, "strId: " + appartSelected.getStrID());
+
                 startActivity(intentAppart);
             }
         });
@@ -430,6 +442,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                     {
                         JSONObject a              = jsonArray.getJSONObject(i);
                         int id_appart             = a.getInt("ID_APPART");
+                        String strId_appart     = String.valueOf(id_appart);
                         String nom_prop           = a.getString("NOM_PROP");
                         String adresse_appart     = a.getString("ADRESSE_APPART");
                         String ville_appart       = a.getString("VILLE_APPART");
@@ -445,7 +458,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         String strCp_appart       = String.valueOf(cp_appart) + " ";
                         String adresseMail        = a.getString("ADRESSE_MAIL");
                         String strImage_princ     = a.getString("IMAGE_PRINCIPALE");
-                        String strImage_second    = a.getString("IMAGE_SECONDAIRE");
                         String strValidation      = a.getString("VALIDATION");
                         Log.e(TAG, "strValidation: " + strValidation);
 
@@ -453,7 +465,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                         if((dispo_appart.equals("Disponible") || dispo_appart.equals("Non disponible")) && ("TRUE".equals(strValidation)))
                         {
                                 Appart appartement = new Appart();
-                                appartement.setStrID(id_appart);
+                                appartement.setStrID(strId_appart);
                                 appartement.setStrNom(nom_prop);
                                 appartement.setStrAdresse(adresse_appart);
                                 appartement.setStrVille(ville_appart);
@@ -467,7 +479,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
                                 appartement.setLatitude(latitudeAppart);
                                 appartement.setStrMail(adresseMail);
                                 appartement.setStrImagePrinc(strImage_princ);
-                                appartement.setStrImageSecond(strImage_second);
 
                                 // adding contact to contact list
                                 arrayListAppart.add(appartement);
