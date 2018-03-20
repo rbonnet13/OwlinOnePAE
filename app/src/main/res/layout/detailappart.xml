@@ -117,7 +117,14 @@
 
             </LinearLayout>
 
-
+        <TextView
+            android:text="CP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cp_detail"
+            android:fontFamily="casual"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"/>
             <TextView
                 android:text="Adresse"
                 android:layout_width="match_parent"
