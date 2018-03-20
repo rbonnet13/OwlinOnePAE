@@ -38,9 +38,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,12 +67,9 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     private ListView lv;
     String url= null;
     String email, name, photoBDD;
-    String strDetail = "", strDetailTel = "", strNomPropDetail = "", strLongitude = "", strLatitude = "" , strDetailAppart = "", strImagePrinc="", strImageSecond="";
-    String strMail = "", strAdresse = "", strCommentaire = "RAS", strVille = "", strPrix = "", strDispoContext = "";
+    String  strCommentaire = "RAS", strDispoContext = "";
     String strNomContext = "", strIdContext = "", disponible = "Disponible", nonDisponible = "Non disponible";
 
-    HashMap <String, String> obj = new HashMap();
-    HashMap <String, String> objDispo = new HashMap();
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView notifcovoit;
@@ -92,10 +86,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
         intent.putExtra("url",url);
         startActivity(intent);
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void doThis(Appart appart) {
-        Toast.makeText(this, appart.getStrNom(), Toast.LENGTH_SHORT).show();
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -129,11 +120,6 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -278,6 +264,7 @@ public class Appartement extends AppCompatActivity implements NavigationView.OnN
     // Fonction appelée quand appuie sur la touche retour
     @Override
     public void onBackPressed() {
+        dismissProgressDialog();
         // Check si le drawer est ouvert. Si oui, on le ferme
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
