@@ -60,6 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Adresse"
+                android:singleLine="true"
+                android:layout_marginRight="150dp"
                 android:background="#11000000"
                 android:textColor="@color/colorWhite" />
 
@@ -75,7 +77,9 @@
                     android:id="@+id/ville_apart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="150dp"
                     android:hint="Ville"
+                    android:singleLine="true"
                     android:background="#11000000"
                     android:textColor="@color/colorWhite" />
             <TextView
@@ -98,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/image_appart_princ"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
