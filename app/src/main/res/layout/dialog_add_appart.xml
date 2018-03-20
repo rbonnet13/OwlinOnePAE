@@ -211,14 +211,44 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/photo_appartfirst"
                     android:layout_marginTop="15dp"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginLeft="30dp"
                     android:src="@drawable/ic_appartement"
+                    android:scaleType="centerCrop"
+                    app:civ_border_color="@color/colorWhite"
+                    android:layout_marginBottom="10dp"
+                    app:civ_border_width="4dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Obligatoire !"
+                        android:drawableLeft="@drawable/warning"
+                        android:layout_gravity="center_vertical"
+                        android:background="#11000000"
+                        android:gravity="center_vertical|center"
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@color/colorWhite" />
+                </LinearLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/photo_appartsecond"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/ic_appartement"
+                    android:layout_marginRight="30dp"
+                    android:layout_alignParentEnd="true"
                     android:scaleType="centerCrop"
                     app:civ_border_color="@color/colorWhite"
                     android:layout_marginBottom="10dp"
