@@ -59,7 +59,7 @@ public class AddApart extends AppCompatActivity {
     Button buttonSubmit;
     EditText nomProp, adresse_appart, ville_appart, descrip_appart, detail_appart, tel_prop, prix_appart, cp_appart,mail_prop;
     String strAdresseAppart= "", strAdresseGoogle= "",strvilleAppart= "", strDescripAppart= "", strDetailAppart= "", strTelProp= "", strPrixAppart= "", finalDescrip="";
-    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = null, strNomProp= "",strImagePrincipale="",strImageSecondaire="";
+    String sTaille="", sDispo="", sMonsieur="", sFinalNom="", strCPAppart= "", strMail_prop = null, strNomProp= "";
     String country = "France";
     Spinner spinnerAppart;
     Spinner spinnerDispo;
@@ -79,15 +79,13 @@ public class AddApart extends AppCompatActivity {
     private int request_codeSecond = 2;
     private String selectedImagePath;
     private ExifInterface exifObject;
-    private Bitmap imageRotate;
+    private Bitmap imageRotate = null;
     private Bitmap imageRotateSecondaire = null;
     private static final int REQUEST_READ_PERMISSION = 100;
-    protected String enteredPhoto;
+    protected String enteredPhoto = null;
     protected String enteredPhotoSecondaire = null;
     Boolean photoClick = false;
     Boolean photoClickSecond = false;
-
-
 
     List<Address> addresses = new List<Address>() {
         @Override
@@ -273,8 +271,8 @@ public class AddApart extends AppCompatActivity {
         dataAdapterMonsieur.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
         spinnerMonsieur.setAdapter(dataAdapterMonsieur);
-        //-------------------PHOTO 1st---------------------------
 
+        //-------------------PHOTO 1st---------------------------
         imagePhoto = (ImageView) findViewById(R.id.photo_appartfirst);
         imagePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,7 +280,7 @@ public class AddApart extends AppCompatActivity {
                 photoClick = true;
                 photoClickSecond = false;
 
-                Intent i = null;
+                Intent i;
                 //verificacion de la version de plataforma
                 if (Build.VERSION.SDK_INT < 19) {
                     //android 4.3  y anteriores
@@ -292,7 +290,6 @@ public class AddApart extends AppCompatActivity {
                 } else {
                     //android 4.4 y superior
                     i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    //  i.addCategory(Intent.CATEGORY_OPENABLE);
                     i.setAction(Intent.ACTION_PICK);
                 }
                 i.setType("image/*");
@@ -300,6 +297,7 @@ public class AddApart extends AppCompatActivity {
             }
         });
 
+        //-------------------PHOTO 2st---------------------------
         imagePhotoSecond = (ImageView) findViewById(R.id.photo_appartsecond);
         imagePhotoSecond.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,7 +305,7 @@ public class AddApart extends AppCompatActivity {
                 photoClickSecond = true;
                 photoClick = false;
 
-                Intent i = null;
+                Intent i;
                 //verificacion de la version de plataforma
                 if (Build.VERSION.SDK_INT < 19) {
                     //android 4.3  y anteriores
@@ -317,17 +315,12 @@ public class AddApart extends AppCompatActivity {
                 } else {
                     //android 4.4 y superior
                     i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    //  i.addCategory(Intent.CATEGORY_OPENABLE);
                     i.setAction(Intent.ACTION_PICK);
                 }
                 i.setType("image/*");
                 startActivityForResult(i, request_codeSecond);
             }
         });
-
-        //-------------------PHOTO 2nd---------------------------
-
-
 
         //Bouton pour ajouter l'appartement-------------------------------
         buttonSubmit = (Button) findViewById(R.id.buttonAddAppart);
@@ -343,7 +336,6 @@ public class AddApart extends AppCompatActivity {
                 sFinalNom        = sFinalNom.replace("'","''");
                 //Adresse de l'appartement-------------------------------
                 strAdresseAppart = adresse_appart.getText().toString();
-
                 strAdresseAppart = strAdresseAppart.replace("'","''");
                 Log.e("nom Ville:", strAdresseAppart);
                 //Ville de l'appartement---------------------------------
@@ -369,9 +361,13 @@ public class AddApart extends AppCompatActivity {
                 String strFinalAdresse = strAdresseAppart + "," + strAdresseGoogle + " "+ strCPAppart
                         + ", "+ country;
                 strMail_prop     = mail_prop.getText().toString().trim();
-                enteredPhoto = convertirImgString(imageRotate);
+
+                //Si l'image principale et si l'image secondaire est null
+                if(imageRotate != null) {
+                    enteredPhoto = convertirImgString(imageRotate);
+                }
                 if(imageRotateSecondaire != null){
-                enteredPhotoSecondaire = convertirImgString(imageRotateSecondaire);
+                    enteredPhotoSecondaire = convertirImgString(imageRotateSecondaire);
                 }
 
                 //Récupération de la longitude et de la latitude de l'addresse finale
@@ -380,12 +376,9 @@ public class AddApart extends AppCompatActivity {
                     for (int i=0; i<10;i++)
                     {
                         addresses = geocoder.getFromLocationName(strFinalAdresse, 1);
-                        Log.e("adresse:", String.valueOf(addresses));
                         if(addresses != null && addresses.size() > 0){
                             addressName = addresses.get(0);
                         }
-
-                        Log.e("adresse:", String.valueOf(addressName.getLongitude()));
 
                         if(addressName.getLongitude() != 0.0)
                         {
@@ -407,15 +400,12 @@ public class AddApart extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-                Log.e("strMail_prop:", strMail_prop);
 
-                //Si téléphone mauvais nombre de chiffre ou avec le +-----------------------------------------------------------
-                boolean test1 = false;
-                boolean test2 = false;
-                if(strTelProp.trim().length()== 10) test1 = true;
-                if(strTelProp.trim().length()== 12) test2 = true;
-
-                Log.e("strTelProp:", String.valueOf(strTelProp.trim().length()));
+                //Si téléphone mauvais nombre de chiffre ou avec le +--------------------------------------
+                boolean dixNumero = false;
+                boolean douzeNumero = false;
+                if(strTelProp.trim().length()== 10) dixNumero = true;
+                if(strTelProp.trim().length()== 12) douzeNumero = true;
 
                 //Si Nom propriétaire est nul------------------------------------------------
                 if(strNomProp.length() == 0) {
@@ -424,17 +414,18 @@ public class AddApart extends AppCompatActivity {
                 }
                 else if ((strMail_prop.trim().length() > 0) && (Email.isEmailValid(strMail_prop) == false))
                 {
-                    Log.e("strMail_prop:", strMail_prop);
-
-                        mail_prop.setError("Veuillez saisir une addresse mail valide");
-                        Toast.makeText(context, text, duration).show();
-
+                    mail_prop.setError("Veuillez saisir une addresse mail valide");
+                    Toast.makeText(context, text, duration).show();
                 }
 
                 //Si téléphone propriétaire est nul------------------------------------------------
-                else if(!test1 && !test2) {
+                else if(!dixNumero && !douzeNumero) {
                     tel_prop.setError("Veuillez saisir un numéro correcte");
                     Toast.makeText(context, text, duration).show();
+                }
+                //Si photo principale est nulle
+                else if(enteredPhoto == null || "null".equals(enteredPhoto)) {
+                    Toast.makeText(context, "Veuillez enregistrer une photo principale", duration).show();
                 }
 
                 //Si adresse appartement est nul------------------------------------------------
@@ -472,7 +463,6 @@ public class AddApart extends AppCompatActivity {
                     descrip_appart.setError("Merci de vérifier la superficie de votre appartement");
                     Toast.makeText(context, text, duration).show();
                 }
-
                 //S'il n'a pas coché l'accord------------------------------------------------
                 else if (!checkAdd.isChecked())
                 {
@@ -490,17 +480,28 @@ public class AddApart extends AppCompatActivity {
             }
         });
     }
-    //-------------------Photo premiere---------------------------
+    public static Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
 
-    //-------------------Photo deuxième---------------------------
-
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
     // Convertir image en string
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String convertirImgString(Bitmap imageRotate) {
         String imagenString;
         ByteArrayOutputStream array=new ByteArrayOutputStream();
         if(imageRotate!=null){
-            imageRotate.compress(Bitmap.CompressFormat.JPEG,30,array);
+            Bitmap reSizeBitmap = getResizedBitmap(imageRotate, 500);
+            reSizeBitmap.compress(Bitmap.CompressFormat.JPEG,30,array);
             byte[] imagenByte=array.toByteArray();
             imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
         }else{
@@ -509,6 +510,7 @@ public class AddApart extends AppCompatActivity {
 
         return imagenString;
     }
+    //Récupération du chemin de la photo
     private String getRealPathFromURIPath(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -523,6 +525,7 @@ public class AddApart extends AppCompatActivity {
             }
         }
     }
+    //Vérification et rotation de la photo si besoin
     public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
         Matrix matrix = new Matrix();
         switch (orientation) {
@@ -668,6 +671,9 @@ public class AddApart extends AppCompatActivity {
                 parameters.put("LATITUDE_APPART", String.valueOf(latitude));
                 parameters.put("ADRESSE_MAIL", strMail_prop);
                 parameters.put("IMAGE_PRINCIPALE", enteredPhoto);
+                if(enteredPhotoSecondaire == null){
+                    enteredPhotoSecondaire = "NULL";
+                }
                 parameters.put("IMAGE_SECONDAIRE", enteredPhotoSecondaire);
                 sh.performPostCall(url, parameters);
                 return null;

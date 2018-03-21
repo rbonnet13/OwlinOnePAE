@@ -42,6 +42,7 @@ public class SplashScreen extends Activity {
 
         if("first".equals(activity))
         {
+            TIME_OUT = 2000;
             imgView .setVisibility(View.INVISIBLE);
             textMerci .setVisibility(View.VISIBLE);
             imgViewHibou .setVisibility(View.VISIBLE);

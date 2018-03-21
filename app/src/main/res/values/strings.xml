@@ -48,7 +48,7 @@
     <string name="vendu">Vendu</string>
     <string name="parametre">Paramètres</string>
     <string name="signaler">Signaler</string>
-    <string name="merci">Merci, votre appartement à été ajouté avec succès</string>
+    <string name="merci">Votre appartement est en cours de validation</string>
     <string name="textCheckBoxAdd">Je certifie l\'exactitude et l\'authenticité des données saisies. Les
     données ne pourront pas être modifiées.</string>
     <string name="about">About</string>

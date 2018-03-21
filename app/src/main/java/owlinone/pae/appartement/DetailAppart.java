@@ -4,6 +4,7 @@ package owlinone.pae.appartement;
  * Created by Julian on 09/12/2016.
  */
 
+import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,6 +43,8 @@ import owlinone.pae.configuration.AddressUrl;
 import owlinone.pae.configuration.HttpHandler;
 
 public class DetailAppart extends AppCompatActivity implements OnMapReadyCallback{
+    private Animator mCurrentAnimator;
+    private int mShortAnimationDuration;
     String strDescript= "";
     String strDetailAppart = "";
     String strDetailTel= "";
@@ -369,6 +372,8 @@ public class DetailAppart extends AppCompatActivity implements OnMapReadyCallbac
                 byte[] decodedBase64Princ = Base64.decode(base64Second, Base64.DEFAULT);
                 Bitmap imageSecond = BitmapFactory.decodeByteArray(decodedBase64Princ, 0, decodedBase64Princ.length);
                 imageSecondaire.setImageBitmap(imageSecond);
+            } else {
+                imageSecondaire.setBackgroundResource(0);
             }
         }
         Exception exception;
