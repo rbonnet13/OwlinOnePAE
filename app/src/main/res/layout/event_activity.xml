@@ -8,8 +8,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/text_event_calendar"
             android:layout_width="wrap_content"
@@ -22,6 +24,7 @@
             android:gravity="start|center_vertical"
             android:textSize="16sp" >
         </TextView>
+        </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -37,4 +40,5 @@
             android:src="@drawable/facebook" />
     </RelativeLayout>
     </LinearLayout>
+
 </LinearLayout>

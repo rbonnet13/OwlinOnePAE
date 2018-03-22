@@ -191,7 +191,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                         mylistEvent.put("DATE", entry.get("ALL_EVENEMENT"));
                         mylistEvent.put("LOGO_FACEBOOK", entry.get("FACEBOOK_EVENEMENT"));
                         mylistEvent.put("LIEN_FACEBOOK", entry.get("LIEN_EVENEMENT"));
-                        System.out.println("Boucle for:");
 
                         eventClicked.add(mylistEvent);
                     }
@@ -393,12 +392,10 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             int currentYear = cal.get(Calendar.YEAR);
             int currentMonth = cal.get(Calendar.MONTH) + 1;
             int currentDay = cal.get(Calendar.DAY_OF_MONTH);
-            Log.e("Current", "TEST DAY: " + currentYear + " " + currentMonth +" " + currentDay);
 
             eventCurrentDay = new ArrayList<>();
 
             for (HashMap<String, String> entry : eventList) {
-                Log.e("Current", "TEST FOR: " + Integer.valueOf(entry.get("YEAR_EVENEMENT")) + " " + Integer.valueOf(entry.get("MONTH_EVENEMENT")) +" " + Integer.valueOf(entry.get("DAY_EVENEMENT")));
                 if (currentDay == Integer.valueOf(entry.get("DAY_EVENEMENT")) && currentMonth == Integer.valueOf(entry.get("MONTH_EVENEMENT")) + erreurMonth &&
                         currentYear == Integer.valueOf(entry.get("YEAR_EVENEMENT")) + erreurYear) {
                     imgLogo.setVisibility(View.INVISIBLE);
@@ -418,7 +415,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
             }
 
             if (eventCurrentDay.size() != 0) {
-                Log.e("Current", "EventCurrent: " + eventCurrentDay.toString());
                 ListAdapter adapter = new SimpleAdapter(CalendarExtra.this, eventCurrentDay,
                         R.layout.event_activity, new String[]{"DATE", "LOGO_FACEBOOK"},
                         new int[]{R.id.text_event_calendar, R.id.facebook_logo_event});
@@ -430,7 +426,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
                         testEvent = (HashMap) lvEvent.getItemAtPosition(position);
 
                         String lien_event_click = testEvent.get("LIEN_FACEBOOK");
-                        Log.e("Event", "Lien onclick: " + lien_event_click);
 
                         if (lien_event_click != "null") {
                             Intent intent = new Intent();
@@ -477,7 +472,6 @@ public class CalendarExtra extends AppCompatActivity implements NavigationView.O
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            System.out.println("Resulted Value: " + result);
             if (result.equals("") || result == null) {
                 //Toast.makeText(MainActivity.this, "Problème de connexion au serveur", Toast.LENGTH_LONG).show();
                 return;
