@@ -4,41 +4,41 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/activity_horizontal_margin">
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/text_event_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
             android:layout_gravity="center_vertical|center"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:hint="HELLO"
             android:gravity="start|center_vertical"
-            android:textSize="16sp" >
+            android:hint="HELLO"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingRight="30dp">
+
         </TextView>
-        </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/facebook_logo_event"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center_vertical|center"
-            android:src="@drawable/facebook" />
-    </RelativeLayout>
     </LinearLayout>
+
+
+
+            <ImageView
+                android:id="@+id/facebook_logo_event"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical|center"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/facebook" />
+        </RelativeLayout>
 
 </LinearLayout>
