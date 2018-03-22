@@ -29,8 +29,6 @@
     <screenName name="owlinone.pae.session.MainLogin">Connexion/Inscription/MDP oublié</screenName>
     <screenName name="owlinone.pae.session.Compte">Modification du compte utilisateur</screenName>
 
-
-
     <screenName name="owlinone.pae.covoiturage.Client">Covoiturage Client</screenName>
     <screenName name="owlinone.pae.covoiturage.Conducteur">Covoiturage Conducteur</screenName>
     <screenName name="owlinone.pae.covoiturage.Covoiturage">Accueil Covoiturage</screenName>
