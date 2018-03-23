@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity
                         JSONObject a        = jsonArray.getJSONObject(i);
                         int id_article      = a.getInt("ID_ARTICLE");
                         String tit_article  = a.getString("TITRE_ARTICLE");
-                        String cat_article  = a.getString("CATEGORIE_ARTICLE");
+                        String cat_article  = a.getString("LIBELLE_CATEGORIE");
                         String img_article  = a.getString("IMAGE_ARTICLE");
                         String cor_article  = a.getString("CORPS_ARTICLE");
                         String date_article = a.getString("DATE_ARTICLE");
